@@ -17,18 +17,16 @@
 % drukowany tylko z włączoną opcją 'brudnopis':
 \wersja   {wersja wstępna [\ymdtoday]}
 
-\author   {Walenty Szczęsny}
-\nralbumu {100\,001}
-\email    {walenty@szczesny.com.pl}
+\author   {Paweł Luszuk}
+\nralbumu {235425}
+\email    {luszukpawel@gmail.com}
 
-\author   {Monika A.~Szczęsna-Woś}
-\nralbumu {100\,002}
 
-\title    {Dokumenty strukturalne: teoria i~zastosowania}
-\date     {2100}
+\title    {Transfer Stylu przy użyciu Uczenia Maszynowego w Blenderze}
+\date     {2020}
 \miejsce  {Gdańsk}
 
-\opiekun  {prof. dr hab. D. Htunk}
+\opiekun  { dr P. Arłukowicz}
 
 % dodatkowe polecenia
 %\renewcommand{\filename}[1]{\texttt{#1}}
@@ -39,19 +37,16 @@
 
 % streszczenie
 \begin{abstract}
-  Aczkolwiek w~ciągu ostatnich lat skład tekstu wspomagany komputerowo
-  całkowicie wyeliminował stosowanie tradycyjnych technik drukarskich,
-  to podobny proces w~przypadku publikacji elektronicznych czyli
-  publikacji, które w~ogóle nie wykorzystują papieru, a~nośnikem
-  informacji staje się ekran komputera nie jest obserwowany.
+Implementacja algorytmu Neural-Style opracowanego przez Leona A. Gatysa, Alexandra S. Eckera i Matthiasa Bethge w środowisku Blender.
+
+Neural-Style lub Neural-Transfer pozwala robić zdjęcia i odtwarzać je w nowym stylu artystycznym. 
 \end{abstract}
 
 % słowa kluczowe
-\keywords{SGML,
- XML,
- XSL,
- dokumenty elektroniczne,
- dokumenty strukturalne}
+\keywords{Blender,
+ Python,
+ PyTorch,
+Machine Learning}
 
 % tytuł i spis treści
 \maketitle
@@ -59,374 +54,330 @@
 % wstęp
 \introduction
 
-Aczkolwiek w~ciągu ostatnich lat skład tekstu wspomagany
-komputerowo całkowicie wyeliminował stosowanie tradycyjnych technik
-drukarskich, to podobny proces w~przypadku publikacji elektronicznych
-czyli publikacji, które w~ogóle nie wykorzystują papieru, a~nośnikem
-informacji staje się ekran komputera nie jest obserwowany.
+Żyjemy w czasach niespotykanego nigdy w historii ludzkości tempa rozwoju nauki i technologii. Komputery są obecnie w stanie wykonywać zadania, które jeszcze 20 lat temu mogły pojawić się tylko w książkach Philipa K. Dicka czy Wiliama Gibsona.
 
-Formatowanie wizualne, powstało z~myślą o~przygotowaniu publikacji do
-druku i~dlatego nie może sprostać nowym potrzebom, które stwarza
-postęp techniki. Coraz większą rolę odgrywają dziś elektroniczne
-repozytoria, bazy danych, publikacje na CD-Romach oraz WWW.  Wypływa
-też stąd ważny wniosek, że tworzenie dokumentów według paradygmatu
-WYSIWYG nie jest efektywne i~stopniowo należy oczekiwać powstawania,
-wdrażania i~rozpowszechniania się systemów opartych na paradygmacie
-\emph{formatowania strukturalnego}.
+Zadania, które jeszcze kilka lat temu wymagały wyższego poznania, są rozwiązywane przez maszyny o niemal nadludzkim poziomie wydajności. Zawody, bez których ludzkość dziesięciolecia temu nie mogła się obejść nie istnieją. Do zadań takich jak wykrywanie znaków drogowych i pieszych przez autonomiczne samochody czy diagnozowanie guza na podstawie obrazu radiologicznego można teraz podejść komputerowo. Analiza obrazu czy obróbka dźwięku może odciążyć człowieka w prostych powtarzalnych czynnościach.
 
-W~dokumencie formatowanym strukturalnie oznaczana jest struktura
-dokumentu a~nie określany jego wygląd. Zwróćmy uwagę, że układ
-graficzny jest pochodną struktury, tj. nadajemy jednolity wygląd
-tytułom rozdziałów, śródtytułów, przypisów, jednakowo wyróżniamy
-wyliczenia itp.  Układ graficzny jak już wspominano może ulegać zmianie
-(np. wraz z~rozpowszechnianiem się nowych technologii wydawniczych)
-ale treść i~struktura raczej nie, np. Biblia Gutenberga widziana z~tej
-perspektywy nie zmieniła się wcale.
 
-\chapter{Wprowadzenie do standardów SGML}
+\chapter{Wprowadzenie do sztucznej inteligencji\label{s:dtd}}
 
-SGML~\cite{Goldfarb:2002:CFG} jest to \emph{metajęzyk} służący do opisywania
-struktury i~zawartości dokumentów (standard ISO 8879).  Do
-podstawowych zalet takiego podejścia należy:
-\begin{itemize}
-\item
-jest to międzynarodowy
-standard dostępny na wielu platformach sprzętowo\-systemowych;
-\item
-jest to
-język opisu \emph{każdego\/} dokumentu, o~praktycznie nieograniczonych
-możliwościach (\emph{rozszerzalność\/})
-\item
-umożliwia powtórne
-wykorzystywanie dokumentów, także w sposób inny od poprzedniego
-(np. tradycyjna książka i~dokument multimedialny utworzony z~tego
-samego dokumentu SGML-owego).
-\end{itemize}
+Sztuczna inteligencja to najbardziej ogólne pojęcie związane związane z komputerami. Prostą sztuczną inteligencję reprezentuje nawet kalkulator. Przyjęto też, iż wyznacznikiem jakości sztucznej inteligencji jest umiejętność „udawania” ludzkiego mózgu. Już w roku 1950 Alan Turing opracował test, test określający w jakim stopniu maszyna jest w stanie myśleć jak człowiek.
 
-Standard służy jedynie do opisywania logicznej struktury dokumentów,
-nie determinuje ostatecznej formy prezentacji informacji, która może
-być docelowo przekształcana w~najróżniejszy sposób. Dokument
-zakodowany z~wykorzystaniem SGML-a może służyć jako postać wyjściowa
-do formatowania tej samej informacji w~różny sposób i~prezentacji
-z~użyciem różnych mediów np. w~formie drukowanej na papierze,
-w~postaci hipertekstu albo tekstowej bazy danych. Pozwala to
-zminimalizować koszty\index{koszty}, cały cykl wydawniczy dokonuje się
-na jednym dokumencie -- pliku SGML-owym, a~nie na wielu.
+\section{Uczenie maszynowe}
 
-\section{Elementy składowe systemu SGML}
+To dziedzina nauki łącząca ze sobą informatykę, matematykę czy statystykę. Kładzie ona szczególny nacisk na analizę danych i zmianę postępowanie w zależności od otrzymanych informacji.
 
-Standard SGML to specyfikacja techniczna metajęzyka. Zaś systemem
-SGML nazywamy \emph{zestaw narzędzi i~środków niezbędnych do
-tworzenia, składowania i~obróbki dokumentów z~wykorzystaniem tego
-standardu}.  Typowy proces produkcji dokumentów w~standardzie SGML
-podzielony jest na kilka części. Najważniejszymi elementami tego
-procesu są~\cite[s.~45--47]{Eisenberg:2002:SXM}:
+\section{Głębokie uczenie }
 
-\begin{itemize}
-\item Klasyfikacja tworzonych dokumentów w~grupy i~wynikający z~tego
-  dobór definicji typu dokumentu\footnote{Definicja typu dokumentu DTD
-    to formalny opis pewnej klasy dokumentów, spis jej elementów
-    składowych (znaczników i~ich atrybutów) oraz zasad ich stosowania
-    (hierarchii występowania czy możliwości skracania).}
-  (por.~punkt~\ref{s:dtd}).
-\item Wybraniu odpowiednich narzędzi do tworzenia i~modyfikowania
-  dokumentów SGML (edytory, konwertery, por.~punkt~\ref{s:edytor},
-  s.~\pageref{s:edytor})\footnote{Wybrany edytor winien w~maksymalnym
-    stopniu ułatwiać proces tworzenie dokumentów strukturalnych,
-    różniący się od tego, jaki jest stosowany w~narzędziach biurowych
-    typu edytor Word.}.
-\item Sprawdzenie poprawności oznaczenia dokumentów
-  (walidacja\index{walidacja}).
-\item Ustalenie metod składowania zbiorów oznakowanych dokumentów.
-\item Ustalenie sposobu prezentacji oznaczonych dokumentów i~ich
-  formatów wyjściowych -- przygotowanie odpowiednich specyfikacji
-  konwersji formatów i~dobór właściwych do tego celu narzędzi
-  (por.~punkty~\ref{s:dsssl} i~\ref{s:xsl}).
-\end{itemize}
+Głębokie uczenie jest podkategorią uczenia maszynowego. Polega na znajdowaniu powiązań między elementami w zbiorze danych niedostrzegalnym przez człowieka. Zajmuje się głównie przetwarzaniem dźwięku np. rozpoznawanie głosu. Przetwarzaniem języka naturalnego np. tłumaczenia czy analizę obrazu np. identyfikowanie osób.
 
-Każdy z~wyżej wymienionych problemów stanowi pewne zadanie do
-wykonania, które może być w dużym stopniu lub całkowicie
-zautomatyzowane dzięki zastosowaniu odpowiednich narzędzi, co jest
-jednym z~celów i~korzyści stosowania systemu opartego na standardzie
-SGML.
+W tej pracy uwaga zostanie poświęcona tylko analizie obrazu, natomiast wiele mechanizmów pracy z dużą ilością danych pozostaje identyczna, gdyż dane takie jak obraz czy plik audio są tylko zestawem danych liczbowych np. obraz w formacie cyfrowym jest to zbiór pikseli o 3 wartościach liczbowych a plik audio to tablica liczb przetrzymująca amplitudy dźwięku w danym czasie.
+
+Głębokie uczenie to transformacje danych wejściowych, których wynikiem są funkcje numeryczne, które ułatwiają algorytmowi niższego rzędu, takim jak klasyfikator, uzyskanie poprawnych wyników na nowych danych. Głębokie uczenie ma na celu pobranie oryginalnych danych i przedstawienie reprezentacji tych samych danych, które można podać algorytmowi w celu rozwiązania problemu. 
+􏰁Głębokiego uczenia się można użyć w przypadku modeli ogólnych, które nie są zaprojektowane do rozwiązania określonego zadania, ale mogą być automatycznie dostosowywane do specjalizacji w problemie.
 
 \begin{figure}[!tbh]
 \centering
-\includegraphics[width=.8\hsize]{fig/schemat}
-\caption{Schemat archiwum\label{RYS.2}}
+\includegraphics[width=.8\hsize]{fig/1}
+\caption{Schemat zależności\label{RYS.1}}
 \source{Opracowanie własne}
 \end{figure}
 
-\section{Opracowanie typu dokumentu\label{s:dtd}}
-Tworzenie DTD~\cite{Eisenberg:2002:SXM,Goldfarb:2002:CFG} powinno zacząć się
-od analizy posiadanych danych oraz potrzeb dotyczących dokumentów
-wynikowych i~informacji. Rezultatem analizy dokumentów jest
-wyspecyfikowanie słownika takich elementów oraz, dla każdego typu
-dokumentu, zależności między tymi elementami. Z~tego powodu stworzenie
-dobrego DTD jest zadaniem niełatwym. Ponadto DTD jest tylko częścią
-systemu SGML; oprócz niego potrzebne są narzędzia do formatowania
-dokumentów, takie jak arkusze stylów DSSSL czy też XSL/XSLT.
 
-Duże koszty implementacji przemawiają często za rozważeniem
-wykorzystania, czy też adaptacji w~systemie SGML udostępnionych
-publicznie gotowych DTD. W~omawianym projekcie postąpiono podobnie,
-ewentualne opracowanie własnego typu dokumentu odkładając na później.
-Rozważano wstępnie wykorzystanie trzech publicznie dostępnych typów
-dokumentów: \texttt{etd} zdefiniowanego na potrzeby projektu
-\textit{Electronic Theses and Dissertations} w~Virginia Polytechnic
-Institute and State University, \texttt{TEI} opracowanego w~ramach
-projektu \textit{Text Encoding Iniciative} oraz
-DocBook opracowany przez konsorcjum firm, głównie sektora IT,
-używających technologii SGML do tworzenia dokumentacji do swoich
-produktów.
+\chapter{Konwolucyjne Sieci Neuronowe  }
 
-\section{DocBook}
-\emph{DocBook DTD}\index{DocBook|(} to typ dokumentu definiujący
-strukturę i~zawartość zbioru znaczników SGML, służących do
-dokumentacji oprogramowania i~różnego rodzaju dokumentacje
-techniczne~\cite[s.~123]{Elmasri:2002:CMC}. Posiada ona bardzo rozbudowaną
-hierarchię znaczników do budowy struktur książek, dokumentacji
-technicznej itp dokumentów.  DTD dla tego typu dokumentu jest dostępne
-zarówno w~standardzie SGML jak i~XML. Dostępna jest także uproszczona
-wersja DTD o~nazwie SimpleDocbook. Zaletą używania wersji uproszczonej
-jest dużo łatwiejsze posługiwanie się nią, z~uwagi na znacznie
-mniejszą liczbę znaczników, por.~tabela~\ref{tab:dtd-cmp}.
+Sieci neuronowe to ogólna nazwa struktur matematycznych wzorowane są na neuronach w mózgu. Sieci neuronowe mogą być automatycznie dostosowywane, aby specjalizować się w danym problemie.
 
-\begin{table}[!tbh]
-\begin{tabular}{|l|l|l|} \hline
-Typ dokumentu & Liczba elementów & Liczba encji \\ \hline
-Docbook & 357 & 1814 \\ \hline
-SimpleDocBook  & 93  & 234 \\ \hline
-TEI & brak danych & 3 \\ \hline
-HTML & 98  & 234 \\ \hline
-\end{tabular}
-\caption{Porównanie wielkości popularnych definicji
-  typu dokumentu\label{tab:dtd-cmp}}
-\source{Obliczenia własne}
-\end{table}
+W tej pracy uwaga poświęcona będzie tylko Konwolucyjcym sieciom neuronowym (ang. Convolutional Neural Network), które sprawdzają się przy analizie obrazów.  Warto jednak wspomnieć o innych np. Long short-term memory network, które swoje zastosowanie ma w analizie dźwięku.Konwolucyjna sieć neuronowa składa się jednej lub wielu warstw klastrów połączeń.
 
-DocBook jest używany obecnie w~większości zarówno komercyjnych jak
-i~niekomercyjnych projektach tworzenia dokumentacji komputerowej
-(np. dokumentacja dla takich projektów jak: LDP -- \textit{Linux
-Documentation Project}, \textit{RedHat Gnome Desktop},
-\textit{Postgres SQL RDBMS}, \textit{PHP3 Hypertext Preprocesor} czy
-dokumentacja do systemu FreeBSD).\index{DocBook|)}
 
-\section{Edytory sterowane składnią\label{s:edytor}}
-
-Pierwszym elementem systemu SGML jest edytor
-strukturalny\index{edytor!strukturalny}, zwany też edytorem sterowanym
-składnią. W~tradycyjnych edytorach działających według paradygmatu
-WYSIWYG\index{WYSIWYG} autor wprowadzając tekst określa na bieżąco
-jego wygląd, mając zarówno w~jednym jak i~drugim przypadku dużą
-swobodę.  Taki sposób pracy w~przypadku masowego tworzenia dokumentów
-jest zupełnie nieefektywny. W~szczególności dotyczy to pracy wielu
-autorów nad jednym lub wieloma dokumentami o~zuniformizowanym
-formacie, czy też tworzenia dokumentów, o~których z~góry wiadomo, że
-będą prezentowane w~różny sposób.
-
-Pewnym rozwiązaniem opisywanych wyżej problemów jest wykorzystanie
-szablonów, w~które, od jakiegoś czasu są wyposażane wszystkie
-popularne edytory biurowe\index{edytor!biurowy}.  Posługując się
-szablonami, autor nie definiuje wyglądu samodzielnie tylko wypełnia
-treścią zdefiniowany z~góry szablon dokumentu.
-Stanowiąc niewątpliwy
-krok do przodu takie podejście nie rozwiązuje jednak wszystkich
-problemów.
-
-Komercyjne edytory SGML, są w~chwili obecnej ciągle bardzo
-drogie, zaś oprogramowanie rozprowadzane na różnego rodzaju licencjach
-\emph{Open Source\/} nie oferuje jeszcze wygody pracy, do której
-przyzwyczaili się użytkownicy edytorów biurowych.
-
-\section{Emacs i~psgml}
-
-Jedynym dostępnym w~chwili
-obecnej, efektywnym, tanim (darmowy) i~dostępnym na wielu
-platformach systemowo-sprzętowych środowisku do tworzenia dokumentów
-strukturalnych jakim jest edytor Emacs\index{edytor!Emacs} z~pakietem
-psgml. Środowisko to wspomaga autora poprzez:
-kolorowanie składni dokumentów SGML i~aplikacji SGML, automatyczne
-uzupełnianie brakujących znaczników, automatyczną kontrolę jakie
-w~danym kontekście można wstawiać znaczniki i~atrybuty, wyświetlanie
-informacje odnośnie możliwych i~domyślnych wartości.
-Wszystkie funkcje są dostępne za pomocą
-odpowiednie skrótów klawiszowych a~także dostępne poprzez wybór
-wskaźnikiem myszy odpowiedniej pozycji z~menu. Pakiet ten umożliwia
-również wywołanie zewnętrznego parsera\index{parser} SGML celem
-weryfikacji poprawności dokumentu.
-
-\chapter{Narzędzia i~standardy pokrewne}
-
-Systemy SGML, ze względu na mnogość funkcji jakie spełniają i~ich
-kompleksowe podejście do oznakowywania i~przetwarzania dokumentów
-tekstowych, są bardzo skomplikowane. Możemy wyróżnić dwa podejścia do
-budowy takich systemów.  Z~jednej strony, buduje się systemy
-zindywidualizowane, oparte o~specyficzne narzędzia tworzone w~takich
-językach, jak: C, C++, Perl czy Python. Edytory strukturalne, filtry
-do transformacji formatów czy parsery\index{parser} i~biblioteki
-przydatne do konstrukcji dalszych narzędzi, tworzone są według potrzeb
-określonych, pojedynczych systemów.
-
-Z~drugiej strony, twórcy oprogramowania postanowili pójść krok dalej
-i~połączyć te różne narzędzia w~jedną całość. Tą całość miał stanowić
-DSSSL lub jego XML-owy odpowiednik -- standard XSL. Ze względu na
-oferowane możliwości można twierdzić, że tworzenie i~używanie narzędzi
-implementujących standard DSSSL/XSL, jest najwłaściwszym
-podejściem. Przemawiają za tym różne argumenty, ale najważniejszym
-z~nich jest to, że mamy tu możliwość stworzenia niezależnego od
-platformy programowej i~narzędziowej zbioru szablonów -- przepisów jak
-przetwarzać dokumenty SGML.
-
-\section{Przetwarzanie dokumentów SGML -- standard DSSSL\label{s:dsssl}}
-
-DSSSL (\textit{Document Style Semantics and Specification Language\/})
--- to międzynarodowy standard ściśle związany ze standardem SGML.
-Standard ten, można podzielić na następujące części:
-
-\begin{itemize}
-\item język transformacji (\textit{transformation language\/}).  To
-  definicja języka służącego do transformacji dokumentu oznaczonego
-  znacznikami zgodnie z~pewnym DTD na dokument oznaczony zgodnie
-  z~innym~DTD.
-\item język stylu (\textit{style language\/}) opisujący sposób
-  formatowania dokumentów SGML.
-\item język zapytań (\textit{query language\/}) służy do
-  identyfikowania poszczególnych fragmentów dokumentu SGML.
-\end{itemize}
-
-Opisane główne części składowe standardu DSSSL dają obraz tego, jak
-wiele aspektów przetwarzania zostało zdefiniowanych i~jak
-skomplikowany jest to problem. Jest to głównym powodem tego, że mimo
-upływu kilku lat od zdefiniowania standardu nie powstały ani
-komercyjne ani wolnodostępne aplikacje wspierające go
-w~całości. Istnieją natomiast \emph{nieliczne\/} narzędzia realizujące
-DSSSL w~ograniczonym zakresie, głównie w~części definiującej język
-stylu, który odpowiada za opatrzenie dokumentu czysto strukturalnego
-w~informacje formatujące. Daje to możliwość publikacji dokumentów SGML
-zarówno w~postaci elektronicznej, hipertekstowej czy też drukowanej.
-
-\section{Przetwarzanie dokumentów XML -- standard XSL\label{s:xsl}}
-
-Tak jak XML jest \emph{uproszczoną\/} wersją standardu SGML, tak XSL
-jest uproszczonym odpowiednikiem standardu DSSSL. W~szczególności,
-wyróżnić można w~tym standardzie następujące części składowe:
-
-\begin{itemize}
-\item język transformacji (XSLT) To definicja języka służącego do
-  transformacji dokumentu.
-\item język zapytań (XPath) służy do identyfikowania poszczególnych
-  fragmentów dokumentu.
-\item język stylu deefiniujący sposób formatowania dokumentów XML.
-\end{itemize}
-
-\chapter{Przegląd dostępnych narzędzi\label{PRZEGLAD.NARZEDZI}}
-
-W~celu wykorzystania standardu SGML do przetwarzania dokumentów,
-niezbędne jest zebranie odpowiedniego zestawu narzędzi. Narzędzi do
-przetwarzania dokumentów SGML jest wiele. Są to zarówno całe
-systemy zintegrowane, jak i~poszczególne programy, biblioteki czy
-skrypty wspomagające.
-
-\section{Narzędzia do przeglądania dokumentów SGML}
-
-Do tej kategorii oprogramowania zaliczamy przeglądarki dokumentów
-SGML oraz serwery sieciowe wspomagające standard SGML, przy
-czym rozwiązań wspierających standard XML jest już w~chwili obecnej
-dużo więcej i~są dużo powszechniejsze.
-
-Jeżeli chodzi o~przeglądarki to zarówno Internet Explorer jak
-i~Netscape umożliwiają bezpośrednie wyświetlenie dokumentów XML;
-ponieważ jednak nie wspierają w~całości standardu XML, prowadzi to
-ciągle do wielu problemów\footnote{Z~innych mniej popularnych
-  rozwiązań można wymienić takie aplikacje, jak: HyBrick SGML
-  Browser firmy Fujitsu Limited, Panorama Publisher firmy InterLeaf
-  Inc, DynaText firmy Inso Corporation czy darmowy QWeb. W~przypadku
-  serwerów zwykle dokonują one transformacji ,,w~locie'' żądanych
-  dokumentów na format HTML (rzadziej bezpośrednio wyświetlają
-  dokumenty XML).  Ta kategoria oprogramowania ma, z~punktu widzenia
-  projektu, znaczenie drugorzędne.}.
-
-\section{Parsery SGML}
-Program \texttt{nsgmls} (z~pakietu \texttt{SP} Jamesa Clarka) jest
-doskonałym parserem\index{parser} dokumentów SGML, dostępnym
-publicznie.  Parser \texttt{nsgmls} jest dostępny w~postaci źródłowej
-oraz w~postaci programów wykonywalnych przygotowanych na platformę
-MS~Windows, Linux/Unix i~inne. Oprócz analizy poprawności dokumentu
-parser\index{parser} ten umożliwia również konwersję danych do formatu
-ESIS\index{ESIS}, który wykorzystywany jest jako dane wejściowe przez
-wiele narzędzi do przetwarzania i~formatowania dokumentów SGML.
-Dodatkowymi, bardzo przydatnymi elementami pakietu \texttt{SP} są:
-program \texttt{sgmlnorm} do normalizacji, program \texttt{sx} służący
-do konwersji dokumentu SGML na XML oraz biblioteki programistyczne,
-przydatne przy tworzeniu specjalistycznych aplikacji służących do
-przetwarzania dokumentów SGML.
-
-W~przypadku dokumentów XML publicznie dostępnych, parserów jest
-w~chwili obecnej kilkadziesiąt. Do popularniejszych zaliczyć można
-Microsoft Java XML Parser firmy Microsoft, LT XML firmy Language
-Technology Group, Exapt oraz XP (James Clark)
-
-\section{Wykorzystanie języków skryptowych}
-
-\section{Wykorzystanie szablonów XSL}
-
-Stosując wersję XML typu DocBook można wykorzystać szablony stylów
-przygotowane w~standardzie XSL (autor N.~Walsh). W~chwili obecnej
-są dostępne narzędzia umożliwiające przetworzenie dokumentów XML do
-postaci drukowanej (Adobe PDF) oraz hipertekstowej (HTML).
-
-Podobnie jak w~przypadku szablonów DSSSL, szablony stylów XSL są
-sparametryzowane i~udokumentowane i~dzięki temu łatwe w~adaptacji. Do
-zamiany dokumentu XML na postać prezentacyjną można wykorzystać jeden
-z~dostępnych publicznie procesorów XSLT
-(por.~tabela~\ref{zest:proces:xslt}).
-
-\begin{table}[!htb]
-\begin{tabular}{|l|l|l|} \hline
-Nazwa & Autor      & Adres URL \\ \hline
-\texttt{sablotron} & Ginger Alliance & \url{http://www.gingerall.com} \\ \hline
-\texttt{Xt}        & J.~Clark & \url{http://www.jclark.com} \\ \hline
-\texttt{4XSLT}     & FourThought & \url{http://www.fourthought.com} \\ \hline
-\texttt{Saxon}     & Michael Kay &  \url{http://users.iclway.co.uk/mhkay/saxon} \\ \hline
-\texttt{Xalan}     & Apache XML Project & \url{http://xml.apache.org} \\ \hline
-\end{tabular}
-\caption{Publicznie dostępne procesory XLST\label{zest:proces:xslt}}
+\begin{figure}[!tbh]
+\centering
+\includegraphics[width=.8\hsize]{fig/2}
+\caption{Układ neuronow dla obrazka 64x64 px\label{RYS.2}}
 \source{Opracowanie własne}
-\end{table}
+\end{figure}
 
-XSL:FO jest skomplikowanym językiem o~dużych możliwościach,
-zawierającym ponad 50 różnych ,,obiektów formatujących'', począwszy od
-najprostszych, takich jak prostokątne bloki tekstu poprzez wyliczenia,
-tabele i~odsyłacze. Obiekty te można formatować wykorzystując przeszło
-200 różnych właściwości (\emph{properties\/}), takich jak: kroje,
-odmiany i~wielkości pisma, odstępy, kolory itp.
-W~tym dokumencie przedstawione jest absolutne miniumum informacji
-na temat standardu XSL:FO.
+Posłużmy się przykładem prostej sieci neuronowej, która ma za zadanie rozpoznać pisane cyfry. Jest to swego rodzaju “Hello, World! ” w dziedzinie uczenia maszynowego.
+W przypadku analizy obrazka 64x64 piksele jedna warstwa sieci neuronowej sieć neuronowa składać będzie się z 4096 neuronów.
 
-Cały dokument XSL:FO zawarty jest wewnątrz elementu \texttt{fo:root}.
-Element ten zawiera (w~podanej niżej kolejności):
+Neuronem określamy najbardziej elementarną cząstkę modelu uczenia maszynowego, często jest to pojedyncza liczba np odcień szarości (ang. Grayscale Value) dla pojedynczego piksela w przypadku czarno-białego obrazka. Neuron jest podstawowym budulcem sieci neuronowej. Neurony są ze sobą połączone w dużej liczbie, tworząc sieć. 
+
+Ostatnią warstwą jest output cyfr 0 - 10 i ta z największą wartością aktywacji zostaje wybrana. 
+
+Dokładniej mówiąc neuron to funkcja, która przyjmuje dane wejściowe ze wszystkich neuronów z poprzedniej warstwy i przetwarza to na wartość od 0 do 1,
+0 to czarny 1 to biały wartość ta zwana jest “aktywacją” lub “funkcją aktywacji”.
+Aktywacja z poprzedniej warstwy, determinuje aktywację w kolejnych aż do samego końca. 
+
+Funkcja aktywacji Najprostszą jednostką w (głębokich) sieciach neuronowych jest operacja liniowa (skalowanie + przesuwanie), po której następuje funkcja aktywacji. W swoim najnowszym modelu miałeś operację liniową; operacja liniowa była całym modelem. Funkcja aktywacji ma na celu skoncentrowanie wyników poprzedniej operacji liniowej w danym zakresie.
+
+Dla każdego neuronu wykonywana jest operacja matematyczna:
+
+
+
+neuron  = φ (w * x + b)
+
+
+
+ Zmienna “x” jest wkładem do obliczeń pojedynczego neuronu , w przypadku rozpoznawania cyfr x jest wartością 0 - 1 odcieniem szarości dla danego piksela, “w” jest wagą, natomiast b to odchylenie.
+
+
+Waga jest to wartość, która na swój sposób określa “ważność” danych neuronów w przypadku rozpoznawania cyfr pisanych piksele na skraju obrazka będą miały mniejsze znaczenie niż te w okolicach jego centrum. Wagi mówią ci, jaki wzór pikselowy odbiera ten neuron w drugiej warstwie. Wagi mnożymy z aktywacją ,  aby wagi pomagały w określeniu stopnia aktywacji, zachowujemy je w przedziale 0-1 tu okazuje się pomocna funkcja aktywacji.
+
+\begin{figure}[!tbh]
+\centering
+\includegraphics[width=.8\hsize]{fig/3}
+\caption{Przypisywanie wag\label{RYS.3}}
+\source{Opracowanie własne}
+\end{figure}
+
+
+
+Dodawane jeszcze jest odchylenie (bias), który mówi ci, jak wysoka musi być suma ważona, zanim neuron zacznie być znacząco aktywny.
+
+W każdej warstwie  wartość w neuronie po dodaniu odchylenia i przemnożeniu przez wagę w celu identyfikacji tylko “ważnych” wartości całość przeliczamy jeszcze przez funkcję aktywacyjną. 
+Tak zwana warstwa ReLU usuwa ujemne wartości z mapy aktywacji, ustawiając je na zero, co zwiększa nieliniowe właściwości funkcji decyzyjnej i całej sieci.
+
+\begin{figure}[!tbh]
+\centering
+\includegraphics[width=.8\hsize]{fig/4}
+\caption{Funkcja ReLU\label{RYS.4}}
+\source{Opracowanie własne}
+\end{figure}
+
+
+Dane są często dzielone na osobne zestawy próbek szkoleniowych i próbek walidacyjnych, co pozwala na ocenę modelu na podstawie danych, na których nie był szkolony.
+ 
+Funkcja strat (ang. loss function)to miara błędu w wykonywaniu zadania, takiego jak błąd między przewidywanymi wyjściami a mierzonymi wartościami. Celem jest, aby funkcja straty była jak najniższa.
+
+Warto dodać iż często w przypadku gdy sieć neuronowa ma rozpoznawać zależności bazujące na kształtach a rozpoznawanie cyfr pisanych właśnie takie jest, często redukuje się dane wejściowe do minimum. Zamienia się wtedy kolorowy obrazek RGB na czarno-biały. Dzięki takiemu zabiegowi sieć neuronowa nie jest zaśmiecona niepotrzebnymi dany jakim jest kolor i może to dać lepszą rozpoznawalność jak również wzrost wydajności zarówno w procesie szkolenia jak i działania klasyfikatora.  
+
+Uczenie się jest oszacowaniem parametrów.   
+
+Podsumowując można uważać za  poprawne stwierdzenie, iż uczenie się sieci to tylko modyfikowanie wag oraz odchyleń tak, aby osiągać najlepsze rezultaty.
+
+
+\chapter{Widzenie komputerowe  }
+
+
+Wprowadzenie konwolucyjnych sieci neuronowych zrewolucjonizowało wizję komputerową, a systemy oparte na obrazach zyskały nowy zestaw możliwości. Model teoretyczny musiał spotkać się z implementacją, która skorzysta z dobrodziejstw uczenia maszynowego.
+
+Po załadowaniu jednego  z popularnych formatów obrazów, a należy przekształcić dane w reprezentację tensora, która ma różne części obrazu ułożone w sposób zgodny z oczekiwaniami danego API uczenia maszynowego.
+
+
+Tensor, jest to wielowymiarowa tablica, są elementami składowymi danych w PyTorch. Sieci neuronowe pobierają tensory na wejściu i wytwarzają tensory jako wyjścia. W rzeczywistości wszystkie operacje w sieci neuronowej i podczas optymalizacji są operacjami między tensorami, a wszystkie parametry (takie jak wagi i odchylenia) w sieci neuronowej są tensorami.
+
+Termin tensor jest dołączony do pojęcia przestrzeni, układów odniesienia i transformacji między nimi. Dla wszystkich innych tensor odnosi się do uogólnienia wektorów i macierzy do dowolnej liczby wymiarów, jak pokazano na rysunku.
+Tensor reprezentujące wartości w poszczególnych pikselach są często kodowane za pomocą liczb 8-bitowych, na przykład w kamerach konsumenckich. W zastosowaniach medycznych, naukowych i przemysłowych nierzadko można znaleźć piksele o większej precyzji numerycznej, takie jak 12-bitowe i 16-bitowe.
+
+ Ta precyzja zapewnia szerszy zakres lub zwiększoną czułość w przypadkach, w których piksel koduje informacje dotyczące właściwości fizycznej, takiej jak gęstość kości, temperatura lub głębokość.
+ 
+ \begin{figure}[!tbh]
+\centering
+\includegraphics[width=.8\hsize]{fig/5}
+\caption{Schemat przetwarzania obrazu\label{RYS.5}}
+\source{Opracowanie własne}
+\end{figure}
+ 
+ Istnieje kilka sposobów kodowania liczb na kolory. Najczęstszym jest
+RGB, która określa kolor za pomocą trzech liczb reprezentujących intensywność czerwieni, zieleni i niebieskiego. 
+
+W tym momencie obrazek jest obiektem podobnym do tablicy o trzech wymiarach: dwóch wymiarach przestrzennych (szerokość i wysokość) i trzecim wymiarze odpowiadającym kanałom czerwonym, zielonym i niebieskim. 
+
+Każdy kolor będzie reprezentowany jako 8-bitowa liczba całkowita, jak w większości formatów fotograficznych ze standardowych aparatów konsumenckich.
+
+Sieci neuronowe zwykle działają z wejściowymi tensorami zmiennoprzecinkowymi. Sieci neuronowe wykazują najlepszą wydajność treningu, gdy dane wejściowe mieszczą się w przedziale od około 0 do 1 lub –1 do 1 (efekt definiowania ich bloków konstrukcyjnych). Sieci neuronowe wymagają przedstawienia danych jako wielowymiarowych tensorów numerycznych, często 32-bitowych liczb zmiennoprzecinkowych.
+
+
+Typową rzeczą, którą należy zrobić, jest rzutowanie tensora na zmiennoprzecinkowe i normalizacja wartości pikseli. Rzutowanie na zmiennoprzecinkowe jest łatwe, ale normalizacja jest trudniejsza, ponieważ zależy od tego, jaki zakres danych wejściowych, który zdecydujesz, powinien wynosić od 0 do 1 (lub –1 do 1). Jedną z możliwości jest podzielenie wartości pikseli przez 255 (maksymalna reprezentowana liczba w 8-bitowym znaku bez znaku):
+
+
+Na tensorach można  wykonać kilka innych operacji na danych wejściowych, w tym przekształcenia geometryczne, takie jak obrót, skalowanie i kadrowanie. Operacje te mogą pomóc w szkoleniu lub mogą być wymagane, aby dowolne dane wejściowe były zgodne z wymaganiami wejściowymi sieci, takimi jak rozmiar obrazu. Natkniesz się na kilka z tych strategii. Na razie pamiętaj tylko, że masz dostępne opcje manipulacji obrazem.
+
+
+\chapter{Transfer Stylu }
+
+Neural-Style opracowany przez Leona A. Gatysa, Alexandra S. Eckera i Matthiasa Bethge. Neural-Style lub Neural-Transfer pozwala robić zdjęcia i odtwarzać je w nowym stylu artystycznym. Algorytm pobiera trzy obrazy, obraz wejściowy, obraz treści i obraz stylu, i zmienia dane wejściowe, aby przypominały treść obrazu treści i styl artystyczny obrazu stylu.
+
+ \begin{figure}[!tbh]
+\centering
+\includegraphics[width=.8\hsize]{fig/6}
+\caption{Przykład zastosowania tranferu stylu\label{RYS.6}}
+\source{Opracowanie własne}
+\end{figure}
+
+W przykładzie, w którym algorytm rozpoznawał cyfry neuronem był pojedynczy piksel ze skalą szarości (grayscale), w przypadku Style Transferu mamy dwa obrazki o pełnym  spektrum RGB (red, green, blue), także neuron będzie bardziej skomplikowany. Ostatnią warstwą jest output są pixele w tej samej ilości i układzie, ale ze zmienionymi wartościami.
+
+\chapter{Przegląd dostępnych narzędzi}
+
+\section{Blender\label{s:dsssl}}
+
+Jest to wolne i otwarte oprogramowanie do modelowania i renderowania obrazów oraz animacji trójwymiarowych.
+
+Pozwala on na pisanie w języku python skryptów, które poszerzają podstawowe funkcjonalności blendera.
+
+\section{Python\label{s:dsssl}}
+
+Język powstały w latach dziewięćdziesiątych, między innymi dzięki rewolucji uczenia maszynowego przeżywa swoją drugą młodość.
+
+Cechuje się klarownością kody źródłowego.
+Jest to język z którego w większości składa się Blender.
+
+Każda wersja blendera ma wbudowaną już własną wersję pythona. 
+
+\section{Wtyczki\label{s:dsssl}}
+
+Jedną z wielu zalet środowiska Blender jest jego otwartość. Większość kodu jest otwarta i konfigurowalna, ułatwia to tworzenie rozszerzeń (wtyczek).
+
+
+
+Wtyczki w Blenderze mogą istnieć w postaci pojedynczych skryptów 
+$.py$ lub zestawu skryptów pakowanych w .zip. Uruchamiany wtedy jest plik $init.py$
+
+Zarówno wtyczki do Blendera jak i same operacje przy użyciu PyTorch’a mogą być tworzone na dowolnym systemie operacyjnym. Te narzędzia znacznie ułatwiają pracę nad tego typu oprogramowaniem.
+
+\section{PyCharm\label{s:dsssl}}
+ Zintegrowane środowisko programistyczne (IDE) dla języka programowania Python firmy JetBrains. Zapewnia m.in.: edycję i analizę kodu źródłowego, graficzny debugger, uruchamianie testów jednostkowych, integrację z systemem kontroli wersji.
+ 
+ \section{Jupyter Notebook\label{s:dsssl}}
+ 
+ Interaktywne środowisko pozwalająca na wykonywanie kodu uczenia maszynowego po stronie serwera. Pozwala na szybkie debugowanie i testowanie kodu między innymi biblioteki PyTorch.
+
+ \section{CUDA\label{s:dsssl}}
+ 
+ (ang. Compute Unified Device Architecture) – opracowana przez firmę Nvidia uniwersalna architektura procesorów wielordzeniowych (głównie kart graficznych) umożliwiająca wykorzystanie ich mocy obliczeniowej do rozwiązywania ogólnych problemów numerycznych w sposób wydajniejszy niż w tradycyjnych, sekwencyjnych procesorach ogólnego zastosowania.
+
+
+FLOPS (od ang. floating point operations per second)  operacje zmiennoprzecinkowe na sekundę) – jednostka mocy obliczeniowej komputerów, używana szczególnie w zastosowaniach naukowych. Jest bardziej uniwersalna od wcześniej używanej jednostki MIPS, oznaczającej liczbę rozkazów procesora wykonanych na sekundę.
+
+
+\chapter{Przegląd dostępnych bibliotek}
+
+
+ \section{PIP\label{s:dsssl}}
+ Standardowy system zarządzania rozszerzeniami i bibliotekami w Pythonie.
+ 
+  \section{BPY\label{s:dsssl}}
+  
+  To biblioteka do komunikowania się z Blenderem.
+  
+    \section{PyTorch\label{s:dsssl}}
+    
+    
+PyTorch to biblioteka programów w języku Python, która ułatwia budowanie projektów głębokiego uczenia się. Podkreśla elastyczność i pozwala wyrazić modele głębokiego uczenia się w idiomatycznym języku Python. Ta przystępność i łatwość użycia znalazły wczesnych użytkowników w społeczności badawczej, a od lat od wydania biblioteki stała się jednym z najważniejszych narzędzi do głębokiego uczenia się dla szerokiego zakresu aplikacji.
+
+python.exe -m pip install torch
+
+Od czasu wydania PyTorch na początku 2017 r. Ekosystem narzędzi do głębokiego uczenia się został znacznie ujednolicony.
+Dzięki interakcjom bibliotek PyTorch ze standardową biblioteką Python i otaczającym ekosystemem, ładowanie najpopularniejszych rodzajów danych i konwertowanie ich do tensorów PyTorch jest wygodne.
+Tensory to podstawowe struktury danych w PyTorch. Tensor to tablica - to znaczy struktura danych przechowująca zbiór liczb, które są dostępne indywidualnie za pomocą indeksu i które mogą być indeksowane za pomocą wielu indeksów.
+
+􏰹Biblioteki takie jak PyTorch pozwalają efektywnie budować i trenować modele sieci neuronowych.
+
+PyTorch zapewnia podstawową strukturę danych, Tensor, wielowymiarową tablicę, która ma wiele podobieństw z tablicami NumPy. Na tej podstawie opracowano listę rzeczy do prania, aby ułatwić uruchomienie projektu lub zaprojektowanie i przeszkolenie w zakresie nowej architektury sieci neuronowej. Tensory przyspieszają operacje matematyczne (przy założeniu, że obecna jest odpowiednia kombinacja sprzętu i oprogramowania), a PyTorch ma pakiety do rozproszonego szkolenia, procesy robocze dla efektywnego ładowania danych oraz obszerną bibliotekę wspólnych funkcji głębokiego uczenia.
+
+PyTorch stanowi zarówno doskonałe wprowadzenie do głębokiego uczenia się, jak i narzędzie przydatne w profesjonalnych kontekstach do pracy na wysokim poziomie w świecie rzeczywistym.
+
+Po pierwsze, PyTorch ma Py z Pythona, ale jest w nim dużo kodu innego niż Python. 
+Ze względu na wydajność większość PyTorch jest napisana w C ++ i CUDA, języku podobnym do C ++ od NVIDIA, który można skompilować tak, aby działał z ogromną równoległością na procesorach graficznych NVIDIA. Istnieją sposoby uruchamiania PyTorch bezpośrednio z C.
+
+U podstaw PyTorch jest biblioteką, która udostępnia tablice wielowymiarowe, zwane tensorami w języku PyTorch, a moduł palnika zapewnia obszerną bibliotekę operacji na nich. Zarówno tensory, jak i powiązane operacje mogą działać na CPU lub GPU. 
+
+Uruchomienie na GPU powoduje ogromne przyspieszenie w porównaniu z procesorem (szczególnie jeśli jesteś gotów zapłacić za GPU najwyższej klasy), a dzięki PyTorch nie wymaga więcej niż dwóch dodatkowych wywołań funkcji. Druga podstawowa rzecz, którą zapewnia PyTorch, pozwala tensorom śledzić wykonywane na nich operacje i obliczać pochodne wyjścia w odniesieniu do dowolnego z jego danych wejściowych w sposób analityczny poprzez propagację wsteczną. 
+
+
+
+PyTorch może być wykorzystywany do fizyki, renderowania, optymalizacji, symulacji, modelowania i tak dalej. PyTorch jest wykorzystywany w kreatywny sposób w całym spektrum zastosowań naukowych. Modele głębokiego uczenia automatycznie uczą się kojarzyć dane wejściowe i pożądane wyniki z przykładów.
+
+Aby trenować model, potrzeba:
+źródła danych treningowych, 
+optymalizatora do dostosowania modelu do danych treningowych 
+pętli  
+sposobu uzyskania modelu i danych sprzętu, które będą wykonywać obliczenia potrzebne do wyszkolenia modelu.
+
+W najprostszym przypadku model wykona wymagane obliczenia na lokalnym procesorze lub na pojedynczym GPU, więc gdy pętla treningowa zawiera dane, obliczenia mogą rozpocząć się natychmiast. Częściej jednak trzeba korzystać ze specjalistycznego sprzętu, takiego jak wiele procesorów graficznych lub aby wiele maszyn włączyło swoje zasoby w szkolenie modelu. 
+
+$torch.cuda.is_available()$
+
+Gdy uzyskasz wyniki z uruchomienia modelu na danych treningowych, torch.optim zapewnia standardowe sposoby aktualizacji modelu, dzięki czemu dane wyjściowe zaczną bardziej przypominać odpowiedzi określone w danych treningowych.
+PyTorch domyślnie przyjmuje model natychmiastowego wykonania (tryb eager).
+ Ilekroć instrukcja dotycząca PyTorch jest wykonywana przez interpreter Pythona, odpowiednia operacja jest natychmiast wykonywana przez bazową implementację C ++ lub CUDA. Ponieważ więcej instrukcji działa na tensorach, więcej operacji jest wykonywanych przez implementację backendu. Proces ten jest tak szybki, jak zwykle może być po stronie C ++, ale wiąże się z kosztami wywołania tej implementacji za pośrednictwem Pythona. Koszt ten jest niewielki, ale sumuje się.
+Odroczone wykonanie
+Nie wykonałeś niczego, dopóki nie podałeś danych wejściowych. Odroczenie wykonania oznacza, że większość wyjątków powstaje, gdy funkcja jest wywoływana, a nie kiedy jest zdefiniowana. W przypadku normalnego Pythona (jak widać tutaj) nie ma problemu, ponieważ interpreter i debuggery mają pełny dostęp do stanu Python w momencie wystąpienia błędu.
+Sprawy stają się trudne, gdy stosuje się wyspecjalizowane klasy z dużym przeciążeniem operatora, co pozwala na odroczenie tego, co wygląda jak natychmiastowe wykonanie pod maską.  Ładowanie Tensora do GPU
+Oprócz dtype, tensor PyTorch ma pojęcie urządzenia, czyli miejsca, w którym na komputerze umieszczane są dane tensora. 
+Oto jak utworzyć tensor na GPU, podając odpowiedni konstruktor:
+
+$points_gpu = torch.tensor([[2.1, 3.7], [4.2, 0.0], [6.9, 6.9]], device='cuda')$
+
+Kopiowanie tensora utworzonego w CPU do GPU:
+$points_gpu = points.to(device='cuda')$
+
+Ten kod zwraca nowy tensor, który ma te same dane liczbowe, ale jest przechowywany w pamięci RAM GPU, a nie w zwykłej pamięci RAM systemu
+
+Tensor, którego wartości są określone w pamięci, zaczynając od skrajnego wymiaru po prawej stronie (na przykład wzdłuż rzędów dla tensora 2D) jest definiowany jako ciągły. Przyległe tensory są wygodne, ponieważ można je odwiedzać sprawnie i po kolei bez skakania po magazynie. (Poprawa lokalizacji danych poprawia wydajność ze względu na sposób dostępu do pamięci w nowoczesnych procesorach).
+
+􏰹 Te reprezentacje zmiennoprzecinkowe są przechowywane w tensorach.
+Tensory to tablice wielowymiarowe i podstawowa struktura danych w PyTorch.
+􏰹 PyTorch ma wszechstronną bibliotekę standardową do tworzenia tensorów i manipulacji
+lation i do operacji matematycznych.
+􏰹 Tensory można uszeregować na dysk i ładować z powrotem.
+􏰹 Wszystkie operacje tensora w PyTorch mogą być wykonywane zarówno na CPU, jak i na GPU
+bez zmiany kodu.
+
+Interpreter języka Python działa wolno w porównaniu ze zoptymalizowanym, skomplikowanym kodem. Wykonywanie operacji matematycznych na dużych kolekcjach danych liczbowych może być szybsze przy użyciu zoptymalizowanego kodu napisanego w skompilowanym języku niskiego poziomu, takim jak C.
+
+    \section{NumPy\label{s:dsssl}}
+    
+    NumPy jest zdecydowanie najpopularniejszą biblioteką wielowymiarową. PyTorch oferuje płynną interoperacyjność z NumPy, co zapewnia pierwszorzędną integrację z resztą bibliotek naukowych w języku Python, takie jak SciPy, Scikit-learn i Pandas.
+
+W porównaniu z macierzami NumPy, tensory PyTorch mają kilka supermocarstw, takich jak zdolność do wykonywania szybkich operacji na graficznych jednostkach przetwarzających (GPU), do dystrybucji operacji na wielu urządzeniach lub maszynach oraz do śledzenia wykresu utworzonych obliczeń im. Wszystkie te funkcje są ważne przy wdrażaniu nowoczesnej biblioteki do głębokiego uczenia się.
+
+
+Tensory PyTorch można konwertować na tablice NumPy i odwrotnie. W ten sposób można wykorzystać ogromną liczbę funkcji w szerszym ekosystemie Pythona, który zbudował się wokół typu tablicy NumPy. Ta zerowa kopia współdziałania z tablicami NumPy wynika z systemu pamięci, który współpracuje z protokołem buforującym Pythona. 
+Ze względu na jego wszechobecność w ekosystemie nauki danych w Pythonie łatwa zamiana tensora na tablicę NumPy, aby użyć charakterystycznych dla NumPy metod bywa przydatne.
+
+    \section{Torchvision\label{s:dsssl}}
+    
+    Torchvision składa się z popularnych zestawów danych, architektur modeli i typowych transformacji obrazu. Torchvision udostępnie wiele wytrenowanych zawczasu modeli, które są gotowe do użycia. Skupmy się na jednym, mianowicie VGG19 (ang. Visual Geometry Group) to wytrenowana na Uniwersytecie Oxfordzkim  konwolucyjna sieć neuronowa.
+
+models.vgg19(pretrained=True).features
+
+    \section{Pillow\label{s:dsssl}}
+    
+    (ang. Python Image Library PIL) dodaje obsługę grafiki np. otwieranie, modyfikowanie, zapisywanie plików graficznych.
+    
+        \section{OS\label{s:dsssl}}
+        
+        Biblioteka impermentujące  interfejsy systemu operacyjnego. W przypadku tej pracy pozwala wykonać instalację paczek w tle poprzez wykonanie procesu terminalowego w tle. 
+
+os.popen(cmd)
+
+\chapter{Źródła}
 
 \begin{itemize}
-\item dokładnie jeden element \texttt{fo:layout-master-set} zawierający
-  szablony określające wygląd poszczególnych stron oraz sekwencji
-  stron (te ostatnie są opcjonalne, ale typowo są definiowane);
-\item zero lub więcej elementów \texttt{fo:declarations};
-\item jeden lub więcej elementów \texttt{fo:page-sequance}
- zawierających treść formatowanego dokumentu wraz z~opisem
- jego sformatowania i~podziału na strony.
+\item Vishnu Subramanian Deep Learning with PyTorch 
+\item Grokking Deep Learning, by Andrew W. Trask
+\item Deep Learning with PyTorch by Eli Stevens and Luca Antiga
+\item Czysty kod. Podręcznik dobrego programisty Robert C. Martin
+\item $https://pytorch.org/tutorials/advanced/neural_style_tutorial.html$
+\item$ https://github.com/rrmina/neural-style-pytorch$
+\item $https://polycount.com/discussion/205872/creating-images-with-python-in-blender$
+\item $https://cloud.blender.org/p/scripting-for-artists/5993ed908119170ebb57164b$
+\item $https://www.3blue1brown.com$
+\item $https://www.manning.com/books/grokking-deep-learning$
+\item $https://www.deeplearningbook.org$
+\item $Deep Learning, by Ian Goodfellow, Yoshua Bengio, and Aaron Courville.$
+
+
 \end{itemize}
+
+
+
 
 % zakończenie
 \summary
-Możliwości, jakie stoją przed archiwum prac magisterskich opartych na
-XML-u, są ograniczone jedynie czasem, jaki należy poświęcić na pełną
-implementację systemu. Nie ma przeszkód technologicznych do stworzenia
-co najmniej równie doskonałego repozytorium, jak ma to miejsce w
-przypadku ETD. Jeżeli chcemy w pełni uczestniczyć w rozwoju nowej ery
-informacji, musimy szczególną uwagę przykładać do odpowiedniej
-klasyfikacji i archiwizacji danych. Sądzę, że język XML znacznie to
-upraszcza.
+Możliwości jaki stoją przed obrazami generowanymi maszynowo są nieograniczone zarówno do prototypowania i tworzenia "bazy" pomysłów, jak również do odciążania człowieka z zadań które jeszcze kilka lat temu były wykonalne tylko dla najlepszych specjalistów w branży.
 
 % załączniki (opcjonalnie):
 \appendix
@@ -442,11 +393,6 @@ Treść załącznika dwa.
 \bibliographystyle{unsrt}
 \bibliography{xml}
 
-% spis tabel (jeżeli jest potrzebny):
-\listoftables
-
-% spis rysunków (jeżeli jest potrzebny):
-\listoffigures
 
 \oswiadczenie
 
