@@ -59,9 +59,11 @@ Machine Learning}
 Zadania, które jeszcze kilka lat temu wymagały wyższego poznania, są rozwiązywane przez maszyny o niemal nadludzkim poziomie wydajności. Zawody, bez których ludzkość dziesięciolecia temu nie mogła się obejść nie istnieją. Do zadań takich jak wykrywanie znaków drogowych i pieszych przez autonomiczne samochody czy diagnozowanie guza na podstawie obrazu radiologicznego można teraz podejść komputerowo. Analiza obrazu czy obróbka dźwięku może odciążyć człowieka w prostych powtarzalnych czynnościach.
 
 
-\chapter{Wprowadzenie do sztucznej inteligencji\label{s:dtd}}
+\chapter{Podstawy\label{s:dtd}}
 
-Sztuczna inteligencja to najbardziej ogólne pojęcie związane związane z komputerami. Prostą sztuczną inteligencję reprezentuje nawet kalkulator. Przyjęto też, iż wyznacznikiem jakości sztucznej inteligencji jest umiejętność „udawania” ludzkiego mózgu. Już w roku 1950 Alan Turing opracował test, test określający w jakim stopniu maszyna jest w stanie myśleć jak człowiek.
+\section{Sztuczna inteligencja}
+
+To najbardziej ogólne pojęcie związane związane z komputerami. Prostą sztuczną inteligencję reprezentuje nawet kalkulator. Przyjęto też, iż wyznacznikiem jakości sztucznej inteligencji jest umiejętność „udawania” ludzkiego mózgu. Już w roku 1950 Alan Turing opracował test, test określający w jakim stopniu maszyna jest w stanie myśleć jak człowiek.
 
 \section{Uczenie maszynowe}
 
@@ -84,10 +86,12 @@ Głębokie uczenie to transformacje danych wejściowych, których wynikiem są f
 \end{figure}
 
 
-\chapter{Konwolucyjne Sieci Neuronowe  }
+\chapter{Sieci Neuronowe  }
 
+\section{Definicja\label{s:dsssl}}
 Sieci neuronowe to ogólna nazwa struktur matematycznych wzorowane są na neuronach w mózgu. Sieci neuronowe mogą być automatycznie dostosowywane, aby specjalizować się w danym problemie.
 
+\section{Konwolucyjne Sieci Neuronowe  \label{s:dsssl}}
 W tej pracy uwaga poświęcona będzie tylko Konwolucyjcym sieciom neuronowym (ang. Convolutional Neural Network), które sprawdzają się przy analizie obrazów.  Warto jednak wspomnieć o innych np. Long short-term memory network, które swoje zastosowanie ma w analizie dźwięku.Konwolucyjna sieć neuronowa składa się jednej lub wielu warstw klastrów połączeń.
 
 
@@ -98,9 +102,12 @@ W tej pracy uwaga poświęcona będzie tylko Konwolucyjcym sieciom neuronowym (a
 \source{Opracowanie własne}
 \end{figure}
 
+
+\section{Przykład  \label{s:dsssl}}
 Posłużmy się przykładem prostej sieci neuronowej, która ma za zadanie rozpoznać pisane cyfry. Jest to swego rodzaju “Hello, World! ” w dziedzinie uczenia maszynowego.
 W przypadku analizy obrazka 64x64 piksele jedna warstwa sieci neuronowej sieć neuronowa składać będzie się z 4096 neuronów.
 
+\section{Neuron  \label{s:dsssl}}
 Neuronem określamy najbardziej elementarną cząstkę modelu uczenia maszynowego, często jest to pojedyncza liczba np odcień szarości (ang. Grayscale Value) dla pojedynczego piksela w przypadku czarno-białego obrazka. Neuron jest podstawowym budulcem sieci neuronowej. Neurony są ze sobą połączone w dużej liczbie, tworząc sieć. 
 
 Ostatnią warstwą jest output cyfr 0 - 10 i ta z największą wartością aktywacji zostaje wybrana. 
@@ -159,12 +166,12 @@ Podsumowując można uważać za  poprawne stwierdzenie, iż uczenie się sieci 
 
 \chapter{Widzenie komputerowe  }
 
-
+\section{Wstęp\label{s:dsssl}}
 Wprowadzenie konwolucyjnych sieci neuronowych zrewolucjonizowało wizję komputerową, a systemy oparte na obrazach zyskały nowy zestaw możliwości. Model teoretyczny musiał spotkać się z implementacją, która skorzysta z dobrodziejstw uczenia maszynowego.
 
 Po załadowaniu jednego  z popularnych formatów obrazów, a należy przekształcić dane w reprezentację tensora, która ma różne części obrazu ułożone w sposób zgodny z oczekiwaniami danego API uczenia maszynowego.
 
-
+\section{Tensor\label{s:dsssl}}
 Tensor, jest to wielowymiarowa tablica, są elementami składowymi danych w PyTorch. Sieci neuronowe pobierają tensory na wejściu i wytwarzają tensory jako wyjścia. W rzeczywistości wszystkie operacje w sieci neuronowej i podczas optymalizacji są operacjami między tensorami, a wszystkie parametry (takie jak wagi i odchylenia) w sieci neuronowej są tensorami.
 
 Termin tensor jest dołączony do pojęcia przestrzeni, układów odniesienia i transformacji między nimi. Dla wszystkich innych tensor odnosi się do uogólnienia wektorów i macierzy do dowolnej liczby wymiarów, jak pokazano na rysunku.
@@ -179,6 +186,7 @@ Tensor reprezentujące wartości w poszczególnych pikselach są często kodowan
 \source{Opracowanie własne}
 \end{figure}
  
+ \section{RGB\label{s:dsssl}}
  Istnieje kilka sposobów kodowania liczb na kolory. Najczęstszym jest
 RGB, która określa kolor za pomocą trzech liczb reprezentujących intensywność czerwieni, zieleni i niebieskiego. 
 
@@ -191,22 +199,135 @@ Sieci neuronowe zwykle działają z wejściowymi tensorami zmiennoprzecinkowymi.
 
 Typową rzeczą, którą należy zrobić, jest rzutowanie tensora na zmiennoprzecinkowe i normalizacja wartości pikseli. Rzutowanie na zmiennoprzecinkowe jest łatwe, ale normalizacja jest trudniejsza, ponieważ zależy od tego, jaki zakres danych wejściowych, który zdecydujesz, powinien wynosić od 0 do 1 (lub –1 do 1). Jedną z możliwości jest podzielenie wartości pikseli przez 255 (maksymalna reprezentowana liczba w 8-bitowym znaku bez znaku):
 
-
+ \section{Operacje na tensorach\label{s:dsssl}}
 Na tensorach można  wykonać kilka innych operacji na danych wejściowych, w tym przekształcenia geometryczne, takie jak obrót, skalowanie i kadrowanie. Operacje te mogą pomóc w szkoleniu lub mogą być wymagane, aby dowolne dane wejściowe były zgodne z wymaganiami wejściowymi sieci, takimi jak rozmiar obrazu. Natkniesz się na kilka z tych strategii. Na razie pamiętaj tylko, że masz dostępne opcje manipulacji obrazem.
 
 
 \chapter{Transfer Stylu }
 
+\section{Ogólne założenia\label{s:dsssl}}
+
 Neural-Style opracowany przez Leona A. Gatysa, Alexandra S. Eckera i Matthiasa Bethge. Neural-Style lub Neural-Transfer pozwala robić zdjęcia i odtwarzać je w nowym stylu artystycznym. Algorytm pobiera trzy obrazy, obraz wejściowy, obraz treści i obraz stylu, i zmienia dane wejściowe, aby przypominały treść obrazu treści i styl artystyczny obrazu stylu.
+
+Na podstawowym poziomie może odnosić się wyłącznie do kolorystyki (np. dominanata czerwonego)oraz tekstury (fale na całości obrazu)
+
+
+Może też odnosić się do bardziej specyficznych właściwosći no stylu ruchu pędzla lub techniki malowania .
+
+
+Oczywiście treści i stylu obrazu nie można całkowicie rozdzielić. Podczas syntezy obrazu, który łączy zawartość jednego obrazu ze stylem drugiego, zwykle nie istnieje obraz, który idealnie pasuje do obu ograniczeń jednocześnie. Ponieważ jednak funkcja utraty, którą minimalizujemy podczas syntezy obrazu, jest liniową kombinacją funkcji utraty odpowiednio dla treści i stylu, możemy płynnie regulować nacisk na każdą rekonstrukcję treści lub stylu
 
  \begin{figure}[!tbh]
 \centering
 \includegraphics[width=.8\hsize]{fig/6}
-\caption{Przykład zastosowania tranferu stylu\label{RYS.6}}
+\caption{Przykład zastosowania tranferu stylu
+Obrazy łączące treść zdjęcia ze stylem kilku znanych dzieł sztuki. Obrazy zostały utworzone przez znalezienie obrazu, który jednocześnie pasuje do reprezentacji treści fotografii i stylu kompozycji. Oryginalne zdjęcie przedstawiające Neckarfront w Tu ̈bingen w Niemczech pokazano w A (zdjęcie: Andreas Praefcke). Obraz, który zapewnił styl dla odpowiedniego wygenerowanego obrazu, jest pokazany w lewym dolnym rogu każdego panelu. B Wrak statku Minotaur autorstwa J.M.W. Turner, 1805. C Gwiaździsta noc Vincenta van Gogha, 1889. D Der Schrei Edvarda Muncha, 1893. E Femme nue assise Pabla Picassa, 1910. F Kompozycja VII Wassily Kandinsky, 1913.
+\label{RYS.6}}
 \source{Opracowanie własne}
 \end{figure}
 
 W przykładzie, w którym algorytm rozpoznawał cyfry neuronem był pojedynczy piksel ze skalą szarości (grayscale), w przypadku Style Transferu mamy dwa obrazki o pełnym  spektrum RGB (red, green, blue), także neuron będzie bardziej skomplikowany. Ostatnią warstwą jest output są pixele w tej samej ilości i układzie, ale ze zmienionymi wartościami.
+
+Chociaż te algorytmy osiągają niezwykłe wyniki, wszystkie one cierpią z powodu tego samego podstawowego ograniczenia: wykorzystują jedynie cechy obrazu niskiego poziomu obrazu docelowego, aby uzyskać informacje na temat transferu tekstury. Idealnie jednak algorytm transferu stylu powinien być w stanie wyodrębnić zawartość obrazu semantycznego z obrazu docelowego (np. Obiektów i ogólnej scenerii), a następnie poinformować o procedurze transferu tekstury w celu odnowienia zawartości semantycznej obrazu docelowego w stylu obrazu źródłowego.
+
+Generalnie oddzielenie treści od stylu w naturalnych obrazach jest nadal niezwykle trudnym problemem. Jednak ostatni postęp w Deep Convolutional Neural Networks  stworzył potężne komputerowe systemy wizyjne, które uczą się wyodrębniać informacje semantyczne na wysokim poziomie z obrazów naturalnych.
+
+Koncepcyjnie jest to algorytm przesyłania tekstur, który ogranicza metodę syntezy tekstur poprzez reprezentacje cech z supernowoczesnych sieci neuronowych konwergentnych. Ponieważ model tekstury opiera się również na głębokich reprezentacjach obrazu, metoda transferu stylu elegancko ogranicza się do problemu optymalizacji w ramach jednej sieci neuronowej. Nowe obrazy są generowane przez wykonanie wyszukiwania przed obrazem w celu dopasowania reprezentacji cech przykładowych obrazów.
+
+Kiedy Konwolucyjne sieci neuronowe są szkolone w zakresie rozpoznawania obiektów, rozwijają reprezentację obrazu, która sprawia, że informacje o obiektach stają się coraz bardziej wyraźne wzdłuż hierarchii przetwarzania [10]. Dlatego wzdłuż hierarchii przetwarzania sieci obraz wejściowy przekształca się w reprezentacje, które są coraz bardziej wrażliwe na rzeczywistą treść obrazu, ale stają się względnie niezmienne dla jego dokładnego wyglądu. Zatem wyższe warstwy w sieci wychwytują zawartość wysokiego poziomu w kategoriach obiektów i ich rozmieszczenia w obrazie wejściowym, ale nie ograniczają bardzo dokładnie wartości pikseli w rekonstrukcji (ryc. 1, zawartości rekonstrukcji d, e ). Natomiast rekonstrukcje z niższych warstw po prostu odtwarzają dokładne wartości pikseli oryginalnego obrazu (ryc. 1, rekonstrukcje zawartości a – c). Dlatego też opis funkcji w wyższych warstwach sieci nazywamy reprezentacją treści.
+
+\section{VGG19\label{s:dsssl}}
+
+Pretrenowany model 
+
+
+Czo to jest model? 
+
+Style transfer to bardzo złożona technika wymagająca bardzo złożonego wytrenowanego modelu.
+
+Własnoręcznie wytrenowanie takiego modelu jest wykonalne przez każdego użytkownika wymaga ono : 
+
+// opis trenowania np w wykrywaniu znaków drogowych 
+
+Tutaj przydatne okazują się wytrenowane już modele. 
+VGG19 jest bardzo efektywny przy ekstrakcji cech.
+
+Feature Extraction an Classification.
+
+model.vgg19(pretrained=True) to do sekcji implementacja 
+
+aby zachować stałe ustawienia parametrów i nie zmieniać ich przez wteczną propagację, co mogłoby popsuć model (overfitting)
+
+$for param in vgg.parameters():
+	param.requires_grad_(False)$
+	
+
+
+\begin{figure}[!tbh]
+\centering
+\includegraphics[width=.8\hsize]{fig/7}
+\caption{Struktura VGG19\label{RYS.4}}
+\source{Opracowanie własne}
+\end{figure}
+
+Przedstawione poniżej wyniki zostały wygenerowane na podstawie sieci VGG [28], która została przeszkolona w zakresie rozpoznawania i lokalizacji obiektów [26] i jest szczegółowo opisana w oryginalnej pracy [28]. Wykorzystaliśmy przestrzeń cech, jaką zapewnia znormalizowana wersja 16 konwojacyjnych i 5 warstw pulujących 19-warstwowej sieci VGG. Znormalizowaliśmy sieć, skalując wagi tak, aby średnia aktywacja każdego filtra splotowego względem obrazów i pozycji była równa jeden. Takie ponowne skalowanie można wykonać dla sieci VGG bez zmiany jej mocy wyjściowej, ponieważ zawiera ona jedynie prostujące liniowe funkcje aktywacyjne i nie ma normalizacji ani łączenia nad mapami cech. Nie używamy żadnej z w pełni połączonych warstw. Model jest publicznie dostępny i można go zbadać w ramach caffe [14]. W przypadku syntezy obrazu stwierdziliśmy, że zastąpienie maksymalnej operacji łączenia przez średnie łączenie w pulę daje nieco bardziej atrakcyjne wyniki, dlatego pokazane obrazy zostały wygenerowane ze średnim zestawieniem w puli.
+
+\section{Matryca Gram\label{s:dsssl}}
+
+Jest to krok niezbędny aby osięgnąć efektywną jak i efektowną ekstrakcję stylu.
+
+Wyciągnięty styl wciąż przecowuje informację niepotrzebne, takie jak pozycje elementów czy ich strukturę na obrazie trzeba to wyczyścić .
+Treba wykonać preprocesing na macierzy cech,która została wyciągnięta .
+
+
+$Gram = V^TV$
+
+// to implementation 
+$def gram_matrix $
+$gram = torch.mm (tensor, tensor.t)$
+
+
+\section{Szkolenie\label{s:dsssl}}
+
+Na początki możliwe musi być analiza obrazu "stylu" i odzielenie stylu obrazka od jego zawartości. 
+
+Następnym krokiem jest tranfer tego stylu z jednego obrazka do drugiego.
+
+
+
+
+Pierwsze treści i funkcje stylu zostaną wyodrębnione i zapisane. Obraz stylu ⃗a jest przepuszczany przez sieć, a jego reprezentacja stylu Al na wszystkich zawartych warstwach jest obliczana i przechowywana (po lewej). Obraz zawartości p⃗ jest przepuszczany przez sieć, a reprezentacja treści Pl w jednej warstwie jest przechowywana (po prawej). Następnie przez sieć przepuszczany jest losowy biały szum ⃗x i obliczane są jego cechy stylu Gl i cechy zawartości Fl. Na każdej warstwie zawartej w reprezentacji stylu obliczana jest elementarna średnia kwadratowa różnica między Gl i Al, aby dać stratę stylu Lstyle (po lewej). Obliczana jest również średnia kwadratowa różnica między Fl a Pl, aby dać utratę zawartości Lcontent (po prawej). Całkowita strata Ltotal jest wówczas liniową kombinacją między utratą zawartości a stylem. Jego pochodną w odniesieniu do wartości pikseli można obliczyć za pomocą propagacji błędu błędu (środek). Ten gradient służy do iteracyjnej aktualizacji obrazu ⃗x, aż jednocześnie będzie pasował do cech stylu obrazu stylu ⃗a i cech zawartości obrazu treści p (środek, dół).
+
+
+Aby przenieść styl kompozycji ⃗a na fotografię p⃗, syntezujemy nowy obraz, który jednocześnie pasuje do reprezentacji treści p⃗ i reprezentacji stylu ⃗a (ryc. 2). W ten sposób wspólnie minimalizujemy odległość reprezentacji cechy białego szumu od reprezentacji treści zdjęcia w jednej warstwie oraz stylowej reprezentacji obrazu zdefiniowanej na kilku warstwach sieci neuronowej splotowej.
+
+reprezentacje treści i stylu w sieci neuronowej splotowej są dobrze rozdzielne. Oznacza to, że możemy niezależnie manipulować obiema reprezentacjami, aby wytwarzać nowe, sensownie postrzegalne obrazy. Aby zademonstrować to odkrycie, generujemy obrazy, które mieszają reprezentację treści i stylu z dwóch różnych obrazów źródłowych.
+
+
+Innym ważnym czynnikiem w procesie syntezy obrazu jest wybór warstw pasujących do treści i reprezentacji stylu. Jak opisano powyżej, reprezentacja stylu jest reprezentacją wieloskalową, która obejmuje wiele warstw sieci neuronowej. Liczba i położenie tych warstw determinuje lokalną skalę, w której dopasowany jest styl, co prowadzi do różnych wrażeń wizualnych (ryc. 1, rekonstrukcje stylu). Zauważyliśmy, że dopasowanie reprezentacji stylu do wyższych warstw w sieci zachowuje struktury obrazów lokalnych na coraz większą skalę, co zapewnia płynniejsze i bardziej ciągłe wrażenia wizualne. Dlatego najbardziej atrakcyjne wizualnie obrazy są zwykle tworzone przez dopasowanie reprezentacji stylu do wysokich warstw w sieci, dlatego dla wszystkich wyświetlanych obrazów dopasowujemy cechy stylu na warstwach „conv1 1”, „conv2 1”, „conv3 1 ”,„ conv4 1 ”i„ conv5 1 ”sieci.
+
+\section{Ograniczenia\label{s:dsssl}}
+
+Prawdopodobnie najbardziej ograniczającym czynnikiem jest rozdzielczość zsyntetyzowanych obrazów. Zarówno wymiar problemu optymalizacji, jak i liczba jednostek w sieci neuronowej splotowej rosną liniowo wraz z liczbą pikseli. Dlatego szybkość procedury syntezy zależy w dużej mierze od rozdzielczości obrazu. Obrazy przedstawione w tym artykule zostały zsyntetyzowane w rozdzielczości około 512 × 512 pikseli, a procedura syntezy może zająć nawet godzinę na GPU Nvidia K40 (w zależności od dokładnego rozmiaru obrazu i kryteriów zatrzymania spadku gradientu). Podczas gdy ta wydajność obecnie zabrania stosowania online i interaktywnych aplikacji naszego algorytmu transferu stylu, prawdopodobne jest, że przyszłe ulepszenia w głębokim uczeniu również zwiększą wydajność tej metody.
+
+Inną kwestią jest to, że zsyntetyzowane obrazy są czasami poddawane szumom o niskim poziomie. Chociaż jest to mniej problem w przypadku transferu stylu artystycznego, problem staje się bardziej widoczny, gdy zarówno treść, jak i obrazy w stylu są fotografiami i wpływa na fotorealizm zsyntetyzowanego obrazu. Jednak hałas jest bardzo charakterystyczny i wydaje się przypominać filtry jednostek w sieci. Zatem możliwe byłoby skonstruowanie skutecznych technik usuwania szumów w celu późniejszego przetwarzania obrazów po procedurze optymalizacji.
+Artystyczna stylizacja obrazów jest tradycyjnie badana w grafice komputerowej pod marką niefotorealistycznego wyrzeczenia. Oprócz pracy nad transferem tekstur, powszechnie stosowane podejścia różnią się koncepcyjnie od naszej pracy, ponieważ zapewniają wyspecjalizowane algorytmy do renderowania obrazu źródłowego w jednym określonym stylu. Aby zapoznać się z ostatnim przeglądem dziedziny, odsyłamy czytelnika do [21].
+
+Oddzielenie treści obrazu od stylu nie jest koniecznie dobrze zdefiniowanym problemem. Wynika to głównie z tego, że nie jest jasne, co dokładnie określa styl obrazu. Mogą to być pociągnięcia pędzlem na obrazie, mapa kolorów, niektóre dominujące formy i kształty, ale także kompozycja sceny i wybór podmiotu obrazu - i prawdopodobnie jest to połączenie ich wszystkich i wiele więcej. Dlatego ogólnie nie jest jasne, czy treść obrazu i styl można w ogóle całkowicie oddzielić - a jeśli tak, to w jaki sposób. Na przykład nie jest możliwe renderowanie obrazu w stylu „Gwiaździstej nocy” van Gogha bez struktur obrazowych przypominających gwiazdy. W naszej pracy uważamy przeniesienie stylu za udane, jeśli wygenerowany obraz „wygląda” na styl, ale pokazuje obiekty i scenerię obrazu zawartości. Jesteśmy jednak w pełni świadomi, że to kryterium oceny nie jest ani matematycznie dokładne, ani uniwersalne.
+
+\section{Optymalizator Adam\label{s:dsssl}}
+
+$optimizer = optim.Adam()$
+$torch.optim()$
+
+Im więcej kroków optymalizacji tym bardziej efektowny będzie transfer stylu.
+
+
+$a$
+
+\section{Podsumowanie\label{s:dsssl}}
+Niemniej jednak uważamy, że to naprawdę fascynujące, że neuronowe
+system, który jest przeszkolony do wykonywania jednego z podstawowych zadań wizji biologicznej, automatycznie uczy się reprezentacji obrazów, które pozwalają - przynajmniej w pewnym stopniu - na oddzielenie treści obrazu od stylu. Jednym z wyjaśnień może być to, że podczas uczenia się rozpoznawania obiektów sieć musi stać się niezmienna dla wszystkich odmian obrazu, które zachowują tożsamość obiektu. Reprezentacje, które uwzględniają zmienność treści obrazu i zmienność jego wyglądu, byłyby niezwykle praktyczne dla tego zadania. W świetle uderzających podobieństw między zoptymalizowanymi pod kątem wydajności sztucznymi sieciami neuronowymi a wizją biologiczną [11, 31, 3, 19, 16], kuszące jest spekulowanie, że ludzka zdolność do wyodrębniania treści ze stylu - a zatem nasza zdolność do tworzenia i ciesz się sztuką - może być również przede wszystkim znakiem rozpoznawczym potężnych możliwości wnioskowania naszego systemu wizualnego.
 
 \chapter{Przegląd dostępnych narzędzi}
 
@@ -351,11 +472,23 @@ models.vgg19(pretrained=True).features
         
         Biblioteka impermentujące  interfejsy systemu operacyjnego. W przypadku tej pracy pozwala wykonać instalację paczek w tle poprzez wykonanie procesu terminalowego w tle. 
 
-os.popen(cmd)
+$os.popen(cmd)$
 
+\chapter{Implementacja}
+
+Wybieramy ktore warstwy w VGG19 używamy do znajdywania cech 
+$def_features$
+
+wszystkie warstwy wyciągają styl a tylko 21 wyciąga kontent
+
+ \section{Wstęp\label{s:dsssl}}
+        
+Rozdział ten pokazuje cały proces implementacji wtyczki do blendera o tak wysokim poziomie skomplikowania. 
 \chapter{Źródła}
 
 \begin{itemize}
+\item $https://papers.nips.cc/paper/5633-texture-synthesis-using-convolutional-neural-networks.pdf$
+\item $https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Gatys_Image_Style_Transfer_CVPR_2016_paper.pdf$
 \item Vishnu Subramanian Deep Learning with PyTorch 
 \item Grokking Deep Learning, by Andrew W. Trask
 \item Deep Learning with PyTorch by Eli Stevens and Luca Antiga
