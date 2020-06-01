@@ -3,7 +3,13 @@
 \usepackage{xcolor}
 \usepackage{listings}
 
-
+\usepackage{listings}
+ 
+\lstset{language=Python}
+\lstset{frame=lines}
+\lstset{caption={Insert code directly in your document}}
+\lstset{label={lst:code_direct}}
+\lstset{basicstyle=\footnotesize}
 % Jeśli nowe rozdziały mają się zaczynać na stronach nieparzystych:
 %\documentclass[openright]{xmgr}
 
@@ -42,20 +48,18 @@
 
 % streszczenie
 \begin{abstract}
+
 W niniejszej pracy przedstawiony zostanie proces implementacji tzw. Transferu Stylu (ang. Style Transfer) w programie do grafiki 2D/3D Blender.
 
-Algorytmu Neural-Style opracowany przez Leona A. Gatysa, Alexandra S. Eckera i Matthiasa Bethge w środowisku Blender.
+Pierwszy rozdział poświęcony jest omówieniu podstawowych pojęć związanych z sztuczną inteligencją. Następnie omówione zostały sieci neuronowe i widzenie komputerowe jako procesy służące do interpretacji = oraz przetwarzania obrazów 2D. Aktualnie dostępnych jest szereg narzędzi umożliwiających analizę obrazu, omówione one zostały w rozdziale 4. Dla wcześniej omówionych narzędzi istnieją biblioteki, które pozwalają na wykorzystanie pełnego potencjału uczenia maszynowego i zostały one omówione w rozdziale 5.
 
-Neural-Style lub Neural-Transfer pozwala robić zdjęcia i odtwarzać je w nowym stylu artystycznym. 
+Implementacja transferu stylu została szczegółowo omówiona w rozdziale 6. Algorytmu Neural-Style opracowany przez Leona A. Gatysa, Alexandra S. Eckera i Matthiasa Bethge w środowisku Blender. W tym rozdziale został pokazany cały proces od założeń, przez stworzenie modelu, poprzez szkolenie. Pokazano, że transfer stylu pozwala na analizować zdjęcia i odtwarzać je w nowym stylu artystycznym, ale również ma pewne ograniczenia. 
 
-Pierwszy rozdział poświęcony jest omówieniu podstawowych pojęć związanych z sztuczną inteligencją. Następnie omówione zostały sieci neuronowe i widzenie komputerowe jako procesy służące. Aktualnie dostępnych jest szereg narzędzi umożliwiających ...., omówione one zostały w rozdziale 'y'. Dla wcześniej omówionych narzędzi istnieją biblioteki, które pozwalają na ..... i zostały one omówione w rozdziale 'z'.
-
- Implementacja transferu stylu została szczegółowo omówiona w rozdziale 6. Został pokazany cały proces od założeń, przez stworzenie modelu, poprzez szkolenie. Pokazano, że transfer stylu pozwala na ....., ale również ma pewne ograniczenia. --- i na tym bym skończył streszczenie. Jeśli chcesz zostawić to o algorytmie neural-style to bym wspomniał o nim, jak opisujesz rozdział, gdzie z niego korzystasz. (W rozdziale 'x' zostało przedstawiony transfer stylu z wykorzystaniem algorytmu Neural-style opracowanego przez.....  itd).
 
 \end{abstract}
 
 % słowa kluczowe
-\keywords{Blender, Transfer Stylu, Python, PyTorch, Uczenie Maszynowe, Głębokie Uczenie }
+\keywords{Blender, Transfer Stylu, Python, PyTorch, Uczenie Maszynowe, Głębokie Uczenie, Sztuczna Inteligencja, Neuron, Konwolucyjne sieci Neuronowe, Metoda Gradientu Prostego, Wsteczna Propagacja,  RGB, Tensor, PyCharm, Jupyter Notebook, CUDA, PIP, BPY, Torchvision, Pillow, OS, Matruca Gram, VGG19}
 
 % tytuł i spis treści
 \maketitle
@@ -67,39 +71,30 @@ Pierwszy rozdział poświęcony jest omówieniu podstawowych pojęć związanych
 
 Zadania, które jeszcze kilka lat temu wymagały wyższego poznania, są rozwiązywane przez maszyny o niemal nadludzkim poziomie wydajności. Zawody, bez których ludzkość dziesięciolecia temu nie mogła się obejść nie istnieją. Do zadań takich jak wykrywanie znaków drogowych i pieszych przez autonomiczne samochody. Analiza obrazu czy obróbka dźwięku może odciążyć człowieka w prostych powtarzalnych czynnościach.
 
-Dodałbym kolejny akapit -> dlaczego w ogóle podjąłeś ten temat - tzn., że np poczatkujący graficy zmagają się z problemami takimi i takimi, a mogliby to łatwiej zrobić przez transfer stylu. Że jest on taki i taki, lecz jest niewykorzystywany - wszystkie powody, dla których ta praca jest wartościowa i będzie mieć wkład w tematykę. Możesz użyć tzw. message-box, wyślę Ci na messengerze o co mi chodzi.
+ Uczone maszynowo generatory obrazu, takie jak style transfer mogą tworzyć nieograniczone bazy inspiracji dla designerów czy grafików. Są one trudne w implementacji ale banalne w użyciu, dlatego poczatkujący graficy mogą osiągnąć ciekawe efekty wizualne bez szczegółowej wiedzy. Na chwilę pisania tej pracy takie narzędzia nie są popularnymi narzędziami dla grafików, gdyż wymagają dużej wiedzy teoretycznej do własnej implementacji. Dużym wkładem w popularyzację programów oraz rozszerzeń bazujących na uczeniu maszunowym. Możliwości jaki stoją przed obrazami generowanymi maszynowo są nieograniczone zarówno do prototypowania i tworzenia "bazy" pomysłów, jak również do odciążania człowieka z zadań które jeszcze kilka lat temu były wykonalne tylko dla najlepszych specjalistów w branży.
 
 
 \chapter{Podstawy\label{s:dtd}}
 
-Sztuczna inteligencja i uczenie maszynowe mają coraz większy udział w naszej codzienności (albo znajdują zastosowanie w coraz większej ilości aplikacji). Tak jakbyś tłumaczył komuś, kto nie ma w ogóle związku z IT. I dalej: W tym rozdziale zostaną omówione podstawowe pojęcia związane ze sztuczną inteligencją. Na schemacie 1.1 zostały przedstawione relacje, które zachodzą pomiędzy przedstawionymi pojęciami.
+Sztuczna inteligencja, uczenie maszynowe oraz głębokie uczenie znajdują zastosowanie w coraz większej ilości aplikacji. W tym rozdziale zostaną omówione podstawowe pojęcia związane ze sztuczną inteligencją. Na schemacie 1.1 zostały przedstawione relacje, które zachodzą pomiędzy przedstawionymi pojęciami.
 
 \section{Sztuczna inteligencja}
 
-To bardzo ogólne pojęcie związane związane z komputerami. Prostą sztuczną inteligencję reprezentuje nawet kalkulator. Przyjęto też, iż wyznacznikiem jakości sztucznej inteligencji jest umiejętność „udawania” ludzkiego mózgu. Już w roku 1950 Alan Turing opracował test [1], określający w jakim stopniu maszyna jest w stanie myśleć jak człowiek.
+Sztuczna inteligencja (ang. Artificial Intelligence) to dziedzina nauki[20], zajmująca się tworzeniem modeli zachowań inteligentnych oraz programów i systemów symulujących te zachowania, zarówno w dziedzinie oprogramowania jak i sprzętu. Prostą sztuczną inteligencję reprezentuje nawet kalkulator. Przyjęto też, iż wyznacznikiem jakości sztucznej inteligencji jest umiejętność „udawania” ludzkiego mózgu. Już w roku 1950 Alan Turing opracował test [1], określający w jakim stopniu maszyna jest w stanie myśleć jak człowiek.
 
-"pojęcie związane z komputerami" nie brzmi formalnie. Nie wyjaśniasz w tym miejscu pojęcia, tylko piszesz, że to pojęcie, ale go nie wyjaśniasz. Zastąpiłbym też wyrażenie, że prostą sztuczną inteligencję reprezentuje też kalkulator, na rzecz jakiegoś przykładu.
+
 
 \section{Uczenie maszynowe}
 
-To dziedzina nauki łącząca ze sobą informatykę, matematykę oraz statystykę. Kładzie ona szczególny nacisk na analizę danych i dostosowywanie logiki programu w zależności od otrzymanych informacji. Głównym celem jest praktyczne zastosowanie osiągnięć w dziedzinie sztucznej inteligencji do stworzenia automatycznego systemu, który można ulepszyć za pomocą zgromadzonego doświadczenia i zdobycia nowej wiedzy na tej podstawie.
+Uczenie maszynowe (ang. Machine Learning) to dziedzina nauki łącząca ze sobą informatykę, matematykę oraz statystykę. Kładzie ona szczególny nacisk na analizę danych i dostosowywanie logiki programu w zależności od otrzymanych informacji. Głównym celem jest praktyczne zastosowanie osiągnięć w dziedzinie sztucznej inteligencji do stworzenia automatycznego systemu, który można ulepszyć za pomocą zgromadzonego doświadczenia i zdobycia nowej wiedzy na tej podstawie.
 
-czenie maszynowe polega na pobraniu dużej ilości danych, poddaniu ich analizie i zbudowaniu na tej podstawie modelu. Dzięki temu, podając programowi nowy zestaw danych, będzie mógł on określić wynik, na podstawie zebranego doświadczenia. (coś w tym stylu, bo z Twojego opisu, no ja wiem o co chodzi, ale może się zdarzyć, że recenzent nie będzie wiedział).
+Uczenie maszynowe polega na pobraniu dużej ilości danych, poddaniu ich analizie i zbudowaniu na tej podstawie modelu. Dzięki temu, podając programowi nowy zestaw danych, będzie mógł on określić wynik, na podstawie zebranego doświadczenia. 
 
 \section{Głębokie uczenie }
 
-Głębokie uczenie jest podkategorią uczenia maszynowego. Polega na znajdowaniu powiązań między elementami w zbiorze danych niedostrzegalnym przez człowieka. Zajmuje się głównie przetwarzaniem dźwięku np. rozpoznawanie "głosu", przetwarzaniem języka naturalnego np. tłumaczenia oraz analizą obrazu np. identyfikowanie osób.
-
-
-
-W tej pracy uwaga zostanie poświęcona tylko analizie obrazu, natomiast wiele mechanizmów pracy z dużą ilością danych pozostaje identyczna, gdyż dane takie jak obraz czy plik audio są tylko zestawem danych liczbowych np. obraz w formacie cyfrowym jest to zbiór pikseli o 3 wartościach liczbowych, a plik audio to tablica liczb przetrzymująca amplitudy dźwięku w danym czasie.
-
-Głębokie uczenie to przetwarzanie danych wejściowych, których wynikiem są funkcje numeryczne, które ułatwiają algorytmowi niższego rzędu, takim jak klasyfikator, uzyskanie poprawnych wyników na nowych danych. [2] Głębokie uczenie ma na celu pobranie oryginalnych danych i przedstawienie reprezentacji tych samych danych, które można podać algorytmowi w celu rozwiązania problemu. 
+Głębokie uczenie (ang. Deep Learning) jest podkategorią uczenia maszynowego. Polega na znajdowaniu powiązań między elementami w zbiorze danych niedostrzegalnym przez człowieka. Zajmuje się głównie przetwarzaniem dźwięku np. rozpoznawanie "głosu", przetwarzaniem języka naturalnego np. tłumaczenia oraz analizą obrazu np. identyfikowanie osób. Charakteryzuje się to przetwarzaniem dużej ilości danych wejściowych, których wynikiem są funkcje numeryczne, które ułatwiają algorytmowi niższego rzędu, takim jak klasyfikator, uzyskanie poprawnych wyników na nowych danych. [2] Głębokie uczenie ma na celu pobranie oryginalnych danych i przedstawienie reprezentacji tych samych danych, które można podać algorytmowi w celu rozwiązania problemu. 
 􏰁Głębokiego uczenia można użyć w przypadku modeli ogólnych, które nie są zaprojektowane do rozwiązania określonego zadania, ale mogą być automatycznie dostosowywane do specjalizacji w problemie.
 
-W tym miejscu robisz taktyczną zmianę tematu - tłumaczysz najpierw pojęcie, następnie piszesz co będzie w pracy, a później znowu tłumaczysz definicję. Wyrzuciłbym w ogóle ten akapit, co będzie w pracy. Możesz to przenieść albo do opisu rozdziału tego, albo do jednego z następnych.
-
-Bardzo często powtarzasz "głębokie uczenie", co rzuca się w oczy.
 
 \begin{figure}[!tbh]
 \centering
@@ -110,47 +105,40 @@ Bardzo często powtarzasz "głębokie uczenie", co rzuca się w oczy.
 
 
 
+\chapter{Widzenie komputerowe  }
 
-\chapter{Sieci Neuronowe  }
+Możliwośc interpretacji i przetwarzania obrazu przez programy zostało zrewolucjonizowane
+przez wprowadzenie konwolucyjnych sieci neuronowych, a systemy oparte na obrazach zyskały nowy zestaw możliwości. 
 
-napisać, że uczenie maszynowe można zrealizować na x sposobów, jednym z nich są sieci neuronowe. Sieci neuronowe są inspirowane działaniem ludzkiego mózgu itd. W tym rozdziale zostanie omówione to i to, a następnie przedstawione to i tamto.
-
+W tym rozdziale zostaną omówione podstawowe definicje związane, a następnie przedstawiony zostanie przykład obrazujący według jakiego wzorca konstruowane są sieci neuronowe. Omówione zostanie również 
+możliwości odczytu, przetwarzania oraz zapisu obrazów.
 
 \section{Neuron  \label{s:dsssl}}
-Neuronem określamy najbardziej elementarną cząstkę modelu uczenia maszynowego, często jest to pojedyncza liczba np. odcień szarości (ang. Grayscale Value) dla pojedynczego piksela w przypadku czarno-białego obrazka. Neuron jest podstawowym budulcem sieci neuronowej. 
 
-Powtarzasz w dwóch miejscach, że jest to elementarny element modelu. Dodałbym w osobnym zdaniu jakie przykładowe wartości mogą przyjmować. A także dodałbym w jaki sposób neurony są połączone ze sobą.
+Neuronem określamy najbardziej elementarną cząstkę modelu uczenia maszynowego, który jest jest podstawowym budulcem sieci neuronowej. Często jest on pojedynczą liczbą np. odcień szarości (ang. Grayscale Value) dla pojedynczego piksela w przypadku czarno-białego obrazka. Połączenia miedzy neuronami obrazowane się za pomocą grafu (Rysunek 2.1).
 
-\section{Definicja\label{s:dsssl}}
+\section{Sieci Neuronowe   \label{s:dsssl}}
 
-Teoretyczny paradygmat struktur matematycznych inspirowany układem synaps i połączeń między nimi w mózgu. Składowymi sieci neuronowych są neurony oraz połączenia między nimi. Sieci neuronowe otrzymują liczbowe dane wejściowe i przekazują liczbowe dane wyjściowe. Może to być np. klasyfikacja, tłumaczenie lub obliczenie.
-
+Sieci Neuronowe (ang. Neural Networks) to teoretyczny paradygmat struktur matematycznych inspirowany układem synaps i połączeń między nimi w mózgu. Składowymi sieci neuronowych są neurony oraz połączenia między nimi. Sieci neuronowe otrzymują liczbowe dane wejściowe i przekazują liczbowe dane wyjściowe. Może to być np. klasyfikacja, tłumaczenie lub obliczenie. Sieci neuronowe dzieli się na warstwy (ang layers), w których każda przetwarzana jest z uwzglądnieniem poprzedniej.
 
 \section{Konwolucyjne Sieci Neuronowe  \label{s:dsssl}}
 
 Najpierw bym wyjaśnił co to są konwulocyjne sieci neuronowe, a dopiero później wspominał, że tylko one zostaną przedstawione w pracy.
 
-W tej pracy uwaga poświęcona będzie tylko konwolucyjcym sieciom neuronowym (ang. Convolutional Neural Network), które sprawdzają się przy analizie obrazów.  
-Mogą być automatycznie dostosowywane, aby specjalizować się w danym problemie.
+Konwolucyjne Sieci Neuronowe (ang. Convolutional neural network) to charakterystyczny dla głębokiego uczenia typ sieci neuronowych, w których liczba warstw w środku sieci jest ukryta (ang. Hidden Layers).
+
 Sieci konwolucyjne poprzez trening są w stanie nauczyć się, jakie cechy szczególne obrazu pomagają w jego klasyfikacji. Jest to możliwe dzięki zastosowaniu filtrów badających relacje pikselli będących w sąsiedztwie. Warto jednak wspomnieć o innych sieciach np. Long short-term memory network, które swoje zastosowanie ma w analizie dźwięku. Konwolucyjna sieć neuronowa składa się z jednej lub wielu warstw klastrów połączeń.
 
+W tej pracy uwaga poświęcona będzie tylko konwolucyjcym sieciom neuronowym (ang. Convolutional Neural Network), które sprawdzają się przy analizie obrazów.  Mogą być one automatycznie dostosowywane, aby specjalizować się w danym problemie.
 
-
+Dane są często dzielone na osobne zestawy próbek szkoleniowych i próbek walidacyjnych, co pozwala na ocenę modelu na podstawie danych, na których nie był szkolony.
 
 
 
 \section{Przykład  \label{s:dsssl}}
 
-Posłużmy się przykładem prostej sieci neuronowej, która ma za zadanie rozpoznać pisane cyfry. Jest to swego rodzaju “Hello, World! ” w dziedzinie uczenia maszynowego.
-W przypadku analizy obrazka 64x64 piksele jedna warstwa sieci neuronowej sieć neuronowa składać będzie się z 4096 neuronów.
-
-Dlaczego będzie składać się z 4096 neuronów akurat? Napisz z czego to wynika.
-
-Jest to swego rodzaju "Hello, World!" - trochę zbyt potocznie. Nie udziwniałbym i napisał po prostu, że jest to najbardziej elementarny przykład.
-
-
-Czym jest największa wartość aktywacji? Najpierw wytłumacz, później korzystaj. Wrzuciłbym te wszystkie pod-definicje do podrozdziału "Definicja", gdzie tłumaczysz. I po prostu dałbym od myślnika: Na sieci neuronowe składają się: - neurony - podstawowa ..., - funkcja aktywacji - funkcja, która określa.... I ewentualnie później je bardziej szczegółowo rozwinął.
-
+Posłużmy się przykładem prostej sieci neuronowej, która ma za zadanie rozpoznać pisane cyfry. Jest to najbardziej elementarny przykład w dziedzinie uczenia maszynowego.
+W przypadku analizy obrazka 64x64 piksele jedna warstwa sieci neuronowej sieć neuronowa składać będzie się z 4096 neuronów, czyli łącznej liczby pikseli w macierzy. Odniesienia do tego przykładu znajdą się w dalszych podrodziałach.
 
 \begin{figure}[!tbh]
 \centering
@@ -159,15 +147,13 @@ Czym jest największa wartość aktywacji? Najpierw wytłumacz, później korzys
 \source{Opracowanie własne}
 \end{figure}
 
+\section{Funkcja Aktywacji  \label{s:dsssl}}
 
+Najprostszą jednostką w (głębokich) sieciach neuronowych jest operacja liniowa (skalowanie + przesuwanie), po której następuje funkcja aktywacji (ang. Activation function).
 
 Ostatnią warstwą jest output cyfr 0 - 10 i ta z największą wartością aktywacji zostaje wybrana. 
 
 Dokładniej mówiąc neuron to funkcja, która przyjmuje dane wejściowe ze wszystkich neuronów z poprzedniej warstwy i przetwarza to na wartość od 0 do 1, 0 to czarny 1 to biały wartość ta zwana jest “aktywacją” lub “funkcją aktywacji”.
-
-\section{Funkcja aktywacji  \label{s:dsssl}}
-
-Najprostszą jednostką w (głębokich) sieciach neuronowych jest operacja liniowa (skalowanie + przesuwanie), po której następuje funkcja aktywacji.
 
 \begin{figure}[!tbh]
 \centering
@@ -184,29 +170,11 @@ Dla każdego neuronu wykonywana jest operacja matematyczna:
 neuron  = φ (w * x + b)
 \end{equation}
 
-
-
- Zmienna “x” jest wkładem do obliczeń pojedynczego neuronu , w przypadku rozpoznawania cyfr x jest wartością 0 - 1 odcieniem szarości dla danego piksela, “w” jest wagą, natomiast b to odchylenie.
- 
- 
- Dodawane jeszcze jest odchylenie (bias), który mówi, jak wysoka musi być suma ważona, zanim neuron zacznie być znacząco aktywny.
- 
- 
-  Objaśnienia wzoru dałbym od myślników. I dodałbym wyjaśnienie - odchylenie od czego?
-
-W każdej warstwie  wartość w neuronie po dodaniu odchylenia i przemnożeniu przez wagę w celu identyfikacji tylko “ważnych” wartości całość przeliczamy jeszcze przez funkcję aktywacyjną. 
-Tak zwana warstwa ReLU usuwa ujemne wartości z mapy aktywacji, ustawiając je na zero, co zwiększa nieliniowe właściwości funkcji decyzyjnej i całej sieci.
-
-
-
-
-Dane są często dzielone na osobne zestawy próbek szkoleniowych i próbek walidacyjnych, co pozwala na ocenę modelu na podstawie danych, na których nie był szkolony.
-
-
-\section{Waga i odchylenie \label{s:dsssl}}
-Jest to wartość, która na swój sposób określa jak istotny danych neuronów w przypadku rozpoznawania cyfr pisanych piksele na skraju obrazka będą miały mniejsze znaczenie niż te w okolicach jego centrum. Wagi mówią, jaki wzór pikselowy odbiera neuron w kolejnej warstwie.
-
-Ponownie, dałbym wcześniej - przy okazji objaśniania wzoru.
+\begin{itemize}
+\item “x” jest wkładem do obliczeń pojedynczego neuronu , w przypadku rozpoznawania cyfr x jest wartością 0 - 1 odcieniem szarości dla danego piksela
+\item “w” jest wagą, Jest to wartość, która na swój sposób określa jak istotny danych neuronów w przypadku rozpoznawania cyfr pisanych piksele na skraju obrazka będą miały mniejsze znaczenie niż te w okolicach jego centrum. Wagi mówią, jaki wzór pikselowy odbiera neuron w kolejnej warstwie.
+\item "b" to odchylenie (bias), który mówi, jak wysoka musi być suma ważona, zanim neuron zacznie być znacząco aktywny.
+\end{itemize}
 
 \begin{figure}[!tbh]
 \centering
@@ -216,24 +184,23 @@ Ponownie, dałbym wcześniej - przy okazji objaśniania wzoru.
 \end{figure}
 
 
+
+W każdej warstwie  wartość w neuronie po dodaniu odchylenia i przemnożeniu przez wagę w celu identyfikacji tylko “ważnych” wartości całość przeliczamy jeszcze przez funkcję aktywacyjną. 
+Tak zwana warstwa ReLU usuwa ujemne wartości z mapy aktywacji, ustawiając je na zero, co zwiększa nieliniowe właściwości funkcji decyzyjnej i całej sieci.
+
+
  Wagi mnożymy z aktywacją ,  aby wagi pomagały w określeniu stopnia aktywacji, zachowujemy je w przedziale od 0 do 1.
  
- \section{Funkcja strat \label{s:dsssl}}
+ \section{Funkcja Strat \label{s:dsssl}}
 Funkcja strat (ang. loss function) to miara błędu w wykonywaniu zadania, takiego jak błąd między przewidywanymi wyjściami a mierzonymi wartościami. Celem jest, aby funkcja straty była jak najniższa.
  
  \section{Metoda Gradientu Prostego\label{s:dsssl}}
 
-Opracowany przez Cauchy'ego w 1847 r. [6] iteracyjny algorytm optymalizacji pierwszego rzędu do znajdowania lokalnego minimum funkcji różniczkowalnej. Aby znaleźć lokalne minimum funkcji za pomocą opadania gradientu, wykonujemy kroki proporcjonalne do ujemnego gradientu (lub przybliżonego gradientu) funkcji w bieżącym punkcie. Ale jeśli zamiast tego podejmujemy kroki proporcjonalne do dodatniego gradientu, zbliżamy się do lokalnego maksimum tej funkcji; procedura jest wówczas nazywana wynurzaniem gradientowym. 
+Metoda Gradientu Prostego (ang. Gradient descent) to opracowany przez Cauchy'ego w 1847 r. [6] iteracyjny algorytm optymalizacji pierwszego rzędu do znajdowania lokalnego minimum funkcji różniczkowalnej. Aby znaleźć lokalne minimum funkcji za pomocą opadania gradientu, wykonujemy kroki proporcjonalne do ujemnego gradientu (lub przybliżonego gradientu) funkcji w bieżącym punkcie. Ale jeśli zamiast tego podejmujemy kroki proporcjonalne do dodatniego gradientu, zbliżamy się do lokalnego maksimum tej funkcji; procedura jest wówczas nazywana wynurzaniem gradientowym. 
 
-Dodałbym objaśnienie po co w ogóle mamy zastosować tą metodę. Na co nam znajdowanie lokalnych minimów
-
-
-\begin{equation}
-optimizer = optim.Adam()
-\end{equation}
+Dodałbym objaśnienie po co w ogóle mamy zastosować tą metodę. Na co nam znajdowanie lokalnych minimów.
 
 
-Objaśnienia do wzoru, co robi optim.Adam()? 
 
 Im więcej kroków optymalizacji tym bardziej efektowny będzie transfer stylu.
 
@@ -242,57 +209,23 @@ Im więcej kroków optymalizacji tym bardziej efektowny będzie transfer stylu.
 
 W uczeniu maszynowym propagowanie wsteczne (ang. backpropagation) jest szeroko stosowanym algorytmem w uczeniu sieci neuronowych przekazywanych do nadzorowanego uczenia. Przy dopasowywaniu sieci neuronowej propagacja wsteczna oblicza gradient funkcji utraty w odniesieniu do wag sieci dla przykładu z pojedynczym wejściem i wyjściem i robi to skutecznie, w przeciwieństwie do naiwnego bezpośredniego obliczania gradientu w odniesieniu do każdej masy indywidualnie. Ta wydajność umożliwia stosowanie metod gradientowych do szkolenia sieci wielowarstwowych, aktualizując wagi w celu zminimalizowania strat. Algorytm wstecznej propagacji działa poprzez obliczenie gradientu funkcji utraty w odniesieniu do każdej masy według reguły łańcuchowej, obliczanie gradientu pojedynczej warstwy na raz, iterowanie wstecz od ostatniej warstwy.
 
-Brakuje właśnie informacji, po co nam ta propagacja i metoda z poprzedniego podrozdziału. Dodałbym omówienie tego we wstępie do rozdziału.
-
-
-
-
- \section{Podsumowanie \label{s:dsssl}}
- 
-Podsumowując można uważać za  poprawne stwierdzenie, iż uczenie się sieci to tylko modyfikowanie wag oraz odchyleń tak, aby osiągać najlepsze rezultaty, czyli uczenie się jest swego rodzaju oszacowaniem parametrów.   
-
- Warto dodać iż często w przypadku gdy sieć neuronowa ma rozpoznawać zależności bazujące na kształtach a rozpoznawanie cyfr pisanych właśnie takie jest, często redukuje się dane wejściowe do minimum. Zamienia się wtedy kolorowy obrazek RGB na czarno-biały. Dzięki takiemu zabiegowi sieć neuronowa nie jest zaśmiecona niepotrzebnymi dany jakim jest kolor i może to dać lepszą rozpoznawalność jak również wzrost wydajności zarówno w procesie szkolenia jak i działania klasyfikatora.  
- 
- "zaśmiecona" to potoczne określenie
-
-
-\chapter{Widzenie komputerowe  }
-
-
-Możliwośc interpretacji i przetwarzania obrazu przez programy zostało zrewolucjonizowane
-przez wprowadzenie konwolucyjnych sieci neuronowych, a systemy oparte na obrazach zyskały nowy zestaw możliwości. 
-
-Rozdział ten traktować będzie o możliwościach odczytu przetwarzania oraz zapisu opbrazów.
-
-Trochę nie trzyma się to kupy - najpierw piszesz, że zostały zrewolucjoniowane przez wprowadzenie sieci neuronowych i nagle urywasz temat pisząc o czym będzie ten rozdział. Nie pisałbym o poprzednim rozdziale (jeśli treść nie jest powiązana), a jeśli jest to napisałbym dlaczego o tym wspominasz. No i znowu opisałbym co będzie omówione w tym rozdziale, po co nam widzenie komputerowe, może definicje najważniejszych pojęć.
 
  \section{RGB\label{s:dsssl}}
- Istnieje kilka sposobów kodowania liczb na kolory. Najczęstszym jest
+ 
+ W przypadku algorytmu rozpoznjającego cyfry, obraz interpretowany przez komputer był w postaci dwuwymiarowej macierzy, z wartościami od 0 do 1. W przypadku algorytmów do innych zastosowań rozposnawanie gatunków kwiatów lub znaków drogowych może okazać się to za mało. Analiza obrazów kolorowych zwiększa złożonośc sieci neuronowych. 
+ 
+Istnieje kilka sposobów kodowania liczb na kolory. Najczęstszym jest
 RGB, który określa kolor za pomocą trzech liczb reprezentujących intensywność czerwieni, zieleni i niebieskiego. 
 
-Jaki obrazek? 
-
-W tym momencie obrazek jest obiektem podobnym do tablicy o trzech wymiarach: dwóch wymiarach przestrzennych (szerokość i wysokość) i trzecim wymiarze odpowiadającym kanałom czerwonym, zielonym i niebieskim. 
+W tym momencie kolorowy obrazek jest obiektem podobnym do tablicy o trzech wymiarach: dwóch wymiarach przestrzennych (szerokość i wysokość) i trzecim wymiarze odpowiadającym kanałom czerwonym, zielonym i niebieskim. 
 
 Każdy kolor będzie reprezentowany jako 8-bitowa liczba całkowita, jak w większości formatów fotograficznych ze standardowych aparatów konsumenckich.
 
-Sieci neuronowe zwykle działają z wejściowymi tensorami zmiennoprzecinkowymi. Sieci neuronowe wykazują najlepszą wydajność treningu, gdy dane wejściowe mieszczą się w przedziale od około 0 do 1 lub –1 do 1 (efekt definiowania ich bloków konstrukcyjnych). Sieci neuronowe wymagają przedstawienia danych jako wielowymiarowych tensorów numerycznych, często 32-bitowych liczb zmiennoprzecinkowych.
-
-Powtarzasz za często "Sieci neoronowe". Trochę też zbyt dynamicznie zmieniasz temat. Najpierw piszesz o RGB, a nagle o sieciach neuronowych. I jest takie wtf, kiedy przeszedłem do innego rozdziału. Połącz jakoś te tematy - Wykorzystanie rgb w sieci neuronowych ... coś wtym rodzaju.
-
-
-Typową rzeczą, którą należy zrobić, jest rzutowanie tensora na zmiennoprzecinkowe i normalizacja wartości pikseli. Rzutowanie na zmiennoprzecinkowe jest łatwe, ale normalizacja jest trudniejsza, ponieważ zależy od tego, jaki zakres danych wejściowych, który zdecydujesz, powinien wynosić od 0 do 1 (lub –1 do 1). Jedną z możliwości jest podzielenie wartości pikseli przez 255 (maksymalna reprezentowana liczba w 8-bitowym znaku bez znaku):
-
-
-Nie za bardzo wiem - jaki jest cel tego podrozdziału. Tzn. nagłówek jest RGB, a w środku najpierw faktycznie tłumaczysz co to jest rgb, ale następnie piszesz o sieciach neuronowych. Oddzieliłbym to na osobny podrozdział, albo zrobił jakieś płynne przejście. 
-
-Po załadowaniu jednego z popularnych formatów obrazów, a należy przekształcić dane w reprezentację tensora, która ma różne części obrazu ułożone w sposób zgodny z oczekiwaniami danego API uczenia maszynowego.
-
-To zdanie trzeba przebudować, bo jest ciężkie do czytania.
+Wczytany obraz (np. w formacie *.jpg) należy przekrztałcić w tensor, który układa obraz w sposób zgodny z oczekiwaniami danego API uczenia maszynowego.
 
 \section{Tensor\label{s:dsssl}}
-Tensor[4], jest to wielowymiarowa tablica. Sieci neuronowe pobierają tensory na wejściu i wytwarzają tensory jako wyjścia. W rzeczywistości wszystkie operacje w sieci neuronowej i podczas optymalizacji są operacjami między tensorami, a wszystkie parametry (takie jak wagi i odchylenia) w sieci neuronowej są tensorami.
 
+Tensor[4], jest to wielowymiarowa tablica. 
 Ponownie mieszasz definicje z wykorzystaniem. Najpierw tłumaczysz, że to wielowymiarowa tablica, później dajesz wykorzystanie w sieciach neuronowych, a dalej znowu piszesz co to jest.
 
 Tensor to struktura danych przechowująca zbiór liczb, które są dostępne indywidualnie za pomocą indeksu i które mogą być indeksowane za pomocą wielu indeksów.
@@ -309,16 +242,25 @@ Tensor reprezentujące wartości w poszczególnych pikselach są często kodowan
 \source{Opracowanie własne}
 \end{figure}
 
- Dodałbym jakąś wzmiankę w tekscie o tym rysunku -> na rysunku 3.1 został przedstawiony....
+Sieci neuronowe pobierają tensory na wejściu i wytwarzają tensory jako wyjścia. W rzeczywistości wszystkie operacje w sieci neuronowej i podczas optymalizacji są operacjami między tensorami, a wszystkie parametry (takie jak wagi i odchylenia) w sieci neuronowej są tensorami.
 
 
- \section{Operacje na tensorach\label{s:dsssl}}
+
+Sieci neuronowe zwykle działają z wejściowymi tensorami zmiennoprzecinkowymi. Sieci neuronowe wykazują najlepszą wydajność treningu, gdy dane wejściowe mieszczą się w przedziale od około 0 do 1 lub –1 do 1 (efekt definiowania ich bloków konstrukcyjnych). Sieci neuronowe wymagają przedstawienia danych jako wielowymiarowych tensorów numerycznych, często 32-bitowych liczb zmiennoprzecinkowych.
+
+Na rysunku 2.4 został przedstawiony schemat procesu operacji na obrazie.
+
 Na tensorach można  wykonać kilka innych operacji na danych wejściowych, w tym przekształcenia geometryczne, takie jak obrót, skalowanie i kadrowanie. Operacje te mogą pomóc w szkoleniu lub mogą być wymagane, aby dowolne dane wejściowe były zgodne z wymaganiami wejściowymi sieci, takimi jak rozmiar obrazu.
 
-Rozwiń ten podrozdział, albo go zmerguj z poprzednim - jest za krótki w stosunku do reszty.
+
+ \section{Podsumowanie \label{s:dsssl}}
+ 
+Podsumowując można uważać za  poprawne stwierdzenie, iż uczenie się sieci to tylko modyfikowanie wag oraz odchyleń tak, aby osiągać najlepsze rezultaty, czyli uczenie się jest swego rodzaju oszacowaniem parametrów.   
+
+Często w przypadku gdy sieć neuronowa ma rozpoznawać zależności bazujące na kształtach a rozpoznawanie cyfr pisanych właśnie takie jest, często redukuje się dane wejściowe do minimum. Zamienia się wtedy kolorowy obrazek RGB na czarno-biały. Dzięki takiemu zabiegowi sieć neuronowa nie zawiera  niepotrzebnych danych takiech jak kolor i może to dać lepszą rozpoznawalność jak również wzrost wydajności zarówno w procesie szkolenia jak i działania klasyfikatora.  
 
 
-\chapter{Przegląd dostępnych narzędzi}
+\chapter{Przegląd Wykorzystanych Narzędzi}
 
 Ponownie wstęp - po co nam te narzędzia, po co robimy ich przegląd, dlaczego w ogóle ten wybór jest ważny. Po przeczytaniu rozdziału, zmieniłbym nazwę rozdziału - To jest omówienie narzędzi, które zostały wykorzystane, a nie przegląd "dostępnych". Byś musiał pokazać jakie inne narzędzia jeszcze są dostępne, żeby tytuł był adekwatny.
 
@@ -573,6 +515,16 @@ Gram = V^TV
 \end{equation}
 
 
+\lstset{caption={Inss}}
+\begin{lstlisting}
+
+from brg.datastructures import Mesh
+ 
+mesh = Mesh.from_obj('faces.obj')
+mesh.draw()
+\end{lstlisting}
+inse
+
 \begin{equation}
 gram\:=\:torch.mm (tensor,\:tensor.t)
 \end{equation}
@@ -630,6 +582,24 @@ Reprezentacje treści i stylu w sieci neuronowej splotowej są dobrze rozdzielne
 
 Innym ważnym czynnikiem w procesie syntezy obrazu jest wybór warstw pasujących do treści i reprezentacji stylu. Jak opisano powyżej, reprezentacja stylu jest reprezentacją wieloskalową, która obejmuje wiele warstw sieci neuronowej. Liczba i położenie tych warstw determinuje lokalną skalę, w której dopasowany jest styl, co prowadzi do różnych wrażeń wizualnych [4]. Zauważyliśmy, że dopasowanie reprezentacji stylu do wyższych warstw w sieci zachowuje struktury obrazów lokalnych na coraz większą skalę, co zapewnia płynniejsze i bardziej ciągłe wrażenia wizualne. Dlatego najbardziej atrakcyjne wizualnie obrazy są zwykle tworzone przez dopasowanie reprezentacji stylu do wysokich warstw w sieci, dlatego dla wszystkich wyświetlanych obrazów dopasowujemy cechy stylu na warstwach „conv1 1”, „conv2 1”, „conv3 1 ”,„ conv4 1 ”i„ conv5 1 ”sieci.
 
+\section{Optymalizacja\label{s:dsssl}}
+
+Adam to optymalizator bazujący na metodzie gradientu prostego.
+
+\lstset{caption={Przykład użycia optymalizatora Adam w PyTorch, więcej informacji w rodziale 5.3}}
+\begin{lstlisting}
+
+# ustawienie optymalizatora
+optimizer = optim.Adam([target], lr=0.003)
+      
+# reset gradientu
+optimizer.zero_grad()
+      
+# aktualizacja
+optimizer.step()
+
+\end{lstlisting}
+
 						
 \section{Ograniczenia\label{s:dsssl}}
 
@@ -686,7 +656,7 @@ Mind, vol. LIX, no. 236, Październik 1950$
 \item $[17]https://www.manning.com/books/grokking-deep-learning$
 \item $[18]https://www.deeplearningbook.org$
 \item $[19]Deep Learning, by Ian Goodfellow, Yoshua Bengio, and Aaron Courville.$
-
+\item $[20]https://pl.wikipedia.org/wiki/Sztuczna_inteligencja$
 
 \end{itemize}
 
