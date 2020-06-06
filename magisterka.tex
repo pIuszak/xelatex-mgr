@@ -96,13 +96,7 @@ Głębokie uczenie (ang. Deep Learning) jest podkategorią uczenia maszynowego. 
 􏰁Głębokiego uczenia można użyć w przypadku modeli ogólnych, które nie są zaprojektowane do rozwiązania określonego zadania, ale mogą być automatycznie dostosowywane do specjalizacji w problemie.
 
 
-\begin{figure}[!tbh]
-\centering
-\includegraphics[width=.8\hsize]{fig/1}
-\caption{Schemat zawierania pomiędzy głębokim uczeniem, uczeniem maszynowym a sztuczną integencją\label{RYS.1}}
-\source{Opracowanie własne}
-\end{figure}
-
+	
 
 
 \chapter{Widzenie komputerowe  }
@@ -121,20 +115,6 @@ Neuronem określamy najbardziej elementarną cząstkę modelu uczenia maszynoweg
 
 Sieci Neuronowe (ang. Neural Networks) to teoretyczny paradygmat struktur matematycznych inspirowany układem synaps i połączeń między nimi w mózgu. Składowymi sieci neuronowych są neurony oraz połączenia między nimi. Sieci neuronowe otrzymują liczbowe dane wejściowe i przekazują liczbowe dane wyjściowe. Może to być np. klasyfikacja, tłumaczenie lub obliczenie. Sieci neuronowe dzieli się na warstwy (ang layers), w których każda przetwarzana jest z uwzglądnieniem poprzedniej [7, 8].
 
-Sieci Neuronowe działają na zasadzie ekstrakcji cech (ang. feature extraction) na zbiorach danych. Zbudowane są z sekwencyjnych warstw, gdzie każda warstwa dokonuje ekstrakcji cech coraz to wyższego poziomu.
-
-\section{Konwolucyjne Sieci Neuronowe  \label{s:dsssl}}
-
-Najpierw bym wyjaśnił co to są konwulocyjne sieci neuronowe, a dopiero później wspominał, że tylko one zostaną przedstawione w pracy.
-
-Konwolucyjne Sieci Neuronowe (ang. Convolutional neural network) zwane też splotowymi to charakterystyczny dla głębokiego uczenia typ sieci neuronowych, w których liczba warstw w środku sieci jest ukryta (ang. Hidden Layers).
-
-Sieci konwolucyjne poprzez trening są w stanie nauczyć się, jakie cechy szczególne obrazu pomagają w jego klasyfikacji. Jest to możliwe dzięki zastosowaniu filtrów badających relacje pikselli będących w sąsiedztwie. Warto jednak wspomnieć o innych sieciach np. Long short-term memory network, które swoje zastosowanie ma w analizie dźwięku. Konwolucyjna sieć neuronowa składa się z jednej lub wielu warstw klastrów połączeń.
-
-W tej pracy uwaga poświęcona będzie tylko konwolucyjcym sieciom neuronowym (ang. Convolutional Neural Network), które sprawdzają się przy analizie obrazów.  Mogą być one automatycznie dostosowywane, aby specjalizować się w danym problemie.
-
-Dane są często dzielone na osobne zestawy próbek szkoleniowych i próbek walidacyjnych, co pozwala na ocenę modelu na podstawie danych, na których nie był szkolony.
-
 
 
 \section{Przykład  \label{s:dsssl}}
@@ -148,6 +128,35 @@ W przypadku analizy obrazka 64x64 piksele jedna warstwa sieci neuronowej sieć n
 \caption{Układ neuronow dla obrazka 64x64 px\label{RYS.2}}
 \source{Opracowanie własne}
 \end{figure}
+
+
+\section{Konwolucyjne Sieci Neuronowe  \label{s:dsssl}}
+
+
+Konwolucyjne Sieci Neuronowe (ang. Convolutional neural network) zwane też splotowymi to charakterystyczny dla głębokiego uczenia typ sieci neuronowych, w których liczba warstw w środku sieci jest ukryta (ang. Hidden Layers).
+
+Konwolucyjcym Sieci Neuronowe działają na zasadzie ekstrakcji cech (ang. feature extraction) na zbiorach danych. Zbudowane są z sekwencyjnych warstw, gdzie każda warstwa dokonuje ekstrakcji cech coraz to wyższego poziomu.
+
+
+
+
+
+\begin{figure}[!tbh]
+\centering
+\includegraphics[width=.8\hsize]{fig/10}
+\caption{Przykład ekstrakcji cech w konwolucyjnej sieci neuronowej\label{RYS.2}}
+\source{Opracowanie własne}
+\end{figure}
+
+Sieci konwolucyjne poprzez trening są w stanie nauczyć się, jakie cechy szczególne obrazu pomagają w jego klasyfikacji. Jest to możliwe dzięki zastosowaniu filtrów badających relacje pikselli będących w sąsiedztwie. Warto jednak wspomnieć o innych sieciach np. Long short-term memory network, które swoje zastosowanie ma w analizie dźwięku. Konwolucyjna sieć neuronowa składa się z jednej lub wielu warstw klastrów połączeń.
+
+ Sprawdzają się one przy analizie obrazów.  Mogą być one automatycznie dostosowywane, aby specjalizować się w danym problemie.
+
+Dane są często dzielone na osobne zestawy próbek szkoleniowych i próbek walidacyjnych, co pozwala na ocenę modelu na podstawie danych, na których nie był szkolony.
+
+
+
+
 
 \section{Funkcja Aktywacji  \label{s:dsssl}}
 
