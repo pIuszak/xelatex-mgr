@@ -95,6 +95,13 @@ Uczenie maszynowe polega na pobraniu dużej ilości danych, poddaniu ich analizi
 Głębokie uczenie (ang. Deep Learning) jest podkategorią uczenia maszynowego. Polega na znajdowaniu powiązań między elementami w zbiorze danych niedostrzegalnym przez człowieka. Zajmuje się głównie przetwarzaniem dźwięku np. rozpoznawanie "głosu", przetwarzaniem języka naturalnego np. tłumaczenia oraz analizą obrazu np. identyfikowanie osób. Charakteryzuje się to przetwarzaniem dużej ilości danych wejściowych, których wynikiem są funkcje numeryczne, które ułatwiają algorytmowi niższego rzędu, takim jak klasyfikator, uzyskanie poprawnych wyników na nowych danych. [2, 17, 18, 19] Głębokie uczenie ma na celu pobranie oryginalnych danych i przedstawienie reprezentacji tych samych danych, które można podać algorytmowi w celu rozwiązania problemu. 
 􏰁Głębokiego uczenia można użyć w przypadku modeli ogólnych, które nie są zaprojektowane do rozwiązania określonego zadania, ale mogą być automatycznie dostosowywane do specjalizacji w problemie.
 
+\begin{figure}[!tbh]
+\centering
+\includegraphics[width=.8\hsize]{fig/1}
+\caption{Schemat zawierania pomiędzy głębokim uczeniem, uczeniem maszynowym a sztuczną integencją\label{RYS.1}}
+\source{Opracowanie własne}
+\end{figure}
+
 
 	
 
@@ -203,23 +210,54 @@ Tak zwana warstwa ReLU usuwa ujemne wartości z mapy aktywacji, ustawiając je n
  Wagi mnożymy z aktywacją ,  aby wagi pomagały w określeniu stopnia aktywacji, zachowujemy je w przedziale od 0 do 1.
  
  \section{Funkcja Strat \label{s:dsssl}}
-Funkcja strat (ang. loss function) to miara błędu w wykonywaniu zadania, takiego jak błąd między przewidywanymi wyjściami a mierzonymi wartościami. Celem jest, aby funkcja straty była jak najniższa.
  
+Funkcja strat (ang. loss function) to miara błędu w wykonywaniu zadania, takiego jak błąd między przewidywanymi wyjściami a mierzonymi wartościami. Celem jest, aby funkcja straty była jak najniższa. 
+Funkcja strat jest sumą kwadratów różnicy, między ostatnimi neuronami w sieci, a podanym przez użytkownika wynikiem. Średnią stratę dla całej sieci (ang. Mean Squared Error) wyliczamy ze wzoru:  
+
+$$MSE=\frac{\sum_{i=1}^{n} (y_i - y_i)}{n}$$
+
+gdzie: 
+
+\begin{itemize}
+\item $n$ jest liczbą neuronów w sieci
+\item $y_i$ jest wartością neuronu o indeksie $i$ 
+\item $y_i'$ jest spodziewaną warością neuronu o indeksie $i$ 
+\end{itemize}
+
+Wyznacznikiem uczenia sieci neuronowej jest zmniejszanie funcji strat. 
+
+
  \section{Metoda Gradientu Prostego\label{s:dsssl}}
 
-Metoda Gradientu Prostego (ang. Gradient descent) to opracowany przez Cauchy'ego w 1847 r. [6] iteracyjny algorytm optymalizacji pierwszego rzędu do znajdowania lokalnego minimum funkcji różniczkowalnej. Aby znaleźć lokalne minimum funkcji za pomocą opadania gradientu, wykonujemy kroki proporcjonalne do ujemnego gradientu (lub przybliżonego gradientu) funkcji w bieżącym punkcie. Ale jeśli zamiast tego podejmujemy kroki proporcjonalne do dodatniego gradientu, zbliżamy się do lokalnego maksimum tej funkcji; procedura jest wówczas nazywana wynurzaniem gradientowym [16]. 
+Metoda Gradientu Prostego (ang. Gradient descent) to opracowany przez Cauchy'ego w 1847 r. [6] iteracyjny algorytm optymalizacji pierwszego rzędu do znajdowania lokalnego minimum funkcji różniczkowalnej.
+
+W dziedzinie uczenia maszynowego Metoda Gradientu prostego jest użyteczna przy estymacji parametrów funkcji. 
+
+
+\begin{figure}[!tbh]
+\centering
+\includegraphics[width=.8\hsize]{fig/11}
+\caption{Minima lokalne w funckji, znalezione metodą gradientu prostego\label{RYS.3}}
+\source{Opracowanie własne}
+\end{figure}
+
+Aby znaleźć lokalne minimum funkcji za pomocą opadania gradientu, wykonujemy kroki proporcjonalne do ujemnego gradientu (lub przybliżonego gradientu) funkcji w bieżącym punkcie.  [16]. 
 
 Im więcej kroków optymalizacji tym bardziej efektowny będzie transfer stylu.
 Przykład użycia takiego optymalizatora znajduje się w rozdziale 5.3.
 
 \section{Wsteczna Propagacja\label{s:dsssl}}
 
-W uczeniu maszynowym propagowanie wsteczne (ang. backpropagation) jest szeroko stosowanym algorytmem w uczeniu sieci neuronowych przekazywanych do nadzorowanego uczenia. Przy dopasowywaniu sieci neuronowej propagacja wsteczna oblicza gradient funkcji utraty w odniesieniu do wag sieci dla przykładu z pojedynczym wejściem i wyjściem i robi to skutecznie, w przeciwieństwie do naiwnego bezpośredniego obliczania gradientu w odniesieniu do każdej masy indywidualnie. [16] Ta wydajność umożliwia stosowanie metod gradientowych do szkolenia sieci wielowarstwowych, aktualizując wagi w celu zminimalizowania strat. Algorytm wstecznej propagacji działa poprzez obliczenie gradientu funkcji utraty w odniesieniu do każdej masy według reguły łańcuchowej, obliczanie gradientu pojedynczej warstwy na raz, iterowanie wstecz od ostatniej warstwy. 
+W uczeniu maszynowym propagowanie wsteczne (ang. backpropagation) jest szeroko stosowanym algorytmem w uczeniu sieci neuronowych. Algorytm ten edytuje wagi oraz odchylenia każdego połączenia neuronu w sieci tak, aby minimalizowć funkcję strat.
+
+Przy dopasowywaniu sieci neuronowej wsteczna propagacja oblicza metodą gradientu prostego funkcję strat w odniesieniu do wag w całej sieci. Dzięki wydajności metody gradientu prostego możliwe jest szkolenie sieci wielowarstwowych.
+
+Algorytm wstecznej propagacji działa poprzez obliczenie gradientu funkcji strat w odniesieniu do każdej wagi według reguły łańcuchowej, obliczanie gradientu pojedynczej warstwy na raz, iterowanie wstecz od ostatniej warstwy. 
 
 
  \section{RGB\label{s:dsssl}}
  
- W przypadku algorytmu rozpoznjającego cyfry, obraz interpretowany przez komputer był w postaci dwuwymiarowej macierzy, z wartościami od 0 do 1. W przypadku algorytmów do innych zastosowań rozposnawanie gatunków kwiatów lub znaków drogowych może okazać się to za mało. Analiza obrazów kolorowych zwiększa złożonośc sieci neuronowych. 
+ W przypadku algorytmu rozpoznjającego cyfry, obraz interpretowany przez komputer był w postaci dwuwymiarowej macierzy, z wartościami od 0 do 1. W przypadku algorytmów do innych zastosowań rozpoznawanie gatunków kwiatów lub znaków drogowych może okazać się to za mało. Analiza obrazów kolorowych zwiększa złożonośc sieci neuronowych. 
  
 Istnieje kilka sposobów kodowania liczb na kolory. Najczęstszym jest
 RGB, który określa kolor za pomocą trzech liczb reprezentujących intensywność czerwieni, zieleni i niebieskiego. 
@@ -232,10 +270,8 @@ Wczytany obraz (np. w formacie *.jpg) należy przekrztałcić w tensor, który u
 
 \section{Tensor\label{s:dsssl}}
 
-Tensor[4], jest to wielowymiarowa tablica. 
-Ponownie mieszasz definicje z wykorzystaniem. Najpierw tłumaczysz, że to wielowymiarowa tablica, później dajesz wykorzystanie w sieciach neuronowych, a dalej znowu piszesz co to jest.
 
-Tensor to struktura danych przechowująca zbiór liczb, które są dostępne indywidualnie za pomocą indeksu i które mogą być indeksowane za pomocą wielu indeksów.
+Tensor to struktura danych [4] przechowująca zbiór liczb, które są dostępne indywidualnie za pomocą indeksu i które mogą być indeksowane za pomocą wielu indeksów.
 
 Termin tensor jest dołączony do pojęcia przestrzeni, układów odniesienia i transformacji między nimi. Dla wszystkich innych tensor odnosi się do uogólnienia wektorów i macierzy do dowolnej liczby wymiarów, jak pokazano na rysunku.
 Tensor reprezentujące wartości w poszczególnych pikselach są często kodowane za pomocą liczb 8-bitowych, na przykład w kamerach konsumenckich. W zastosowaniach medycznych, naukowych i przemysłowych nierzadko można znaleźć piksele o większej precyzji numerycznej, takie jak 12-bitowe i 16-bitowe.
@@ -317,11 +353,11 @@ Zarówno wtyczki do Blendera jak i same operacje przy użyciu PyTorch’a mogą 
  
  \section{Jupyter Notebook\label{s:dsssl}}
  
-Jupyter Notebook to iInteraktywne środowisko pozwalająca na wykonywanie kodu uczenia maszynowego po stronie serwera. Pozwala na szybkie debugowanie i testowanie kodu między innymi biblioteki PyTorch.
+Jupyter Notebook to interaktywne środowisko pozwalająca na wykonywanie kodu uczenia maszynowego po stronie serwera. Pozwala na szybkie debugowanie i testowanie kodu między innymi biblioteki PyTorch.
 
  \section{CUDA\label{s:dsssl}}
  
-CUDA (ang. Compute Unified Device Architecture) jest to opracowana przez firmę Nvidia uniwersalna architektura procesorów wielordzeniowych (głównie kart graficznych) umożliwiająca wykorzystanie ich mocy obliczeniowej do rozwiązywania ogólnych problemów numerycznych w sposób wydajniejszy niż w tradycyjnych, sekwencyjnych procesorach ogólnego zastosowania. Charakteryzuje się ona wyszszym współczynnikiem FLOPS (ang. floating point operations per second) czyli ilości operacji zmiennoprzecinkowych na sekundę.
+CUDA (ang. Compute Unified Device Architecture) jest to opracowana przez firmę Nvidia uniwersalna architektura procesorów wielordzeniowych (głównie kart graficznych) umożliwiająca wykorzystanie ich mocy obliczeniowej do rozwiązywania ogólnych problemów numerycznych w sposób wydajniejszy niż w tradycyjnych, sekwencyjnych procesorach ogólnego zastosowania. Charakteryzuje się ona wyższym współczynnikiem FLOPS (ang. floating point operations per second) czyli ilości operacji zmiennoprzecinkowych na sekundę.
 
 
 
@@ -407,7 +443,7 @@ Ten kod zwraca nowy tensor, który ma te same dane liczbowe, ale jest przechowyw
 
   \section{BPY\label{s:dsssl}}
   
-  BPY (ang. Blender Python) to biblioteka do komunikowania się z Blenderem, a konkretnej z Pythonem wbudowanym w Blendera. Wszystkie operacje, które można wykonać przy pomocy intefejsu gragicznego Blendera można też przedstawić jako kod wykonywany przy odwołaniu do BPY [14, 15].
+  BPY (ang. Blender Python) to biblioteka do komunikowania się z Blenderem, a konkretnej z Pythonem wbudowanym w Blendera. Wszystkie operacje, które można wykonać przy pomocy intefejsu graficznego Blendera można też przedstawić jako kod wykonywany przy odwołaniu do BPY [14, 15].
   
   
   \begin{figure}[!tbh]
