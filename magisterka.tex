@@ -49,7 +49,7 @@
 % streszczenie
 \begin{abstract}
 
-W niniejszej pracy przedstawiony zostanie proces implementacji tzw. Transferu Stylu (ang. Style Transfer) w programie do grafiki 2D/3D Blender.
+W niniejszej pracy przedstawiony zostanie proces implementacji tzw. Transferu Stylu (\textit{ang. Style Transfer}) w programie do grafiki 2D/3D Blender.
 
 Pierwszy rozdział poświęcony jest omówieniu podstawowych pojęć związanych z sztuczną inteligencją. Następnie omówione zostały sieci neuronowe i widzenie komputerowe jako procesy służące do interpretacji oraz przetwarzania obrazów 2D. Aktualnie dostępnych jest szereg narzędzi umożliwiających analizę obrazu, omówione one zostały w rozdziale 4. Dla wcześniej omówionych narzędzi istnieją biblioteki, które pozwalają na wykorzystanie pełnego potencjału uczenia maszynowego i zostały one omówione w rozdziale 5.
 
@@ -69,7 +69,7 @@ Implementacja transferu stylu została szczegółowo omówiona w rozdziale 6. Al
 
 Żyjemy w czasach niespotykanego nigdy w historii ludzkości tempa rozwoju nauki i technologii. Komputery są obecnie w stanie wykonywać zadania, które jeszcze 20 lat temu mogły pojawić się tylko w umysłach Philipa K. Dicka czy Wiliama Gibsona.
 
-Zadania, które jeszcze kilka lat temu wymagały wyższego poznania, są rozwiązywane przez maszyny o niemal nadludzkim poziomie wydajności. Zawody, bez których ludzkość dziesięciolecia temu nie mogła się obejść nie istnieją. Do zadań takich jak wykrywanie znaków drogowych i pieszych przez autonomiczne samochody. Analiza obrazu czy obróbka dźwięku może odciążyć człowieka w prostych powtarzalnych czynnościach.
+Zadania, które jeszcze kilka lat temu wymagały wyższego poznania, są rozwiązywane przez maszyny o niemal nadludzkim poziomie wydajności. Zawody, bez których ludzkość dziesięciolecia temu nie mogła się obejść nie istnieją. Szutczna inteligencja coraz częściej używana jest do zadań takich jak wykrywanie znaków drogowych i pieszych przez autonomiczne samochody czy analiza obrazu i obróbka dźwięku. Komputery w coraz większej liczbie dziedzin m odciążyć człowieka w prostych powtarzalnych czynnościach.
 
  Uczone maszynowo generatory obrazu, takie jak style transfer mogą tworzyć nieograniczone bazy inspiracji dla designerów czy grafików. Są one trudne w implementacji ale banalne w użyciu, dlatego poczatkujący graficy mogą osiągnąć ciekawe efekty wizualne bez szczegółowej wiedzy. Na chwilę pisania tej pracy takie narzędzia nie są popularnymi narzędziami dla grafików, gdyż wymagają dużej wiedzy teoretycznej do własnej implementacji. Dużym wkładem w popularyzację programów oraz rozszerzeń bazujących na uczeniu maszynowym. Możliwości jaki stoją przed obrazami generowanymi maszynowo są nieograniczone zarówno do prototypowania i tworzenia "bazy" pomysłów, jak również do odciążania człowieka z zadań które jeszcze kilka lat temu były wykonalne tylko dla najlepszych specjalistów w branży.
 
@@ -80,25 +80,25 @@ Sztuczna inteligencja, uczenie maszynowe oraz głębokie uczenie znajdują zasto
 
 \section{Sztuczna inteligencja}
 
-Sztuczna inteligencja (ang. Artificial Intelligence) to dziedzina nauki[20, 21], zajmująca się tworzeniem modeli zachowań inteligentnych oraz programów i systemów symulujących te zachowania, zarówno w dziedzinie oprogramowania jak i sprzętu. Prostą sztuczną inteligencję reprezentuje nawet kalkulator. Przyjęto też, iż wyznacznikiem jakości sztucznej inteligencji jest umiejętność „udawania” ludzkiego mózgu. Już w roku 1950 Alan Turing opracował test [1], określający w jakim stopniu maszyna jest w stanie myśleć jak człowiek.
+Sztuczna inteligencja (\textit{ang. Artificial Intelligence}) to dziedzina nauki [20, 21], zajmująca się tworzeniem modeli zachowań inteligentnych oraz programów i systemów symulujących te zachowania, zarówno w dziedzinie oprogramowania jak i sprzętu. Prostą sztuczną inteligencję reprezentuje nawet kalkulator. Przyjęto też, iż wyznacznikiem jakości sztucznej inteligencji jest umiejętność „udawania” ludzkiego mózgu. Już w roku 1950 Alan Turing opracował test [1], określający w jakim stopniu maszyna jest w stanie myśleć jak człowiek.
 
 
 
 \section{Uczenie maszynowe}
 
-Uczenie maszynowe (ang. Machine Learning) to dziedzina nauki łącząca ze sobą informatykę, matematykę oraz statystykę. Kładzie ona szczególny nacisk na analizę danych i dostosowywanie logiki programu w zależności od otrzymanych informacji. Głównym celem jest praktyczne zastosowanie osiągnięć w dziedzinie sztucznej inteligencji do stworzenia automatycznego systemu, który można ulepszyć za pomocą zgromadzonego doświadczenia i zdobycia nowej wiedzy na tej podstawie [9].
+Uczenie maszynowe (\textit{ang. Machine Learning}) to dziedzina nauki łącząca ze sobą informatykę, matematykę oraz statystykę. Kładzie ona szczególny nacisk na analizę danych i dostosowywanie logiki programu w zależności od otrzymanych informacji. Głównym celem jest praktyczne zastosowanie osiągnięć w dziedzinie sztucznej inteligencji do stworzenia automatycznego systemu, który można ulepszyć za pomocą zgromadzonego doświadczenia i zdobycia nowej wiedzy na tej podstawie [9].
 
 Uczenie maszynowe polega na pobraniu dużej ilości danych, poddaniu ich analizie i zbudowaniu na tej podstawie modelu. Dzięki temu, podając programowi nowy zestaw danych, będzie mógł on określić wynik, na podstawie zebranego doświadczenia. 
 
 \section{Głębokie uczenie }
 
-Głębokie uczenie (ang. Deep Learning) jest podkategorią uczenia maszynowego. Polega na znajdowaniu powiązań między elementami w zbiorze danych niedostrzegalnym przez człowieka. Zajmuje się głównie przetwarzaniem dźwięku np. rozpoznawanie "głosu", przetwarzaniem języka naturalnego np. tłumaczenia oraz analizą obrazu np. identyfikowanie osób. Charakteryzuje się to przetwarzaniem dużej ilości danych wejściowych, których wynikiem są funkcje numeryczne, które ułatwiają algorytmowi niższego rzędu, takim jak klasyfikator, uzyskanie poprawnych wyników na nowych danych. [2, 17, 18, 19] Głębokie uczenie ma na celu pobranie oryginalnych danych i przedstawienie reprezentacji tych samych danych, które można podać algorytmowi w celu rozwiązania problemu. 
+Głębokie uczenie (\textit{ang. Deep Learning}) jest podkategorią uczenia maszynowego. Polega na znajdowaniu powiązań między elementami w zbiorze danych niedostrzegalnym przez człowieka. Zajmuje się głównie przetwarzaniem dźwięku np. rozpoznawanie "głosu", przetwarzaniem języka naturalnego np. tłumaczenia oraz analizą obrazu np. identyfikowanie osób. Charakteryzuje się to przetwarzaniem dużej ilości danych wejściowych, których wynikiem są funkcje numeryczne, które ułatwiają algorytmowi niższego rzędu, takim jak klasyfikator, uzyskanie poprawnych wyników na nowych danych. [2, 17, 18, 19] Głębokie uczenie ma na celu pobranie oryginalnych danych i przedstawienie reprezentacji tych samych danych, które można podać algorytmowi w celu rozwiązania problemu. 
 􏰁Głębokiego uczenia można użyć w przypadku modeli ogólnych, które nie są zaprojektowane do rozwiązania określonego zadania, ale mogą być automatycznie dostosowywane do specjalizacji w problemie.
 
 \begin{figure}[!tbh]
 \centering
 \includegraphics[width=.8\hsize]{fig/1}
-\caption{Schemat zawierania pomiędzy głębokim uczeniem, uczeniem maszynowym a sztuczną integencją\label{RYS.1}}
+\caption{Schemat zależności pomiędzy głębokim uczeniem, uczeniem maszynowym a sztuczną integencją\label{RYS.1}}
 \source{Opracowanie własne}
 \end{figure}
 
@@ -109,25 +109,25 @@ Głębokie uczenie (ang. Deep Learning) jest podkategorią uczenia maszynowego. 
 \chapter{Widzenie komputerowe  }
 
 Możliwośc interpretacji i przetwarzania obrazu przez programy zostało zrewolucjonizowane
-przez wprowadzenie konwolucyjnych sieci neuronowych, a systemy oparte na obrazach zyskały nowy zestaw możliwości. 
+przez wprowadzenie konwolucyjnych sieci neuronowych, a systemy oparte na analizie obrazu zyskały nowy zestaw możliwości. 
 
-W tym rozdziale zostaną omówione podstawowe definicje związane, a następnie przedstawiony zostanie przykład obrazujący według jakiego wzorca konstruowane są sieci neuronowe. Omówione zostanie również 
+W tym rozdziale zostaną omówione podstawowe definicje związane, a następnie przedstawiony zostanie przykład obrazujący, według jakiego wzorca konstruowane są sieci neuronowe. Omówione zostanie również 
 możliwości odczytu, przetwarzania oraz zapisu obrazów.
 
 \section{Neuron  \label{s:dsssl}}
 
-Neuronem określamy najbardziej elementarną cząstkę modelu uczenia maszynowego, który jest jest podstawowym budulcem sieci neuronowej. Często jest on pojedynczą liczbą np. odcień szarości (ang. Grayscale Value) dla pojedynczego piksela w przypadku czarno-białego obrazka. Połączenia miedzy neuronami obrazowane się za pomocą grafu (Rysunek 2.1).
+Neuronem określamy najbardziej elementarną cząstkę modelu uczenia maszynowego, który jest jest podstawowym budulcem sieci neuronowej. Często jest on pojedynczą liczbą np. odcień szarości (\textit{ang. Grayscale Value}) dla pojedynczego piksela w przypadku czarno-białego obrazka. Połączenia miedzy neuronami obrazowane się za pomocą grafu (Rysunek 2.1).
 
 \section{Sieci Neuronowe   \label{s:dsssl}}
 
-Sieci Neuronowe (ang. Neural Networks) to teoretyczny paradygmat struktur matematycznych inspirowany układem synaps i połączeń między nimi w mózgu. Składowymi sieci neuronowych są neurony oraz połączenia między nimi. Sieci neuronowe otrzymują liczbowe dane wejściowe i przekazują liczbowe dane wyjściowe. Może to być np. klasyfikacja, tłumaczenie lub obliczenie. Sieci neuronowe dzieli się na warstwy (ang layers), w których każda przetwarzana jest z uwzglądnieniem poprzedniej [7, 8].
+Sieci Neuronowe (\textit{ang. Neural Networks}) to teoretyczny paradygmat struktur matematycznych inspirowany układem synaps i połączeń między nimi w mózgu. Składowymi sieci neuronowych są neurony oraz połączenia między nimi. Sieci neuronowe otrzymują liczbowe dane wejściowe i przekazują liczbowe dane wyjściowe. Może to być np. klasyfikacja, tłumaczenie lub obliczenie. Sieci neuronowe dzieli się na warstwy (ang layers), w których każda przetwarzana jest z uwzglądnieniem poprzedniej [7, 8].
 
 
 
 \section{Przykład  \label{s:dsssl}}
 
 Posłużmy się przykładem prostej sieci neuronowej, która ma za zadanie rozpoznać pisane cyfry. Jest to najbardziej elementarny przykład w dziedzinie uczenia maszynowego.
-W przypadku analizy obrazka 64x64 piksele jedna warstwa sieci neuronowej sieć neuronowa składać będzie się z 4096 neuronów, czyli łącznej liczby pikseli w macierzy. Odniesienia do tego przykładu znajdą się w dalszych podrodziałach.
+W przypadku analizy obrazka 64x64 piksele jedna warstwa sieci neuronowej składać będzie się z 4096 neuronów, czyli łącznej liczby pikseli w macierzy. Odniesienia do tego przykładu znajdą się w dalszych podrodziałach.
 
 \begin{figure}[!tbh]
 \centering
@@ -140,9 +140,9 @@ W przypadku analizy obrazka 64x64 piksele jedna warstwa sieci neuronowej sieć n
 \section{Konwolucyjne Sieci Neuronowe  \label{s:dsssl}}
 
 
-Konwolucyjne Sieci Neuronowe (ang. Convolutional neural network) zwane też splotowymi to charakterystyczny dla głębokiego uczenia typ sieci neuronowych, w których liczba warstw w środku sieci jest ukryta (ang. Hidden Layers).
+Konwolucyjne Sieci Neuronowe (\textit{ang. Convolutional Neural Network}) zwane też splotowymi to charakterystyczny dla głębokiego uczenia typ sieci neuronowych, w których liczba warstw w środku sieci jest ukryta (\textit{ang. Hidden Layers}).
 
-Konwolucyjcym Sieci Neuronowe działają na zasadzie ekstrakcji cech (ang. feature extraction) na zbiorach danych. Zbudowane są z sekwencyjnych warstw, gdzie każda warstwa dokonuje ekstrakcji cech coraz to wyższego poziomu.
+Konwolucyjcym Sieci Neuronowe działają na zasadzie ekstrakcji cech (\textit{ang. Feature Extraction}) na zbiorach danych. Zbudowane są z sekwencyjnych warstw, gdzie każda warstwa dokonuje ekstrakcji cech coraz to wyższego poziomu.
 
 
 
@@ -167,11 +167,11 @@ Dane są często dzielone na osobne zestawy próbek szkoleniowych i próbek wali
 
 \section{Funkcja Aktywacji  \label{s:dsssl}}
 
-Najprostszą jednostką w (głębokich) sieciach neuronowych jest operacja liniowa (skalowanie + przesuwanie), po której następuje funkcja aktywacji (ang. Activation function).
+Najprostszą jednostką w (głębokich) sieciach neuronowych jest operacja liniowa (skalowanie + przesuwanie), po której następuje funkcja aktywacji (\textit{ang. Activation Function}).
 
 Ostatnią warstwą jest output cyfr 0 - 10 i ta z największą wartością aktywacji zostaje wybrana. 
 
-Dokładniej mówiąc neuron to funkcja, która przyjmuje dane wejściowe ze wszystkich neuronów z poprzedniej warstwy i przetwarza to na wartość od 0 do 1, 0 to czarny 1 to biały wartość ta zwana jest “aktywacją” lub “funkcją aktywacji”.
+Dokładniej mówiąc neuron to funkcja, która przyjmuje dane wejściowe ze wszystkich neuronów z poprzedniej warstwy i przetwarza to na wartość od 0 do 1, 0 to czarny, a 1 to biały. Wartości te zwana są “aktywacją” lub “funkcją aktywacji”.
 
 \begin{figure}[!tbh]
 \centering
@@ -190,7 +190,7 @@ neuron  = φ (w * x + b)
 
 \begin{itemize}
 \item “x” jest wkładem do obliczeń pojedynczego neuronu , w przypadku rozpoznawania cyfr x jest wartością 0 - 1 odcieniem szarości dla danego piksela
-\item “w” jest wagą, Jest to wartość, która na swój sposób określa jak istotny danych neuronów w przypadku rozpoznawania cyfr pisanych piksele na skraju obrazka będą miały mniejsze znaczenie niż te w okolicach jego centrum. Wagi mówią, jaki wzór pikselowy odbiera neuron w kolejnej warstwie.
+\item “w” jest wagą, Jest to wartość, która na swój sposób określa jak istotny jest wynik danych neuronów. W przypadku rozpoznawania cyfr pisanych odręcznie, piksele na skraju obrazka będą miały mniejsze znaczenie niż te w okolicach jego centrum. Wagi mówią, jaki wzór pikselowy odbiera neuron w kolejnej warstwie.
 \item "b" to odchylenie (bias), który mówi, jak wysoka musi być suma ważona, zanim neuron zacznie być znacząco aktywny.
 \end{itemize}
 
@@ -207,12 +207,12 @@ W każdej warstwie  wartość w neuronie po dodaniu odchylenia i przemnożeniu p
 Tak zwana warstwa ReLU usuwa ujemne wartości z mapy aktywacji, ustawiając je na zero, co zwiększa nieliniowe właściwości funkcji decyzyjnej i całej sieci.
 
 
- Wagi mnożymy z aktywacją ,  aby wagi pomagały w określeniu stopnia aktywacji, zachowujemy je w przedziale od 0 do 1.
+ Wagi mnożymy z aktywacją, aby pomagały w określeniu stopnia aktywacji, zachowujemy je w przedziale od 0 do 1.
  
  \section{Funkcja Strat \label{s:dsssl}}
  
-Funkcja strat (ang. loss function) to miara błędu w wykonywaniu zadania, takiego jak błąd między przewidywanymi wyjściami a mierzonymi wartościami. Celem jest, aby funkcja straty była jak najniższa. 
-Funkcja strat jest sumą kwadratów różnicy, między ostatnimi neuronami w sieci, a podanym przez użytkownika wynikiem. Średnią stratę dla całej sieci (ang. Mean Squared Error) wyliczamy ze wzoru:  
+Funkcja strat (\textit{ang. Loss Function}) to miara błędu w wykonywaniu zadania, takiego jak błąd między przewidywanymi wyjściami a mierzonymi wartościami. Celem jest, aby funkcja straty była jak najniższa. 
+Funkcja strat jest sumą kwadratów różnicy, między ostatnimi neuronami w sieci, a podanym przez użytkownika wynikiem. Średnią stratę dla całej sieci (\textit{ang. Mean Squared Error}) wyliczamy ze wzoru:  
 
 $$MSE=\frac{\sum_{i=1}^{n} (y_i - y_i)}{n}$$
 
@@ -229,7 +229,7 @@ Wyznacznikiem uczenia sieci neuronowej jest zmniejszanie funcji strat.
 
  \section{Metoda Gradientu Prostego\label{s:dsssl}}
 
-Metoda Gradientu Prostego (ang. Gradient descent) to opracowany przez Cauchy'ego w 1847 r. [6] iteracyjny algorytm optymalizacji pierwszego rzędu do znajdowania lokalnego minimum funkcji różniczkowalnej.
+Metoda Gradientu Prostego (\textit{ang. Gradient descent}) to opracowany przez Cauchy'ego w 1847 r. [6] iteracyjny algorytm optymalizacji pierwszego rzędu do znajdowania lokalnego minimum funkcji różniczkowalnej.
 
 W dziedzinie uczenia maszynowego Metoda Gradientu prostego jest użyteczna przy estymacji parametrów funkcji. 
 
@@ -248,7 +248,7 @@ Przykład użycia takiego optymalizatora znajduje się w rozdziale 5.3.
 
 \section{Wsteczna Propagacja\label{s:dsssl}}
 
-W uczeniu maszynowym propagowanie wsteczne (ang. backpropagation) jest szeroko stosowanym algorytmem w uczeniu sieci neuronowych. Algorytm ten edytuje wagi oraz odchylenia każdego połączenia neuronu w sieci tak, aby minimalizowć funkcję strat.
+W uczeniu maszynowym propagowanie wsteczne (\textit{ang. Backpropagation}) jest szeroko stosowanym algorytmem w uczeniu sieci neuronowych. Algorytm ten edytuje wagi oraz odchylenia każdego połączenia neuronu w sieci tak, aby minimalizowć funkcję strat.
 
 Przy dopasowywaniu sieci neuronowej wsteczna propagacja oblicza metodą gradientu prostego funkcję strat w odniesieniu do wag w całej sieci. Dzięki wydajności metody gradientu prostego możliwe jest szkolenie sieci wielowarstwowych.
 
@@ -259,22 +259,22 @@ Algorytm wstecznej propagacji działa poprzez obliczenie gradientu funkcji strat
  
  W przypadku algorytmu rozpoznjającego cyfry, obraz interpretowany przez komputer był w postaci dwuwymiarowej macierzy, z wartościami od 0 do 1. W przypadku algorytmów do innych zastosowań rozpoznawanie gatunków kwiatów lub znaków drogowych może okazać się to za mało. Analiza obrazów kolorowych zwiększa złożonośc sieci neuronowych. 
  
-Istnieje kilka sposobów kodowania liczb na kolory. Najczęstszym jest
+Istnieje kilka sposobów kodowania kolorów na liczby. Najpopularniejszym jest
 RGB, który określa kolor za pomocą trzech liczb reprezentujących intensywność czerwieni, zieleni i niebieskiego. 
 
 W tym momencie kolorowy obrazek jest obiektem podobnym do tablicy o trzech wymiarach: dwóch wymiarach przestrzennych (szerokość i wysokość) i trzecim wymiarze odpowiadającym kanałom czerwonym, zielonym i niebieskim. 
 
-Każdy kolor będzie reprezentowany jako 8-bitowa liczba całkowita, jak w większości formatów fotograficznych ze standardowych aparatów konsumenckich.
+Każdy kolor będzie reprezentowany jako 8-bitowa liczba całkowita, jak w większości formatów fotograficznych ze standardowych aparatów konsumenckich. [2]
 
-Wczytany obraz (np. w formacie *.jpg) należy przekrztałcić w tensor, który układa obraz w sposób zgodny z oczekiwaniami danego API uczenia maszynowego.
+Wczytany obraz (np. w formacie *.jpg) należy przekrztałcić w wielowymiarową tablicę, która układa obraz w sposób zgodny z oczekiwaniami danego API uczenia maszynowego.
 
 \section{Tensor\label{s:dsssl}}
 
 
 Tensor to struktura danych [4] przechowująca zbiór liczb, które są dostępne indywidualnie za pomocą indeksu i które mogą być indeksowane za pomocą wielu indeksów.
 
-Termin tensor jest dołączony do pojęcia przestrzeni, układów odniesienia i transformacji między nimi. Dla wszystkich innych tensor odnosi się do uogólnienia wektorów i macierzy do dowolnej liczby wymiarów, jak pokazano na rysunku.
-Tensor reprezentujące wartości w poszczególnych pikselach są często kodowane za pomocą liczb 8-bitowych, na przykład w kamerach konsumenckich. W zastosowaniach medycznych, naukowych i przemysłowych nierzadko można znaleźć piksele o większej precyzji numerycznej, takie jak 12-bitowe i 16-bitowe.
+Termin tensor jest dołączony do pojęcia przestrzeni, układów odniesienia i transformacji między nimi, odnosi się do uogólnienia wektorów i macierzy do dowolnej liczby wymiarów, jak pokazano na rysunku 2.6.
+Tensory reprezentujące wartości w poszczególnych pikselach są często kodowane za pomocą liczb 8-bitowych, na przykład w kamerach konsumenckich. [2] W zastosowaniach medycznych, naukowych i przemysłowych nierzadko można znaleźć piksele o większej precyzji numerycznej, takie jak 12-bitowe i 16-bitowe.
 
  Ta precyzja zapewnia szerszy zakres lub zwiększoną czułość w przypadkach, w których piksel koduje informacje dotyczące właściwości fizycznej, takiej jak gęstość kości, temperatura lub głębokość.
  
@@ -285,11 +285,11 @@ Tensor reprezentujące wartości w poszczególnych pikselach są często kodowan
 \source{Opracowanie własne}
 \end{figure}
 
-Sieci neuronowe pobierają tensory na wejściu i wytwarzają tensory jako wyjścia. W rzeczywistości wszystkie operacje w sieci neuronowej i podczas optymalizacji są operacjami między tensorami, a wszystkie parametry (takie jak wagi i odchylenia) w sieci neuronowej są tensorami.
+Sieci neuronowe pobierają tensory na wejściu i wytwarzają tensory jako wyjścia. W rzeczywistości wszystkie operacje w sieci neuronowej i podczas optymalizacji są operacjami między tensorami, a wszystkie parametry (takie jak wagi i odchylenia) w sieci neuronowej również są tensorami.
 
 
 
-Sieci neuronowe zwykle działają z wejściowymi tensorami zmiennoprzecinkowymi, wykazując najlepszą wydajność treningu, gdy dane wejściowe mieszczą się w przedziale od około 0 do 1 lub –1 do 1 (efekt definiowania ich bloków konstrukcyjnych). Sieci neuronowe wymagają przedstawiania danych jako wielowymiarowych tensorów numerycznych, często 32-bitowych liczb zmiennoprzecinkowych.
+Sieci neuronowe zwykle działają z wejściowymi tensorami zmiennoprzecinkowymi, wykazując najlepszą wydajność treningu, gdy dane wejściowe mieszczą się w przedziale od około 0 do 1 lub –1 do 1 (efekt definiowania ich bloków konstrukcyjnych). Sieci neuronowe wymagają przedstawiania danych jako wielowymiarowych tensorów numerycznych, często 32-bitowych liczb zmiennoprzecinkowych. [2]
 
 Na rysunku 2.4 został przedstawiony schemat procesu operacji na obrazie.
 
@@ -297,13 +297,13 @@ Na tensorach można  wykonać kilka innych operacji na danych wejściowych, w ty
 
  \section{Optymalizacja \label{s:dsssl}}
  
- Często w przypadku, gdy sieć neuronowa ma rozpoznawać zależności bazujące na kształtach, a rozpoznawanie cyfr pisanych właśnie takie jest, redukuje się dane wejściowe do minimum. Zamienia się wtedy kolorowy obrazek RGB na czarno-biały. Dzięki takiemu zabiegowi sieć neuronowa nie zawiera  niepotrzebnych danych takiech jak kolor i może to dać lepszą rozpoznawalność jak również wzrost wydajności zarówno w procesie szkolenia jak i działania klasyfikatora.  
+ Często w przypadku, gdy sieć neuronowa ma rozpoznawać zależności bazujące na kształtach (a rozpoznawanie cyfr pisanych właśnie takie jest) redukuje się dane wejściowe do minimum. Zamienia się wtedy kolorowy obrazek RGB na czarno-biały. Dzięki takiemu zabiegowi sieć neuronowa nie zawiera  niepotrzebnych danych takiech jak kolor i może to dać lepszą rozpoznawalność jak również wzrost wydajności zarówno w procesie szkolenia jak i działania klasyfikatora.  
 
 
 
  \section{Podsumowanie \label{s:dsssl}}
  
-Podsumowując można uważać za  poprawne stwierdzenie, iż uczenie się sieci to tylko modyfikowanie wag oraz odchyleń tak, aby osiągać najlepsze rezultaty, czyli uczenie się jest swego rodzaju oszacowaniem parametrów.   
+Podsumowując, można uważać za  poprawne stwierdzenie, iż uczenie sieci to tylko modyfikowanie wag oraz odchyleń tak, aby osiągać najlepsze rezultaty, czyli uczenie jest swego rodzaju oszacowaniem parametrów.   
 
 
 
@@ -314,11 +314,11 @@ Przetwarzanie obrazu przy użyciu sieci neuronowych to interdyscyplinarne zagadn
 \section{Python\label{s:dsssl}}
 
 Język Python powstał już w latach dziewięćdziesiątych, a między innymi dzięki rewolucji uczenia maszynowego przeżywa swoją drugą młodość. Jest używany w przez największe frameworki do uczenia maszynowego takie jak Tensorflow czy PyTorch (opisany w rodziale  4.3).
-Jest to język, z którego w większości składa się interfejs Blendera. Każda wersja blendera ma wbudowaną już własną wersję pythona. Na potrzeby tej pracy cała implementacja Transferu Stylu została napisana w tym języku.
+Jest to język, z którego w większości składa się API (\textit{ang. Application Programming Interface}) Blendera, czyli udostępniony dla programistów sposób do rozbudowywania tej aplikacji. Każda wersja Blendera ma wbudowaną już własną wersję Pythona. Na potrzeby tej pracy cała implementacja Transferu Stylu została napisana w tym języku.
 
 \section{Blender\label{s:dsssl}}
 
-Blender jest to wolnym i otwartym oprogramowaniem do modelowania i renderowania obrazów oraz animacji trójwymiarowych. Pozwala on na pisanie w języku python skryptów, które poszerzają podstawowe funkcjonalności blendera.
+Blender jest darmowym i otwartym oprogramowaniem do modelowania i renderowania obrazów oraz animacji trójwymiarowych. Pozwala on na pisanie w języku Python skryptów, które poszerzają podstawowe funkcjonalności Blendera.
 
 \section{Wtyczki\label{s:dsssl}}
 
@@ -353,15 +353,15 @@ Zarówno wtyczki do Blendera jak i same operacje przy użyciu PyTorch’a mogą 
 \end{figure}
 
 \section{PyCharm\label{s:dsssl}}
- PyCharm to zintegrowane środowisko programistyczne (IDE) dla języka programowania Python firmy JetBrains. Zapewnia m.in.: edycję i analizę kodu źródłowego, graficzny debugger, uruchamianie testów jednostkowych, integrację z systemem kontroli wersji. 
+ PyCharm to zintegrowane środowisko programistyczne (\textit{Integrated Development Environment IDE}) firmy JetBrains dla języka programowania Python. Zapewnia m.in.: edycję i analizę kodu źródłowego, graficzny debugger, uruchamianie testów jednostkowych, integrację z systemem kontroli wersji. 
  
  \section{Jupyter Notebook\label{s:dsssl}}
  
-Jupyter Notebook to interaktywne środowisko pozwalająca na wykonywanie kodu uczenia maszynowego po stronie serwera. Pozwala na szybkie debugowanie i testowanie kodu między innymi biblioteki PyTorch.
+Jupyter Notebook to interaktywne środowisko pozwalające na wykonywanie kodu uczenia maszynowego po stronie serwera. Pozwala na szybkie debugowanie i testowanie kodu, między innymi biblioteki PyTorch.
 
  \section{CUDA\label{s:dsssl}}
  
-CUDA (ang. Compute Unified Device Architecture) jest to opracowana przez firmę Nvidia uniwersalna architektura procesorów wielordzeniowych (głównie kart graficznych) umożliwiająca wykorzystanie ich mocy obliczeniowej do rozwiązywania ogólnych problemów numerycznych w sposób wydajniejszy niż w tradycyjnych, sekwencyjnych procesorach ogólnego zastosowania. Charakteryzuje się ona wyższym współczynnikiem FLOPS (ang. floating point operations per second) czyli ilości operacji zmiennoprzecinkowych na sekundę.
+CUDA (\textit{ang. Compute Unified Device Architecture}) jest to opracowana przez firmę Nvidia uniwersalna architektura procesorów wielordzeniowych (głównie kart graficznych) umożliwiająca wykorzystanie ich mocy obliczeniowej do rozwiązywania ogólnych problemów numerycznych w sposób wydajniejszy niż w tradycyjnych, sekwencyjnych procesorach ogólnego zastosowania. Charakteryzuje się ona wyższym współczynnikiem FLOPS (\textit{ang. Floating Point Operations Per Second}) czyli ilości operacji zmiennoprzecinkowych na sekundę.
 
 
 
@@ -373,7 +373,7 @@ Podobnie jak w przypdaku narzędzi jest wiele bibliotek w języku Python rozwią
 W tym rozdziale opisane zostaną natomiast te, użyte w implementacji Transferu Stylu opisanego szczegółowo wraz z przykładowym kodem w rozdziale 5.
 
  \section{PIP\label{s:dsssl}}
- PIP (ang. Package In Python) to standardowy system zarządzania rozszerzeniami i bibliotekami w Pythonie. Wszystkie inne zewnętrzne bibilioteki pythona instalowane są przy pomocy biblioteki PIP.
+ PIP (\textit{ang. Pip Installs Python}) to standardowy system zarządzania rozszerzeniami i bibliotekami w Pythonie. Wszystkie inne zewnętrzne biblioteki Pythona instalowane są przy pomocy PIP.
 
 \lstset{caption={Przykład instalacji PIP-a na danym Pythonie}}
 \begin{lstlisting}
@@ -398,7 +398,7 @@ python.exe -m pip install torch
 
 Dzięki integracji bibliotek PyTorch ze standardową biblioteką Python i otaczającym ekosystemem, ładowanie najpopularniejszych rodzajów danych i konwertowanie ich do tensorów PyTorch jest wygodne.􏰹Biblioteki takie jak PyTorch pozwalają efektywnie budować i trenować modele sieci neuronowych.
 
-PyTorch zapewnia podstawową strukturę danych, Tensor, wielowymiarową tablicę, która ma wiele podobieństw z tablicami NumPy więcej o Tensorach w rozdziale 2.10.
+PyTorch zapewnia podstawową strukturę danych - Tensor, czyli wielowymiarową tablicę, która ma wiele podobieństw z tablicami NumPy więcej o Tensorach w rozdziale 2.10.
 
  Tensory przyspieszają operacje matematyczne (przy założeniu, że obecna jest odpowiednia kombinacja sprzętu i oprogramowania), a PyTorch ma pakiety do rozproszonego szkolenia, procesy robocze dla efektywnego ładowania danych oraz obszerną bibliotekę wspólnych funkcji głębokiego uczenia.
 
@@ -414,7 +414,7 @@ PyTorch może być wykorzystywany do fizyki, renderowania, optymalizacji, symula
 
 Modele głębokiego uczenia automatycznie uczą się kojarzyć dane wejściowe i pożądane wyniki z przykładów.
 
-W najprostszym przypadku model wykona wymagane obliczenia na lokalnym procesorze lub na pojedynczym GPU, więc gdy pętla treningowa zawiera dane, obliczenia mogą rozpocząć się natychmiast. [3, 10, 12] Częściej jednak trzeba korzystać ze specjalistycznego sprzętu, takiego jak wiele procesorów graficznych lub aby wiele maszyn włączyło swoje zasoby w szkolenie modelu. 
+W najprostszym przypadku model wykona wymagane obliczenia na lokalnym procesorze lub na pojedynczym GPU, więc gdy pętla treningowa zawiera dane, obliczenia mogą rozpocząć się natychmiast. [3, 10, 12] Częściej jednak trzeba korzystać ze specjalistycznego sprzętu, takiego jak wiele procesorów graficznych lub włączanie zasobów wielu maszyn w szkolenie modelu.. 
 
 
 \lstset{caption={Funkcja boolowska, sprawdzająca czy dana maszyna wspiera architekturę CUDA}}
@@ -447,7 +447,7 @@ Ten kod zwraca nowy tensor, który ma te same dane liczbowe, ale jest przechowyw
 
   \section{BPY\label{s:dsssl}}
   
-  BPY (ang. Blender Python) to biblioteka do komunikowania się z Blenderem, a konkretnej z Pythonem wbudowanym w Blendera. Wszystkie operacje, które można wykonać przy pomocy intefejsu graficznego Blendera można też przedstawić jako kod wykonywany przy odwołaniu do BPY [14, 15].
+  BPY (\textit{ang. Blender Python}) to jedna z głównych bibliotek Blendera do komunikowania się z Blenderem, a konkretnej z Pythonem wbudowanym w Blendera. Wszystkie operacje, które można wykonać przy pomocy intefejsu graficznego Blendera można też przedstawić jako kod wykonywany przy odwołaniu do BPY [14, 15].
   
   
   \begin{figure}[!tbh]
@@ -462,15 +462,15 @@ Ten kod zwraca nowy tensor, który ma te same dane liczbowe, ale jest przechowyw
     NumPy jest zdecydowanie najpopularniejszą biblioteką wielowymiarową. PyTorch oferuje płynną interoperacyjność z NumPy, co zapewnia integrację z resztą bibliotek naukowych w języku Python, takie jak SciPy, Scikit-learn i Pandas.
     
 
-Tensory PyTorch, w przeciwieństwie z macierzami NumPy, mają zdolność do wykonywania szybkich operacji na graficznych jednostkach przetwarzających (GPU), do dystrybucji operacji na wielu urządzeniach lub maszynach oraz do śledzenia wykresu utworzonych obliczeń im. Wszystkie te funkcje są ważne przy wdrażaniu nowoczesnej biblioteki do głębokiego uczenia się.
+Tensory PyTorch, w przeciwieństwie z macierzami NumPy, mają zdolność do wykonywania szybkich operacji na graficznych jednostkach przetwarzających (GPU), do dystrybucji operacji na wielu urządzeniach oraz do śledzenia wykresu utworzonych obliczeń. Wszystkie te funkcje są ważne przy wdrażaniu nowoczesnej biblioteki do głębokiego uczenia się.
 
 
-Tensory PyTorch można konwertować na tablice NumPy i odwrotnie. W ten sposób można wykorzystać ogromną liczbę funkcji w szerszym ekosystemie Pythona, który zbudował się wokół typu tablicy NumPy. Ta zerowa kopia współdziałania z tablicami NumPy wynika z systemu pamięci, który współpracuje z protokołem buforującym Pythona. 
-Ze względu na jego wszechobecność w ekosystemie nauki danych w Pythonie łatwa zamiana tensora na tablicę NumPy, aby użyć charakterystycznych dla NumPy metod bywa przydatne.
+Tensory PyTorch można konwertować na tablice NumPy i odwrotnie. W ten sposób można wykorzystać ogromną liczbę funkcji w szerszym ekosystemie Pythona, który zbudował się wokół typu tablicy NumPy. Brak koniecznoścu kopiowania danych między tensorami, a tablicami NumPy wynika z systemu pamięci, który współpracuje z protokołem buforującym Pythona. 
+Ze względu na jego wszechobecność w ekosystemie nauki danych w Pythonie łatwa zamiana tensora na tablicę NumPy, aby użyć charakterystycznych dla NumPy metod bywa przydatna.
 
     \section{Torchvision\label{s:dsssl}}
     
-    Torchvision składa się z popularnych zestawów danych, architektur modeli i typowych transformacji obrazu. Torchvision udostępnie wiele wytrenowanych zawczasu modeli, które są gotowe do użycia. Między innymi VGG19 używane w tej pracy.
+    Torchvision składa się z popularnych zestawów danych, architektur modeli i typowych transformacji obrazu. Torchvision udostępnia wiele wytrenowanych zawczasu modeli, które są gotowe do użycia. Między innymi VGG19 używane w tej pracy.
     
 \lstset{caption={Przykład pobrania modelu VGG19 przez torchvision, więcej o VGG19 w rozdziale 5.4}}
 \begin{lstlisting}
@@ -480,12 +480,12 @@ models.vgg19(pretrained=True).features
 
 \section{Pillow\label{s:dsssl}}
     
-   Pillow (ang. Python Image Library PIL) dodaje obsługę grafiki np. otwieranie, modyfikowanie, zapisywanie plików graficznych.
+   Pillow (\textit{ang. Python Image Library PIL}) dodaje obsługę grafiki np. otwieranie, modyfikowanie, zapisywanie plików graficznych.
    
     
 \section{OS\label{s:dsssl}}
         
-Biblioteka impermentująca  interfejsy systemu operacyjnego. W przypadku tej pracy pozwala wykonać instalację paczek w tle poprzez wykonanie procesu terminalowego w tle. 
+Biblioteka impermentująca interfejsy systemu operacyjnego. W przypadku tej pracy pozwala wykonać instalację paczek w tle poprzez wykonanie procesu terminalowego w tle. 
 
 
 \lstset{caption={Przykład pobrania modelu VGG19 przez torchvision, więcej o VGG19 w rozdziale 5.4}}
@@ -503,26 +503,26 @@ Algorytm Neural-Style opracowany został przez Leona A. Gatysa, Alexandra S. Eck
 
 Jak zostało wspimniane we wcześniejsczych rodziałach sieci neuronowe zbudowane są z sekwencyjnych warstw, gdzie każda warstwa dokonuje ekstrakcji cech coraz to wyższego poziomu.
 
-Na początku możliwe musi być analiza obrazu "stylu" i odzielenie stylu obrazka od jego zawartości. 
+Na początku możliwa musi być analiza "stylu" obrazu i odzielenie stylu obrazka od jego zawartości. 
 Następnym krokiem jest tranfer tego stylu z jednego obrazka do drugiego.[4]
 
 Na podstawowym poziomie jako "styl" można interpretować jako  kolorystyki (np. dominanata czerwonego) oraz tekstury (fale na całości obrazu).
 Styl może też odnosić się do bardziej specyficznych właściwosći np. ruchu pędzla lub techniki malowania. Oczywiście treści i stylu obrazu nie można całkowicie rozdzielić. Podczas syntezy obrazu, który łączy zawartość jednego obrazu ze stylem drugiego, zwykle nie istnieje obraz, który idealnie pasuje do obu ograniczeń jednocześnie. Ponieważ jednak funkcja straty, którą minimalizujemy podczas syntezy obrazu, jest liniową kombinacją funkcji straty odpowiednio dla treści i stylu, możemy płynnie regulować nacisk na każdą rekonstrukcję treści lub stylu.
 
-W przykładzie, w którym algorytm rozpoznawał cyfry, neuronem był pojedynczy piksel ze skalą szarości (ang. grayscale), w przypadku Transferu Stylu mamy dwa obrazki o pełnym  spektrum RGB (red, green, blue), a co za tym idzie neuron będzie bardziej skomplikowany. Podobnie jak w Rysunku 2.1. Tworzymy teoretyczny model warstw sieci neuronowych. W tym przypadku pierwszą  warstwą jest tablica wszystkich pikseli z wartościami RGB z obrazka wejściowego RGB. Ostatnią warstwą  są pixele w tej samej ilości i układzie, ale ze zmienionymi wartościami RGB. 
+W przykładzie, w którym algorytm rozpoznawał cyfry, neuronem był pojedynczy piksel ze skalą szarości (\textit{ang. Grayscale}), w przypadku Transferu Stylu mamy dwa obrazki o pełnym  spektrum RGB (red, green, blue), a co za tym idzie neuron będzie bardziej skomplikowany. Podobnie jak w Rysunku 2.1. Tworzymy teoretyczny model warstw sieci neuronowych. W tym przypadku pierwszą  warstwą jest tablica wszystkich pikseli z wartościami RGB z obrazka wejściowego RGB. Ostatnią warstwą  są pixele w tej samej ilości i układzie, ale ze zmienionymi wartościami RGB. 
 
  \begin{figure}[!tbh]
 \centering
 \includegraphics[width=.8\hsize]{fig/6}
-\caption{Przykład zastosowania tranferu stylu
-Obrazy łączące treść zdjęcia ze stylem kilku znanych dzieł sztuki. Obrazy zostały utworzone przez znalezienie obrazu, który jednocześnie pasuje do reprezentacji treści fotografii i stylu kompozycji. Oryginalne zdjęcie przedstawiające wizualizację nowego budynku wydziału Informatyki Uniwersytetu Gdańskiego. Obraz, który zapewnił styl dla odpowiedniego wygenerowanego obrazu, Gwiaździsta noc Vincenta van Gogha, 1889. Na samym końcu widzimy obraz wyjścia po wykonianiu 2048 iteracji.
+\caption{Przykład zastosowania tranferu stylu.
+Obraz łączący treść zdjęcia ze stylem kilku znanego dzieła sztuki. Obraz został utworzone przez znalezienie obrazu, który jednocześnie pasuje do reprezentacji treści fotografii i stylu kompozycji. Oryginalne zdjęcie przedstawiające wizualizację nowego budynku wydziału Informatyki Uniwersytetu Gdańskiego. Obraz, który zapewnił styl dla odpowiedniego wygenerowanego obrazu, Gwiaździsta noc Vincenta van Gogha, 1889. Na samym końcu widzimy obraz wyjścia po wykonianiu 2048 iteracji.
 \label{RYS.6}}
-\source{Opracowanie własne}
+\source{\textit{https://inf.ug.edu.pl}, Opracowanie własne}
 \end{figure}
 
 Oddzielenie treści od stylu w obrazach jest niezwykle trudnym problemem. Jednak ostatni postęp w głębokich konwolucyjnych sieciach neuronowych [4,5,7] stworzył potężne komputerowe systemy interpretacji obrazu, które uczą się wyodrębniać informacje semantyczne na wysokim poziomie z obrazów naturalnych.
 
-Koncepcyjnie jest to algorytm przesyłania tekstur, który ogranicza metodę syntezy tekstur poprzez reprezentacje cech z supernowoczesnych sieci neuronowych konwergentnych.[4,5,7] Ponieważ model tekstury opiera się również na głębokich reprezentacjach obrazu, metoda transferu stylu elegancko ogranicza się do problemu optymalizacji w ramach jednej sieci neuronowej. Nowe obrazy są generowane przez wykonanie wyszukiwania przed obrazem w celu dopasowania reprezentacji cech przykładowych obrazów.
+Koncepcyjnie jest to algorytm przesyłania tekstur, który ogranicza metodę syntezy tekstur poprzez reprezentacje cech z nowoczesnych konwolucyjnych sieci neuronowych.[4,5,7] Ponieważ model tekstury opiera się również na głębokich reprezentacjach obrazu, metoda transferu stylu elegancko ogranicza się do problemu optymalizacji w ramach jednej sieci neuronowej.
 
 Kiedy konwolucyjne sieci neuronowe są szkolone w zakresie rozpoznawania obiektów, rozwijają reprezentację obrazu, która sprawia, że informacje o obiektach stają się coraz bardziej wyraźne wzdłuż hierarchii przetwarzania. Dlatego wzdłuż hierarchii przetwarzania sieci obraz wejściowy przekształca się w reprezentacje, które są coraz bardziej wrażliwe na rzeczywistą treść obrazu, ale stają się względnie niezmienne dla jego dokładnego wyglądu. Zatem wyższe warstwy w sieci wychwytują zawartość wysokiego poziomu w kategoriach obiektów i ich rozmieszczenia w obrazie wejściowym, ale nie ograniczają bardzo dokładnie wartości pikseli w rekonstrukcji. Natomiast rekonstrukcje z niższych warstw po prostu odtwarzają dokładne wartości pikseli oryginalnego obrazu Dlatego też opis funkcji w wyższych warstwach sieci nazywamy reprezentacją treści.
 
@@ -543,13 +543,13 @@ Aby trenować model, potrzeba:
 Transfer stylu to złożona technika wymagająca bardzo złożonego wytrenowanego modelu. Tutaj przydatne okazują się wytrenowane już modele. VGG19 jest bardzo efektywny przy ekstrakcji cech.
 
 \section{Matryca Gram\label{s:dsssl}}
-Aby osięgnąć efektywną jak i efektowną ekstrakcję stylu. Celem jest minimalizacja różnicy między rozkładami funkcji. Wyciągnięty styl wciąż przechowuje informację niepotrzebne, takie jak pozycje elementów czy ich strukturę na obrazie.Aby pozbyć się niepotrzebnych informacji trzeba wykonać przetwarzanie wstępne (ang. preprocesing) na macierzy cech, która została wyciągnięta:
+Aby osięgnąć efektywną jak i efektowną ekstrakcję stylu. Celem jest minimalizacja różnicy między rozkładami funkcji. Wyciągnięty styl wciąż przechowuje informacje niepotrzebne, takie jak pozycje elementów czy ich strukturę na obrazie. Aby pozbyć się niepotrzebnych informacji trzeba wykonać przetwarzanie wstępne (\textit{ang. Preprocesing}) na macierzy cech, która została wyciągnięta:
 
 \begin{equation}
 Gram = V^TV
 \end{equation}
 
-gdzie V to dowony wektor będący jedną z cech (ang. feature) w modelu, natomiast T jest transpozycją tego wektora. 
+gdzie V to dowony wektor będący jedną z cech (\textit{ang. Feature}) w modelu, natomiast T jest transpozycją tego wektora. 
 \lstset{caption={Przykłąd implementacji funkcji, która przetwarza tensor wedle opisanego powyżej wzoru.}}
 \begin{lstlisting}
 # Gram Matrix
@@ -567,8 +567,8 @@ gram\:=\:torch.mm (tensor,\:tensor.t)
 
 \section{VGG19\label{s:dsssl}}
 
-VGG (ang. Visual Geometry Group) to pretrenowany model konwolucyjnej sieci neuronowej. 
-Wytrenowana na uniwersytecie Oksfordzkim została przeszkolona w zakresie rozpoznawania i lokalizacji obiektów na obrazie 2D jest szczegółowo opisana w oryginalnej pracy [5].
+VGG (\textit{ang. Visual Geometry Group}) to pretrenowany model konwolucyjnej sieci neuronowej. 
+Model został wytrenowana na uniwersytecie Oksfordzkim w zakresie rozpoznawania i lokalizacji obiektów na obrazie 2D i jest szczegółowo opisany w oryginalnej pracy [5].
 
 \begin{figure}[!tbh]
 \centering
@@ -578,12 +578,13 @@ Wytrenowana na uniwersytecie Oksfordzkim została przeszkolona w zakresie rozpoz
 \end{figure}
 
 
-Kluczową w tym przypaku jest klasyfikacja oraz wyodrębnianie funkcji.
-VGG19 Wykorzystuje przestrzeń cech, jaką zapewnia znormalizowana wersja 16 konwojacyjnych i 5 warstw pulujących 19-warstwowej sieci VGG. Znormalizowaliśmy sieć, skalując wagi tak, aby średnia aktywacja każdego filtra konwolucyjnego względem obrazów i pozycji była równa jeden. Takie ponowne skalowanie można wykonać dla sieci VGG bez zmiany jej mocy wyjściowej, ponieważ zawiera ona jedynie prostujące liniowe funkcje aktywacyjne i nie ma normalizacji ani łączenia nad mapami cech. Nie używamy żadnej z w pełni połączonych warstw. W przypadku syntezy obrazu stwierdzono, że zastąpienie maksymalnej operacji łączenia przez średnie łączenie w pulę daje nieco bardziej atrakcyjne wyniki, dlatego pokazane obrazy zostały wygenerowane ze średnim zestawieniem w puli. 
+Kluczowa w tym przypaku jest klasyfikacja i wyodrębnianie funkcji.
+VGG19 wykorzystuje przestrzeń cech, jaką zapewnia znormalizowana wersja 16 konwolucyjnych, 5 warstw ekstrakcji (\textit{ang. Pooling Layers}) i 19-warstwowej sieci VGG. Znormalizowaliśmy sieć, skalując wagi tak, aby średnia aktywacja każdego filtra konwolucyjnego względem obrazów i pozycji była równa jeden. Takie ponowne skalowanie można wykonać dla sieci VGG bez zmiany jej mocy wyjściowej, ponieważ zawiera ona jedynie prostujące liniowe funkcje aktywacyjne i nie ma normalizacji ani łączenia nad mapami cech. Nie używamy żadnej z w pełni połączonych warstw. W przypadku syntezy obrazu stwierdzono, że zastąpienie maksymalnej operacji łączenia przez średnie łączenie w pulę daje nieco bardziej atrakcyjne wyniki, dlatego pokazane obrazy zostały wygenerowane ze średnim zestawieniem w puli. 
 
 Jako, iż VGG19 to wilozadaniowy model, nie wszystkie warstwy będą przydatne przy implementacji Transferu Stylu. 
 
-Do transferu stylu potrzebne są tylko te warstwy używane do znajdywania cech. Jest to tylko 6 warstw: warstwy 0, 5, 10, 19, 28 do ekstrakcji stylu oraz warstwa  21 do ekstrakcji kontentu.
+Do transferu stylu potrzebne są tylko te warstwy używane do znajdo
+model.vgg19(pretrained = T rue)wania cech. Jest to tylko 6 warstw: warstwy 0, 5, 10, 19, 28 do ekstrakcji stylu oraz warstwa  21 do ekstrakcji kontentu.
 
 \lstset{caption={Przykład implementacji modelu VGG19 [13]}}
 \begin{lstlisting}
@@ -613,7 +614,7 @@ Reprezentacje treści i stylu w konwolucyjnej sieci neuronowej są rozdzielne w 
 
 Innym ważnym czynnikiem w procesie syntezy obrazu jest wybór warstw pasujących do treści i reprezentacji stylu. Jak opisano powyżej, reprezentacja stylu jest reprezentacją wielowarstwową, która obejmuje wiele warstw sieci neuronowej. Liczba i położenie tych warstw determinuje lokalną skalę, w której dopasowany jest styl, co prowadzi do różnych wrażeń wizualnych [4]. 
 \\
- Najbardziej atrakcyjne wizualnie obrazy są zwykle tworzone przez dopasowanie reprezentacji stylu do wysokich warstw w sieci, dlatego dla wszystkich wyświetlanych obrazów dopasowujemy cechy stylu na warstwach „conv1 1”, „conv2 1”, „conv3 1 ”,„ conv4 1 ”i„ conv5 1 ”sieci.
+ Najbardziej atrakcyjne wizualnie obrazy są zwykle tworzone przez dopasowanie reprezentacji stylu do wysokich warstw w sieci, dlatego dla wszystkich wyświetlanych obrazów dopasowujemy cechy stylu na warstwach „conv1 1”, „conv2 1”, „conv3 1”, „conv4 1” i „conv5 1” sieci.
 
 \section{Optymalizacja\label{s:dsssl}}
 
@@ -636,15 +637,14 @@ optimizer.step()
 						
 \section{Ograniczenia\label{s:dsssl}}
 
-Prawdopodobnie najbardziej ograniczającym czynnikiem jest rozdzielczość zsyntetyzowanych obrazów. Zarówno problem optymalizacji, jak i liczba jednostek w konwolucyjnej sieci neuronowej rosną wraz z liczbą pikseli, dlatego szybkość procedury syntezy zależy w dużej mierze od rozdzielczości obrazu. Obrazy przedstawione w tym artykule zostały zsyntetyzowane w rozdzielczości około 1024 × 1024 pikseli, a procedura syntezy może zająć nawet godzinę na karcie graficznej NVIDIA GeForce GTX 1060 (M) (Przy użyciu technologii CUDA, októrej wiecej w rozdziale 3.6). Podczas gdy ta wydajność obecnie zabrania stosowania online i interaktywnych aplikacji algorytmu transferu stylu, prawdopodobne jest, że przyszłe ulepszenia w głębokim uczeniu również zwiększą wydajność tej metody.
-
+Prawdopodobnie najbardziej ograniczającym czynnikiem jest rozdzielczość zsyntetyzowanych obrazów. Zarówno problem optymalizacji, jak i liczba jednostek w konwolucyjnej sieci neuronowej rosną wraz z liczbą pikseli, dlatego szybkość procedury syntezy zależy w dużej mierze od rozdzielczości obrazu. Obrazy przedstawione w tym artykule zostały zsyntetyzowane w rozdzielczości około 1024 × 1024 pikseli, a procedura syntezy może zająć nawet godzinę na karcie graficznej NVIDIA GeForce GTX 1060 (M) (Przy użyciu technologii CUDA, októrej wiecej w rozdziale 3.6). Podczas gdy ta wydajność obecnie zabrania w interaktywnych aplikacjach algorytmu transferu stylu, prawdopodobne jest, że przyszłe ulepszenia w głębokim uczeniu zwiększą wydajność tej metody.
 
 Inną kwestią jest to, że zsyntetyzowane obrazy narażone są na zakłócenia zwane dalej szumem.  Problem staje się bardziej widoczny, gdy zarówno treść, jak i obrazy w stylu są fotografiami i już na poziomie analizy obraka wejściowego wpływa na wygląd zsyntetyzowanego obrazu. Taki szum jest bardzo charakterystyczny i przypomina filtr. 
 
-Instnieją zaawansowane techniki usuwania sztakich szumów. Takie jak D-Noise Addon dla Blendera od firmy Remington [21] czy NVIDIA OptiX Ray Tracing Engine [22]. Oba rozwiązania również korzystają z dobrodziejstw sztuczej ineligencji oraz głębokiego uczenia. Zatem możliwe byłoby skonstruowanie skutecznych technik usuwania szumów w celu późniejszego przetwarzania obrazów po procedurze optymalizacji.
+Instnieją zaawansowane techniki usuwania sztakich szumów. Takie jak D-Noise Addon dla Blendera od firmy Remington [21] czy NVIDIA OptiX Ray Tracing Engine [22]. Oba rozwiązania korzystają z dobrodziejstw sztuczej ineligencji oraz głębokiego uczenia. Zatem możliwe byłoby skonstruowanie skutecznych technik usuwania szumów w celu późniejszego przetwarzania obrazów po procedurze optymalizacji.
  \\
 
-Oddzielenie treści obrazu od stylu nie jest koniecznie dobrze zdefiniowanym problemem. Wynika to głównie z tego, że nie jest jasne, co dokładnie określa styl obrazu. Mogą to być pociągnięcia pędzlem na obrazie, mapa kolorów, niektóre dominujące formy i kształty, ale także kompozycja sceny i wybór podmiotu obrazu - i prawdopodobnie jest to połączenie ich wszystkich i wiele więcej. 
+Oddzielenie treści obrazu od stylu nie jest koniecznie dobrze zdefiniowanym problemem. Wynika to głównie z tego, że nie jest jasne, co dokładnie określa styl obrazu. Mogą to być pociągnięcia pędzlem na obrazie, mapa kolorów, niektóre dominujące formy i kształty, ale także kompozycja sceny i wybór podmiotu obrazu lub jest to połączenie ich wszystkich i wiele więcej. 
 
 \section{Podsumowanie\label{s:dsssl}}
 
