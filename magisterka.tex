@@ -402,7 +402,7 @@ Operacje matematyczne na tensorach zwykle są szybsze niż na zwykłych tablicac
 
 PyTorch stanowi zarówno doskonałe wprowadzenie do głębokiego uczenia, jak i narzędzie przydatne w profesjonalnych komercyjnych zastosowań.
 
-[3]PyTorch ma "Py"z Pythona, ale jest w nim dużo kodu innego niż Python. 
+PyTorch ma "Py"z Pythona, ale jest w nim dużo kodu innego niż Python. [3]
 Ze względu na wydajność większość PyTorch jest napisana w C++. 
 Zarówno tensory, jak i powiązane operacje mogą działać na CPU lub GPU. 
 
@@ -412,8 +412,8 @@ PyTorch może być wykorzystywany do fizyki, renderowania, optymalizacji, symula
 
 Modele głębokiego uczenia automatycznie uczą się kojarzyć dane wejściowe i pożądane wyniki z przykładów.
 
-W najprostszym przypadku model wykona wymagane obliczenia na lokalnym procesorze lub na pojedynczym GPU, więc gdy pętla treningowa zawiera dane, obliczenia mogą rozpocząć się natychmiast. [3, 10, 12] Częściej jednak trzeba korzystać ze specjalistycznego sprzętu, takiego jak wiele procesorów graficznych lub włączanie zasobów wielu maszyn w szkolenie modelu.. 
-
+W najprostszym przypadku model wykona wymagane obliczenia na lokalnym procesorze lub na pojedynczym GPU, więc gdy pętla treningowa zawiera dane, obliczenia mogą rozpocząć się natychmiast. [3, 10, 12] Częściej jednak trzeba korzystać ze specjalistycznego sprzętu, takiego jak wiele procesorów graficznych lub włączanie zasobów wielu maszyn w szkolenie modelu.
+\\
 
 \lstset{caption={Funkcja boolowska, sprawdzająca czy dana maszyna wspiera architekturę CUDA}}
 \begin{lstlisting}
@@ -442,7 +442,8 @@ Ten kod zwraca nowy tensor, który ma te same dane liczbowe, ale jest przechowyw
 
 􏰹Te reprezentacje zmiennoprzecinkowe są przechowywane w tensorach. Tensory to tablice wielowymiarowe i podstawowa struktura danych w PyTorch. PyTorch ma wszechstronną bibliotekę standardową do tworzenia tensorów i operacji matematycznych. Tensory można uszeregować na dysk i ładować z powrotem.
 􏰹Wszystkie operacje tensora w PyTorch mogą być wykonywane zarówno na CPU, jak i na GPU bez zmiany kodu.
-
+\\
+\\
   \section{BPY\label{s:dsssl}}
   
   BPY (\textit{ang. Blender Python}) to jedna z głównych bibliotek do komunikowania się z Blenderem, a konkretnej z Pythonem wbudowanym w Blendera. Wszystkie operacje, które można wykonać przy pomocy intefejsu graficznego Blendera można też przedstawić jako kod wykonywany przy odwołaniu do BPY [14, 15].
@@ -654,8 +655,10 @@ optimizer.step()
 \section{Ograniczenia\label{s:dsssl}}
 
 Prawdopodobnie najbardziej ograniczającym czynnikiem jest rozdzielczość zsyntetyzowanych obrazów. Zarówno problem optymalizacji, jak i liczba jednostek w konwolucyjnej sieci neuronowej rosną wraz z liczbą pikseli, dlatego szybkość procedury syntezy zależy w dużej mierze od rozdzielczości obrazu. Obrazy przedstawione w tej pracy zostały zsyntetyzowane w rozdzielczości około 1024 × 1024 pikseli, a procedura syntezy może zająć nawet godzinę na karcie graficznej NVIDIA GeForce GTX 1060 (M) (Przy użyciu technologii CUDA, o której wiecej w rozdziale 3.6). Podczas gdy ta wydajność obecnie nie sprawdzi się w interaktywnych aplikacjach, prawdopodobne jest, że przyszłe ulepszenia w głębokim uczeniu zwiększą wydajność tej metody.
+\\
 
 Inną kwestią jest to, że zsyntetyzowane obrazy narażone są na zakłócenia zwane dalej szumem.  Problem staje się bardziej widoczny, gdy zarówno treść, jak i obrazy w stylu są fotografiami i już na poziomie analizy obraka wejściowego wpływa na wygląd zsyntetyzowanego obrazu. Taki szum jest bardzo charakterystyczny i przypomina filtr. 
+\\
 
 Instnieją zaawansowane techniki usuwania sztakich szumów. Takie jak D-Noise Addon dla Blendera od firmy Remington [21] czy NVIDIA OptiX Ray Tracing Engine [22]. Oba rozwiązania korzystają z dobrodziejstw sztuczej ineligencji oraz głębokiego uczenia. Możliwe byłoby skonstruowanie skutecznych technik usuwania szumów w celu późniejszego przetwarzania obrazów po procedurze optymalizacji.
  \\
