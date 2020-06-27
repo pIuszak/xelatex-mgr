@@ -4,7 +4,10 @@
 \usepackage{listings}
 
 \usepackage{listings}
- 
+ \usepackage{url}
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
+\makeatother
 \lstset{language=Python}
 \lstset{frame=lines}
 \lstset{caption={Insert code directly in your document}}
@@ -54,13 +57,19 @@
 
 \indent \indent W niniejszej pracy przedstawiony zostanie proces implementacji tzw. Transferu Stylu (\textit{ang. Style Transfer}) w programie do grafiki 2D/3D Blender.
 
-Pierwszy rozdział poświęcony jest omówieniu podstawowych pojęć związanych ze sztuczną inteligencją. Następnie omówione zostały sieci neuronowe i widzenie komputerowe jako procesy służące do interpretacji oraz przetwarzania obrazów 2D. Aktualnie dostępnych jest szereg narzędzi umożliwiających analizę obrazu, omówione one zostały w rozdziale 4. Dla wcześniej omówionych narzędzi istnieją biblioteki, które pozwalają na wykorzystanie pełnego potencjału uczenia maszynowego i zostały one omówione w rozdziale 5.
+W pierwszym rozdziale omówione zostaną podstawowe pojęcia związane ze sztuczną inteligencją,  takie jak uczenie maszynowe czy głębokie uczenie.  Następnie omówione zostały neurony,  sieci neuronowe i konwolucyjne sieci neuronowe w kontekście widzenia komputerowego,  czyli procesów służący do interpretacji oraz przetwarzania obrazów 2D.  Następnie opisane zostaną pojęcia,  takie jak Metoda Gradientu Prostego,  Funkcja Aktywacji,  Funkcja Strat czy Propagacja Wsteczna które umożliwiają teoretyczną manipulację sieciemi neuronowymi.  Następnie opisane zostaną pojęcia takie jak Tensor czy RGB,  które opisują jak wygląda interpretacja obrazu i sieci neuronowej w komputerze.
 
-Implementacja transferu stylu została szczegółowo omówiona w rozdziale 6. Algorytmu Neural-Style opracowany przez Leona A. Gatysa, Alexandra S. Eckera i Matthiasa Bethge w środowisku Blender. W tym rozdziale został pokazany cały proces, od założeń, przez stworzenie modelu, poprzez szkolenie. Pokazano, że transfer stylu pozwala analizować zdjęcia i odtwarzać je w nowym stylu artystycznym, ale również ma pewne ograniczenia. 
+
+Aktualnie dostępnych jest szereg narzędzi umożliwiających analizę obrazu, na potrzeby tej pracy zostały użyte i omówione w rozdziale 4 następujące narzędzia: Blender,  PyCharm,  Jupyter Notebook oraz inne. 
+
+\indent \indent Dla wcześniej omówionych narzędzi istnieją biblioteki, takie jak PyTorch,  które pozwalają na wykorzystanie pełnego potencjału uczenia maszynowego i zostały one omówione w rozdziale 5.
+
+Implementacja transferu stylu została szczegółowo omówiona w rozdziale 6.  Algorytm Neural-Style opracowany przez Leona A. Gatysa,  Alexandra S. Eckera i Matthiasa Bethge w środowisku Blender.  W tym rozdziale został pokazany cały proces,  od założeń,  przez stworzenie modelu,  poprzez szkolenie.  Pokazano,  że transfer stylu pozwala analizować zdjęcia i odtwarzać je w nowym stylu artystycznym, ale również ma pewne ograniczenia. 
+\clearpage
 \end{abstract}
 
 % słowa kluczowe
-\keywords{Blender, Transfer Stylu, Python, PyTorch, Uczenie Maszynowe, Głębokie Uczenie, Sztuczna Inteligencja, Neuron, Konwolucyjne Sieci Neuronowe, Metoda Gradientu Prostego,Propagacja Wsteczna,  RGB, Tensor, PyCharm, Jupyter Notebook, CUDA, PIP, BPY, Torchvision, Pillow, OS, Matryca Gram, VGG19}
+\keywords{Blender,  Transfer Stylu,  Python,  PyTorch,  Uczenie Maszynowe,  Głębokie Uczenie,  Sztuczna Inteligencja,  Neuron,  Konwolucyjne Sieci Neuronowe,  Metoda Gradientu Prostego,  Propagacja Wsteczna,  RGB, Tensor,  PyCharm,  Jupyter Notebook,  CUDA,  PIP,  BPY,  Torchvision,  Pillow,  OS,  Matryca Gram,  VGG19}
 
 % tytuł i spis treści
 \maketitle
@@ -68,11 +77,11 @@ Implementacja transferu stylu została szczegółowo omówiona w rozdziale 6. Al
 % wstęp
 \introduction
 
-\indent \indent Żyjemy w czasach niespotykanego nigdy w historii ludzkości tempa rozwoju nauki i technologii. Komputery są obecnie w stanie wykonywać zadania, które jeszcze 20 lat temu mogły pojawić się tylko w umysłach Philipa K. Dicka czy Wiliama Gibsona.
+\indent \indent Żyjemy w czasach niespotykanego nigdy w historii ludzkości tempa rozwoju nauki i technologii. Komputery są obecnie w stanie wykonywać zadania, które jeszcze 20 lat temu mogły pojawić się tylko w umysłach Philipa K. Dicka czy Stanisława Lema.
 
 Zadania, które jeszcze kilka lat temu wymagały wyższego poznania, są rozwiązywane przez maszyny o niemal nadludzkim poziomie wydajności. Zawody, bez których ludzkość dziesięciolecia temu nie mogła się obejść nie istnieją. Szutczna inteligencja coraz częściej używana jest do zadań takich jak analiza obrazu i obróbka dźwięku czy wykrywanie znaków drogowych i pieszych przez autonomiczne samochody. Komputery w coraz większej liczbie dziedzin mogą odciążyć człowieka w prostych powtarzalnych czynnościach.
 
- Uczone maszynowo generatory obrazu, takie jak Transfer Stylu mogą tworzyć nieograniczone bazy inspiracji dla designerów czy grafików. Są one trudne w implementacji ale banalne w użyciu, dlatego poczatkujący graficy mogą osiągnąć ciekawe efekty wizualne bez szczegółowej wiedzy. Na chwilę pisania tej pracy takie narzędzia nie są popularnymi narzędziami dla grafików, gdyż wymagają dużej wiedzy teoretycznej do własnej implementacji. Możliwości jakie stoją przed obrazami generowanymi maszynowo są nieograniczone zarówno do prototypowania i tworzenia "bazy" pomysłów, jak również do odciążania człowieka z zadań które jeszcze kilka lat temu były wykonalne tylko dla najlepszych specjalistów w branży.
+ Uczone maszynowo generatory obrazu, takie jak Transfer Stylu mogą tworzyć nieograniczone bazy inspiracji dla designerów czy grafików. Są one trudne w implementacji ale banalne w użyciu, dlatego poczatkujący graficy mogą osiągnąć ciekawe efekty wizualne bez szczegółowej wiedzy. Na chwilę pisania tej pracy takie narzędzia nie są popularnymi narzędziami dla grafików, gdyż wymagają dużej wiedzy teoretycznej do własnej implementacji. 
 
 
 \chapter{Podstawy\label{s:dtd}}
@@ -100,10 +109,6 @@ Zadania, które jeszcze kilka lat temu wymagały wyższego poznania, są rozwią
 \caption{Schemat zależności pomiędzy głębokim uczeniem, uczeniem maszynowym, a sztuczną integencją\label{RYS.1}}
 \source{Opracowanie własne}
 \end{figure}
-
-
-	
-
 
 \chapter{Widzenie komputerowe  }
 
@@ -189,7 +194,25 @@ Tak zwana warstwa ReLU usuwa ujemne wartości z mapy aktywacji, ustawiając je n
  Wagi mnożymy z aktywacją, aby pomagały w określeniu stopnia aktywacji, zachowujemy je w przedziale od 0 do 1.
  
  W przykładowej sieci rozpoznawającej liczby pisane ostatnią warstwą jest 10 neuronów z wartościami cyfr od 0 do 10 i ta z największą wartością aktywacji zostaje wybrana. 
- 
+\\
+\\
+\\
+\\
+\\
+\\
+
+ \section{Metoda Gradientu Prostego\label{s:dsssl}}
+
+\indent \indent Metoda Gradientu Prostego (\textit{ang. Gradient descent}) algorytm optymalizacji, służący do znajdowania lokalnego minimum funkcji.  Został on zaproponowany przez Cauchy'ego już w 1847 r. [6].  W dziedzinie uczenia maszynowego Metoda Gradientu Prostego jest użyteczna przy estymacji parametrów funkcji [16].  Przykład użycia takiego optymalizatora znajduje się w rozdziale 5.3.
+
+
+\begin{figure}[!tbh]
+\centering
+\includegraphics[width=.8\hsize]{fig/11}
+\caption{Minima lokalne w funckji, znalezione metodą gradientu prostego\label{RYS.3}}
+\source{Opracowanie własne}
+\end{figure}
+
  \section{Funkcja Strat \label{s:dsssl}}
  
 \indent \indent Funkcja strat (\textit{ang. Loss Function}) to miara błędu w wykonywaniu zadania, takiego jak błąd między przewidywanymi wyjściami a mierzonymi wartościami. Celem jest, aby wartość funkcja strat była jak najniższa. 
@@ -207,34 +230,20 @@ gdzie:
 
 Wyznacznikiem uczenia sieci neuronowej jest zmniejszanie funcji strat. 
 
-
- \section{Metoda Gradientu Prostego\label{s:dsssl}}
-
-\indent \indent Metoda Gradientu Prostego (\textit{ang. Gradient descent}) to opracowany przez Cauchy'ego w 1847 r. [6] iteracyjny algorytm optymalizacji pierwszego rzędu do znajdowania lokalnego minimum funkcji różniczkowalnej. W dziedzinie uczenia maszynowego Metoda Gradientu Prostego jest użyteczna przy estymacji parametrów funkcji. Aby znaleźć lokalne minimum funkcji za pomocą opadania gradientu, wykonujemy kroki proporcjonalne do ujemnego gradientu (lub przybliżonego gradientu) funkcji w bieżącym punkcie.[16] Im więcej kroków optymalizacji tym bardziej efektowny będzie transfer stylu.
-Przykład użycia takiego optymalizatora znajduje się w rozdziale 5.3.
-
-
-\begin{figure}[!tbh]
-\centering
-\includegraphics[width=.8\hsize]{fig/11}
-\caption{Minima lokalne w funckji, znalezione metodą gradientu prostego\label{RYS.3}}
-\source{Opracowanie własne}
-\end{figure}
-
-
-
 \section{Propagacja Wsteczna\label{s:dsssl}}
 
 \indent \indent W uczeniu maszynowym propagowanie wsteczne (\textit{ang. Backpropagation}) jest szeroko stosowanym algorytmem w uczeniu sieci neuronowych. Algorytm ten edytuje wagi oraz odchylenia każdego połączenia neuronu w sieci tak, aby minimalizowć funkcję strat. Przy dopasowywaniu sieci neuronowej propagacja wsteczna oblicza metodą gradientu prostego funkcję strat w odniesieniu do wag w całej sieci. Dzięki wydajności metody gradientu prostego możliwe jest szkolenie sieci wielowarstwowych. Algorytm wstecznej propagacji działa poprzez obliczenie gradientu funkcji strat w odniesieniu do każdej wagi według reguły łańcuchowej, obliczanie gradientu pojedynczej warstwy na raz, iterowanie wstecz od ostatniej warstwy. 
 
 
- \section{RGB\label{s:dsssl}}
- 
+\section{RGB\label{s:dsssl}}
 \indent \indent W przypadku algorytmu rozpoznającego cyfry, obraz interpretowany przez komputer był w postaci dwuwymiarowej macierzy, z wartościami od 0 do 1. W przypadku algorytmów do innych zastosowań, takich jak rozpoznawanie gatunków kwiatów lub znaków drogowych, obrazek monochromatyczny może dostarczać za mało informacji wejściowych do skutecznej analizy. W takim przypadku niezbędny okazuje się obaz kolorowy. 
-\\ 
+\\
 \\
 \indent \indent Istnieje kilka sposobów kodowania kolorów na liczby. Najpopularniejszym jest
 RGB (\textit{ang. Red, Green, Blue}), który określa kolor za pomocą trzech liczb reprezentujących intensywność czerwieni, zieleni i niebieskiego. Analiza obrazów kolorowych zwiększa złożonośc sieci neuronowych. Kolorowy obrazek jest obiektem podobnym do tablicy o trzech wymiarach: dwóch wymiarach przestrzennych (szerokość i wysokość) i trzecim wymiarze odpowiadającym kanałom czerwonym, zielonym i niebieskim. Każdy kolor będzie reprezentowany jako 8-bitowa liczba całkowita, jak w większości formatów fotograficznych ze standardowych aparatów konsumenckich. [2] Wczytany obraz (np. w formacie *.jpg) należy przekrztałcić w wielowymiarową tablicę, która układa obraz w sposób zgodny z oczekiwaniami danego interfejsu programowania aplikacji, czyli API (\textit{ang. Application Programming Interface}) uczenia maszynowego.
+\clearpage
+
+
 
 \section{Tensor\label{s:dsssl}}
 
@@ -251,7 +260,7 @@ Tensory reprezentujące wartości w poszczególnych pikselach są często kodowa
 \caption{Schemat przetwarzania obrazu\label{RYS.5}}
 \source{Opracowanie własne}
 \end{figure}
-
+\clearpage
  \section{Optymalizacja \label{s:dsssl}}
  
 \indent \indent Często w przypadku, gdy sieć neuronowa ma rozpoznawać zależności bazujące na kształtach (a rozpoznawanie cyfr pisanych właśnie takie jest) redukuje się dane wejściowe do minimum. Zamienia się wtedy kolorowy obrazek RGB na czarno-biały. Dzięki takiemu zabiegowi sieć neuronowa nie zawiera  niepotrzebnych danych takiech jak kolor i może to dać lepszą rozpoznawalność, jak również wzrost wydajności zarówno w procesie szkolenia, jak i działania klasyfikatora.  
@@ -314,7 +323,7 @@ Zarówno wtyczki do Blendera, jak i same operacje przy użyciu PyTorch’a, mog�
 
  \section{CUDA\label{s:dsssl}}
  
-\indent \indent CUDA (\textit{ang. Compute Unified Device Architecture}) jest to opracowana przez firmę Nvidia uniwersalna architektura procesorów wielordzeniowych (głównie kart graficznych) umożliwiająca wykorzystanie ich mocy obliczeniowej do rozwiązywania ogólnych problemów numerycznych w sposób wydajniejszy niż w tradycyjnych, sekwencyjnych procesorach ogólnego zastosowania. Charakteryzuje się ona wyższym współczynnikiem FLOPS (\textit{ang. Floating Point Operations Per Second}) czyli ilości operacji zmiennoprzecinkowych na sekundę.
+\indent \indent CUDA (\textit{ang. Compute Unified Device Architecture}) to platforma do obliczeń równoległych dla procesorów wielordzeniowych (głównie kart graficznych) sworzona przez firmę Nvidia.  Pozwala ona na zrównoleglanie obliczeń algorytmów numerycznych.  Charakteryzuje się ona wyższym współczynnikiem FLOPS (\textit{ang. Floating Point Operations Per Second}),  czyli ilości operacji zmiennoprzecinkowych na sekundę.
 
 
 
@@ -333,10 +342,23 @@ W tym rozdziale opisane zostaną natomiast te, użyte w implementacji Transferu 
 python.exe -m ensurepip
 \end{lstlisting}
 
+\section{OS\label{s:dsssl}}
+        
+  \indent \indent Biblioteka impermentująca interfejsy systemu operacyjnego. W przypadku tej pracy pozwala wykonać instalację paczek w tle poprzez wykonanie procesu terminalowego w tle. 
+
+
+\lstset{caption={Przykład funkcji, która wykonuje daną komendę termonalową przy użyciu OS}}
+\begin{lstlisting}
+# execute terminal command and return output
+def exec(cmd):
+    stream = os.popen(cmd)
+    output = stream.read()
+    print(output)
+\end{lstlisting}
+
 
  
-
-    \section{PyTorch\label{s:dsssl}}
+\section{PyTorch\label{s:dsssl}}
     
     
 \indent \indent PyTorch to biblioteka, która ułatwia budowanie projektów głębokiego uczenia. [3] Pozwala wyrazić modele głębokiego uczenia w języku Python. Ta przystępność i łatwość użycia znalazły wczesnych użytkowników w społeczności badawczej, a od czasu premiery tej biblioteki stała się jednym z najważniejszych narzędzi do głębokiego uczenia dla szerokiego zakresu aplikacji. Instalujemy ją przy pomocy wcześniej wspomnianego PIP-a:
@@ -390,6 +412,16 @@ gpu = points.to(device='cuda')
 \caption{Przykład prostych operacji w Blenderze, przedstawonych w postaci kodu z odwołaniem do BPY. Między innymi znajedzimy tu dodanie nowego materiału, zminę koloru, dodanie modyfikatora Subdivision.\label{RYS.3}}
 \source{Opracowanie własne}
 \end{figure}
+
+    \section{Torchvision\label{s:dsssl}}
+    
+  \indent \indent Torchvision składa się z popularnych zestawów danych, architektur modeli i typowych transformacji obrazu. Torchvision udostępnia wiele wytrenowanych zawczasu modeli, które są gotowe do użycia. Między innymi VGG19 używane w tej pracy.
+    
+\lstset{caption={Przykład pobrania modelu VGG19 przez torchvision, więcej o VGG19 w rozdziale 5.4}}
+\begin{lstlisting}
+models.vgg19(pretrained=True).features
+\end{lstlisting}
+
   
 \section{NumPy\label{s:dsssl}}
     
@@ -408,15 +440,7 @@ def im_convert(self, tensor):
         return image
 \end{lstlisting}
 
-    \section{Torchvision\label{s:dsssl}}
-    
-  \indent \indent Torchvision składa się z popularnych zestawów danych, architektur modeli i typowych transformacji obrazu. Torchvision udostępnia wiele wytrenowanych zawczasu modeli, które są gotowe do użycia. Między innymi VGG19 używane w tej pracy.
-    
-\lstset{caption={Przykład pobrania modelu VGG19 przez torchvision, więcej o VGG19 w rozdziale 5.4}}
-\begin{lstlisting}
-models.vgg19(pretrained=True).features
-\end{lstlisting}
-
+\clearpage
 
 \section{Pillow\label{s:dsssl}}
     
@@ -428,20 +452,6 @@ image = PIL.Image.open(img_path).convert('RGB')
 \end{lstlisting}
    
     
-\section{OS\label{s:dsssl}}
-        
-  \indent \indent Biblioteka impermentująca interfejsy systemu operacyjnego. W przypadku tej pracy pozwala wykonać instalację paczek w tle poprzez wykonanie procesu terminalowego w tle. 
-
-
-\lstset{caption={Przykład funkcji, która wykonuje daną komendę termonalową przy użyciu OS}}
-\begin{lstlisting}
-# execute terminal command and return output
-def exec(cmd):
-    stream = os.popen(cmd)
-    output = stream.read()
-    print(output)
-\end{lstlisting}
-
 
 
 \chapter{Transfer Stylu }
@@ -488,7 +498,7 @@ Aby trenować model, potrzeba:
 \end{itemize}
 
 Transfer stylu to technika wymagająca bardzo złożonego wytrenowanego modelu. Tutaj przydatne okazują się wytrenowane już modele. VGG19 jest bardzo efektywny przy ekstrakcji cech.
-
+\clearpage
 \section{Matryca Gram\label{s:dsssl}}
   \indent \indent Aby osiągnąć efektywną, jak i efektowną ekstrakcję stylu, należy minimalizować różnicę między rozkładami funkcji. Wyciągnięty styl wciąż przechowuje informacje niepotrzebne, takie jak pozycje elementów czy ich strukturę na obrazie. Aby pozbyć się niepotrzebnych informacji trzeba wykonać przetwarzanie wstępne (\textit{ang. Preprocesing}) na macierzy cech, która została wyciągnięta:
 
@@ -591,48 +601,44 @@ Inną kwestią jest to, że zsyntetyzowane obrazy narażone są na zakłócenia 
 \chapter{Bibliografia}
 
 \begin{itemize}
-\item$[1]\: Alan\:Turing, "Computing\:Machinery\:and \:Intelligence",\\ 
-Mind, vol. LIX, no.\:236, Październik 1950$
-\item$[2]\: Ian \:Goodfellow \:and \:Yoshua \:Bengio \:and \:Aaron\: Courville,\\ 
-"Deep\: Learning\: An\: MIT\: Press\: book",\: https://www.deeplearningbook.org$
-\item $[3]\:Vishnu \:Subramanian\: Deep\: Learning\: with \:PyTorch\\ https://arxiv.org/pdf/1508.06576.pdf $ 
-\item $[4]\:Leon \:A.\: Gatys,\: Alexander\: S. Ecker,\: Matthias\: Bethge\\ "A \:Neural Algorithm \:of\: Artistic Style" $
-\item $[5]\:https://www.cv-foundation.org/openaccess/content\_cvp\r_2016/papers/\\\:Gatys\_Image\_Style\_Transfer\_CVPR\_2016\_paper.pdf$
-\item $[6] \:Lemaréchal, C. (2012). "Cauchy\:and \:the \:Gradient \:Method" (PDF).\\ Doc\: Math\: Extra:\: 251–254.$
-\item $[7]\:https://papers.nips.cc/paper/5633-texture-syanthesis-using-convolutional-neural-networks.pdf$
-\item$[8]\:K. \:Simonyan\: and \:A.\: Zisserman. Very\: Deep\: Convolutional\\ \:Networks\: for\: Large Scale\: Image\: Recognition.\\ arXiv:1409.1556 [cs], Sept. 2014. arXiv: 1409.1556.$
-\item $[9]\:Grokking Deep Learning, by Andrew W. Trask$
-\item $[10]\:Deep Learning with PyTorch by Eli Stevens and Luca Antiga$
-\item $[12]\:https://pytorch.org/tutorials/advanced/neural_style_tutorial.html$
-\item $[13]\:https://github.com/rrmina/neural-style-pytorch$
-\item $[14]\:https://polycount.com/discussion/205872/creating-images-with-python-in-blender$
-\item $[15]\:https://cloud.blender.org/p/scripting-for-artists/5993ed908119170ebb57164b$
-\item $[16]\:https://www.3blue1brown.com$
-\item $[17]\:https://www.manning.com/books/grokking-deep-learning$
-\item $[18]\:https://www.deeplearningbook.org$
-\item $[19]\:Deep Learning, by Ian Goodfellow, Yoshua Bengio, and Aaron Courville.$
-\item $[20]\:https://pl.wikipedia.org/wiki/Sztuczna_inteligencja$
-\item $[21]\:https://remington.pro/software/blender/d-noise/$
-\item $[22]\:https://developer.nvidia.com/optix$
+\item [{[1]}] \textit{"Computing Machinery and Intelligence"},  Alan Turing
+\item [{[2]}] \textit{"Deep Learning An MIT Press book"},  Ian Goodfellow and Yoshua Bengio and Aaron Courville,  \url{https://www.deeplearningbook.org}
+\item [{[3]}] \textit{"Deep Learning with PyTorch"} , Vishnu Subramanian, \url{https://arxiv.org/pdf/1508.06576.pdf}
+\item [{[4]}] \textit{"A Neural Algorithm of Artistic Style"},   Leon A. Gatys,  Alexander S. Ecker,  Matthias Bethge
+\item [{[5]}] \url{https://www.cv-foundation.org/openaccess/content_cvp_2016/papers/Gatys_Image_Style_Transfer_CVPR_2016_paper.pdf}
+\item [{[6]}] \textit{"Cauchy and the Gradient Method"},  Lemaréchal,  C. (2012). 
+\item [{[7]}] \url{https://papers.nips.cc/paper/
+5633-texture-syanthesis-using-convolutional-neural-networks.pdf}
+\item[{[8]}] \textit{"Very Deep Convolutional Networks for Large Scale Image Recognition"},  K. Simonyan and A.  Zisserman. 
+\item [{[9]}] \textit{"Grokking Deep Learning"},  Andrew W. Trask
+\item [{[10]}] \textit{"Deep Learning with PyTorch"}, Eli Stevens and Luca Antiga
+\item [{[11]}] \url{https://pytorch.org/tutorials/advanced/neural_style_tutorial.html}
+\item [{[12]}] \url{https://github.com/rrmina/neural-style-pytorch}
+\item [{[13]}] \url{https://polycount.com/discussion/205872/creating-images-with-python-in-blender}
+\item [{[14]}] \url{https://cloud.blender.org/p/scripting-for-artists}
+\item [{[15]}] \url{https://www.3blue1brown.com}
+\item [{[16]}] \url{https://www.manning.com/books/grokking-deep-learning}
+\item [{[17]}]\url{https://www.deeplearningbook.org}
+\item [{[18]}] \textit{"Deep Learning"},  Ian Goodfellow, Yoshua Bengio,  Aaron Courville.
+\item [{[19]}]\url{https://pl.wikipedia.org/wiki/Sztuczna_inteligencja}
+\item [{[20]}]\url{https://remington.pro/software/blender/d-noise/}
+\item [{[21]}]\url{https://developer.nvidia.com/optix}
+
 
 \end{itemize}
 
 
 % załączniki (opcjonalnie):
 \appendix
-\chapter{Tytuł załącznika jeden}
+\chapter{Kod źródłowy pojektu}
 
-Treść załącznika jeden.
-
-\chapter{Tytuł załącznika dwa}
-
-Treść załącznika dwa.
+\url{https://github.com/pIuszak/blender-pytorch-style-transfer}
 
 % literatura (obowiązkowo):
 \bibliographystyle{unsrt}
 \bibliography{xml}
 
 
-\oswiadczenie
+
 
 \end{document}
