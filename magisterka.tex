@@ -57,10 +57,10 @@
 
 \indent \indent W niniejszej pracy przedstawiony zostanie proces implementacji tzw. Transferu Stylu (\textit{ang. Style Transfer}) w programie do grafiki 2D/3D Blender.
 
-W pierwszym rozdziale omówione zostaną podstawowe pojęcia związane ze sztuczną inteligencją,  takie jak uczenie maszynowe czy głębokie uczenie.  Następnie omówione zostały neurony,  sieci neuronowe i konwolucyjne sieci neuronowe w kontekście widzenia komputerowego,  czyli procesów służący do interpretacji oraz przetwarzania obrazów 2D.  Następnie opisane zostaną pojęcia,  takie jak Metoda Gradientu Prostego,  Funkcja Aktywacji,  Funkcja Strat czy Propagacja Wsteczna które umożliwiają teoretyczną manipulację sieciemi neuronowymi.  Następnie opisane zostaną pojęcia takie jak Tensor czy RGB,  które opisują jak wygląda interpretacja obrazu i sieci neuronowej w komputerze.
+W pierwszym rozdziale omówione zostaną podstawowe pojęcia związane ze sztuczną inteligencją,  takie jak uczenie maszynowe czy głębokie uczenie.  Następnie omówione zostały neurony,  sieci neuronowe i konwolucyjne sieci neuronowe w kontekście widzenia komputerowego,  czyli procesów służący do interpretacji oraz przetwarzania obrazów 2D.  Na potrzeby tej pracy zostały użyte następujące teoretyczne modele: Metoda Gradientu Prostego,  Funkcja Aktywacji,  Funkcja Strat i Propagacja Wsteczna,  które umożliwiają manipulację sieciemi neuronowymi.  Następnie opisane zostaną pojęcia takie jak Tensor czy RGB,  które opisują jak wygląda interpretacja obrazu i sieci neuronowej w komputerze.
 
 
-Aktualnie dostępnych jest szereg narzędzi umożliwiających analizę obrazu, na potrzeby tej pracy zostały użyte i omówione w rozdziale 4 następujące narzędzia: Blender,  PyCharm,  Jupyter Notebook oraz inne. 
+Aktualnie dostępny jest szereg narzędzi umożliwiających analizę obrazu,  na potrzeby tej pracy zostały użyte i omówione w rozdziale 4 narzędzia: Blender,  PyCharm,  Jupyter Notebook i inne. 
 
 \indent \indent Dla wcześniej omówionych narzędzi istnieją biblioteki, takie jak PyTorch,  które pozwalają na wykorzystanie pełnego potencjału uczenia maszynowego i zostały one omówione w rozdziale 5.
 
@@ -81,7 +81,7 @@ Implementacja transferu stylu została szczegółowo omówiona w rozdziale 6.  A
 
 Zadania, które jeszcze kilka lat temu wymagały wyższego poznania, są rozwiązywane przez maszyny o niemal nadludzkim poziomie wydajności. Zawody, bez których ludzkość dziesięciolecia temu nie mogła się obejść nie istnieją. Szutczna inteligencja coraz częściej używana jest do zadań takich jak analiza obrazu i obróbka dźwięku czy wykrywanie znaków drogowych i pieszych przez autonomiczne samochody. Komputery w coraz większej liczbie dziedzin mogą odciążyć człowieka w prostych powtarzalnych czynnościach.
 
- Uczone maszynowo generatory obrazu, takie jak Transfer Stylu mogą tworzyć nieograniczone bazy inspiracji dla designerów czy grafików. Są one trudne w implementacji ale banalne w użyciu, dlatego poczatkujący graficy mogą osiągnąć ciekawe efekty wizualne bez szczegółowej wiedzy. Na chwilę pisania tej pracy takie narzędzia nie są popularnymi narzędziami dla grafików, gdyż wymagają dużej wiedzy teoretycznej do własnej implementacji. 
+ Uczone maszynowo generatory obrazu, takie jak Transfer Stylu mogą tworzyć nieograniczone bazy inspiracji dla designerów czy grafików. Są one trudne w implementacji ale banalne w użyciu, dlatego poczatkujący graficy mogą osiągnąć ciekawe efekty wizualne bez szczegółowej wiedzy.  Na chwilę powstawania tej pracy takie narzędzia nie są zbyt popularne wśród grafików,  gdyż wymagają dużej wiedzy teoretycznej do własnej implementacji. 
 
 
 \chapter{Podstawy\label{s:dtd}}
@@ -112,7 +112,7 @@ Zadania, które jeszcze kilka lat temu wymagały wyższego poznania, są rozwią
 
 \chapter{Widzenie komputerowe  }
 
-\indent \indent Możliwośc interpretacji i przetwarzania obrazu przez programy zostało zrewolucjonizowane przez wprowadzenie konwolucyjnych sieci neuronowych, a aplikacje oparte na analizie obrazu zyskały nowy wymiar możliwości. W tym rozdziale zostaną omówione podstawowe definicje związane z widzeniem komputerowym, a następnie przedstawiony zostanie przykład obrazujący, według jakiego wzorca konstruowane są sieci neuronowe. Omówione zostaną również 
+\indent \indent Możliwość interpretacji i przetwarzania obrazu przez programy zostało zrewolucjonizowane przez wprowadzenie konwolucyjnych sieci neuronowych, a aplikacje oparte na analizie obrazu zyskały nowy wymiar możliwości. W tym rozdziale zostaną omówione podstawowe definicje związane z widzeniem komputerowym, a następnie przedstawiony zostanie przykład obrazujący, według jakiego wzorca konstruowane są sieci neuronowe. Omówione zostaną również 
 możliwości odczytu, przetwarzania oraz zapisu obrazów.
 
 \section{Neuron  \label{s:dsssl}}
